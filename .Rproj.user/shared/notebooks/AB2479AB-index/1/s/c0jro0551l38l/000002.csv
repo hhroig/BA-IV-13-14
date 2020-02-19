@@ -1,0 +1,6 @@
+"0","# automatically create a bib database for R packages"
+"0","knitr::write_bib(c("
+"0","  .packages(), 'class', 'caret', 'ISLR', 'ROCR'"
+"0","), 'packages.bib')"
+"2","package(s) ISLR not found"
+"0","knitr::opts_chunk$set(cache = T)"

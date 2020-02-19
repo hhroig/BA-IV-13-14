@@ -1,0 +1,339 @@
+"1","
+"
+"2","trying URL 'https://cran.rstudio.com/bin/windows/contrib/3.6/labelled_2.2.2.zip'
+"
+"2","Content type 'application/zip'"
+"2"," length 154352 bytes (150 KB)
+"
+"2","downloaded 150 KB
+
+"
+"2","trying URL 'https://cran.rstudio.com/bin/windows/contrib/3.6/combinat_0.0-8.zip'
+"
+"2","Content type 'application/zip'"
+"2"," length 43075 bytes (42 KB)
+"
+"2","downloaded 42 KB
+
+"
+"2","trying URL 'https://cran.rstudio.com/bin/windows/contrib/3.6/questionr_0.7.0.zip'
+"
+"2","Content type 'application/zip'"
+"2"," length 1936150 bytes (1.8 MB)
+"
+"2","downloaded 1.8 MB
+
+"
+"1","package ‘labelled’ successfully unpacked and MD5 sums checked
+"
+"1","package ‘combinat’ successfully unpacked and MD5 sums checked
+"
+"1","package ‘questionr’ successfully unpacked and MD5 sums checked
+"
+"1","
+"
+"1",""
+"1","The downloaded binary packages are in
+	C:\Users\HHRoig\AppData\Local\Temp\Rtmpsx4wXb\downloaded_packages"
+"1",""
+"1","
+"
+"2","installing the source package �klaR�
+
+"
+"2","trying URL 'https://cran.rstudio.com/src/contrib/klaR_0.6-15.tar.gz'
+"
+"2","Content type 'application/x-gzip'"
+"2"," length 294627 bytes (287 KB)
+"
+"2","downloaded 287 KB
+
+"
+"1","* installing *source* package 'klaR' ...
+"
+"1","** package 'klaR' successfully unpacked and MD5 sums checked
+"
+"1","** using staged installation
+"
+"1","** R
+"
+"1","** data
+"
+"1","** inst
+"
+"1","** byte-compile and prepare package for lazy loading
+"
+"1","** help
+"
+"1","*** installing help indices
+"
+"1","  converting help for package 'klaR'
+"
+"1","    finding HTML links ... done
+"
+"1","    B3                                      html  
+"
+"1","    EDAM                                    html  
+"
+"1","    GermanCredit                            html  
+"
+"1","    NaiveBayes                              html  
+"
+"1","    TopoS                                   html  
+"
+"1","    b.scal                                  html  
+"
+"1","    benchB3                                 html  
+"
+"1","    betascale                               html  
+"
+"1","    calc.trans                              html  
+"
+"1","    centerlines                             html  
+"
+"1","    classscatter                            html  
+"
+"1","    cond.index                              html  
+"
+"1","    corclust                                html  
+"
+"1","    countries                               html  
+"
+"1","    cvtree                                  html  
+"
+"1","    distmirr                                html  
+"
+"1","    dkernel                                 html  
+"
+"1","    dmvnorm                                 html  
+"
+"1","    drawparti                               html  
+"
+"1","    e.scal                                  html  
+"
+"1","    errormatrix                             html  
+"
+"1","    friedmandata                            html  
+"
+"1","    greedy.wilks                            html  
+"
+"1","    hmm.sop                                 html  
+"
+"1","    kmodes                                  html  
+"
+"1","    loclda                                  html  
+"
+"1","    locpvs                                  html  
+"
+"1","    meclight                                html  
+"
+"1","    nm                                      html  
+"
+"1","    partimat                                html  
+"
+"1","    plineplot                               html  
+"
+"1","    plot.NaiveBayes                         html  
+"
+"1","    plot.woe                                html  
+"
+"1","    predict.NaiveBayes                      html  
+"
+"1","    predict.loclda                          html  
+"
+"1","    predict.locpvs                          html  
+"
+"1","    predict.meclight                        html  
+"
+"1","    predict.pvs                             html  
+"
+"1","    predict.rda                             html  
+"
+"1","    predict.sknn                            html  
+"
+"1","    predict.svmlight                        html  
+"
+"1","    predict.woe                             html  
+"
+"1","    pvs                                     html  
+"
+"1","    quadplot                                html  
+"
+"1","    quadtrafo                               html  
+"
+"1","    rda                                     html  
+"
+"1","    rerange                                 html  
+"
+"1","    shardsplot                              html  
+"
+"1","    sknn                                    html  
+"
+"1","    stepclass                               html  
+"
+"1","    svmlight                                html  
+"
+"1","    triframe                                html  
+"
+"1","    trigrid                                 html  
+"
+"1","    triperplines                            html  
+"
+"1","    triplot                                 html  
+"
+"1","    tripoints                               html  
+"
+"1","    tritrafo                                html  
+"
+"1","    ucpm                                    html  
+"
+"1","    woe                                     html  
+"
+"1","    xtractvars                              html  
+"
+"1","** building package indices
+"
+"1","** testing if installed package can be loaded from temporary location
+"
+"1","** testing if installed package can be loaded from final location
+"
+"1","** testing if installed package keeps a record of temporary installation path
+"
+"1","* DONE (klaR)
+"
+"2","
+"
+"2",""
+"2","The downloaded source packages are in
+	‘C:\Users\HHRoig\AppData\Local\Temp\Rtmpsx4wXb\downloaded_packages’"
+"2",""
+"2","
+"
+"0","model_rda_def"
+"1","Regularized Discriminant Analysis"
+"1"," "
+"1","
+
+"
+"1","8001"
+"1",""
+"1"," samples"
+"1","
+"
+"1","   2"
+"1",""
+"1"," predictor"
+"1",""
+"1","
+"
+"1","   2"
+"1"," "
+"1","classes:"
+"1"," "
+"1","'No', 'Yes'"
+"1"," "
+"1","
+"
+"1","
+"
+"1","No pre-processing
+"
+"1","Resampling:"
+"1"," "
+"1","Cross-Validated (10 fold)"
+"1"," "
+"1","
+"
+"1","Summary of sample sizes:"
+"1"," "
+"1","7200, 7200, 7201, 7202, 7201, 7202, ..."
+"1"," "
+"1","
+"
+"1","Resampling results"
+"1"," across tuning parameters"
+"1",":
+
+"
+"1",""
+"1","  gamma"
+"1","  lambda"
+"1","  Accuracy "
+"1","  Kappa    "
+"1","
+"
+"1","  0    "
+"1","  0     "
+"1","  0.9730043"
+"1","  0.3787741"
+"1","
+"
+"1","  0    "
+"1","  1     "
+"1","  0.9733790"
+"1","  0.3710518"
+"1","
+"
+"1","  1    "
+"1","  0     "
+"1","  0.9666297"
+"1","  0.0000000"
+"1","
+"
+"1","  1    "
+"1","  1     "
+"1","  0.9666297"
+"1","  0.0000000"
+"1","
+"
+"1","
+"
+"1","Accuracy was used to select the optimal model using the largest value.
+"
+"1","The final values used for the model were gamma = 0 and lambda = 1."
+"1","
+"
+"0","model_rda_def$finalModel"
+"1","Call:"
+"1"," "
+"1","
+"
+"1","rda.default(x = x, grouping = y, gamma = param$gamma, lambda = param$lambda)
+"
+"1","
+Regularization parameters:"
+"1"," "
+"1","
+"
+"1"," gamma "
+"1","lambda "
+"1","
+"
+"1","     0 "
+"1","     1 "
+"1","
+"
+"1","
+Prior probabilities of groups:"
+"1"," "
+"1","
+"
+"1","        No "
+"1","       Yes "
+"1","
+"
+"1","0.96662917 "
+"1","0.03337083 "
+"1","
+"
+"1","
+Misclassification rate:"
+"1"," "
+"1","
+"
+"1","       apparent:"
+"1"," "
+"1","2.662"
+"1"," "
+"1","%
+"
