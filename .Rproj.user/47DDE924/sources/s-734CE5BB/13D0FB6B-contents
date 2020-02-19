@@ -1,0 +1,124 @@
+library(ISLR)
+
+data("Default")
+head(Default)
+
+class(Default)
+summary(Default)
+
+library(ggplot2)
+
+plot.2d <- ggplot(Default, aes(x = balance, y = income, group = default)) + 
+  geom_point(aes(shape = default, color = default), alpha = 0.5) +
+  theme_light()
+plot.2d
+
+histos <- ggplot(Default, aes(x = balance, group = default)) + 
+  geom_histogram(bins = round((sqrt(333) + sqrt(9000))/2), aes(color = default, fill = default), alpha = 0.2) +
+  theme_light()
+histos
+
+## LDA -----
+library(caret)
+df <- Default[, c("income", "balance", "default")]
+train.ID <- createDataPartition(df$default, p = 0.8, list = FALSE)
+
+train_df <- df[train.ID, ]
+test_df <- df[-train.ID, ]
+
+# damos nuestros primeros pasos en la validacion cruzada...
+# (podemos probar varias opciones)
+# en este caso no hay parametros para tunear
+fit_control <- trainControl(method='cv', number = 10)  
+
+model_lda_def <- train(default ~., 
+                        data = train_df, 
+                        method = "lda", 
+                        trControl = fit_control)
+model_lda_def
+model_lda_def$finalModel
+
+# hagamos las predicciones del conjunto de prueba
+prediction_lda_def <- predict(model_lda_def, newdata = test_df)
+confusionMatrix(prediction_lda_def, reference = test_df$default)
+
+# extraemos el Accuracy o Precision
+confusionMatrix(prediction_lda_def, reference = test_df$default)$overall[1]
+# la tasa de error
+tasa.error <- 1-confusionMatrix(prediction_lda_def, reference = test_df$default)$overall[1]
+names(tasa.error) <- "Error"
+tasa.error
+
+# Pintar la frontera de decision ----
+# Paso 1: crear un grid de valores desde min a max de ambos predictores
+pl = seq(min(train_df$balance), max(train_df$balance), by=20)
+pw = seq(min(train_df$income), max(train_df$income), by=800)
+
+lgrid <- expand.grid(balance=pl, income=pw)
+
+# Paso 2: obtener las predicciones tanto para el grid como para el test
+ldaPredGrid <- predict(model_lda_def, newdata=lgrid)
+train_df$Pred.Class <- predict(model_lda_def, newdata = train_df)
+
+# Paso 3: ggplot con la funcion contour
+ggplot(data=lgrid) + 
+  stat_contour(aes(x=balance, y=income, z=as.numeric(ldaPredGrid)), bins=2) +
+  geom_point(aes(x=balance, y=income, colour=ldaPredGrid),alpha=0.1) +
+  labs(colour = "Fallo en pago") +
+  geom_point(data=train_df, 
+             aes(x=balance, y=income,
+                 colour=Pred.Class), size=5, shape=1) + 
+  theme_light() 
+
+## Curva ROC
+# hagamos las predicciones del conjunto de prueba
+pred_prob <- predict(model_lda_def, newdata = test_df, type = "prob")
+
+library(ROCR)
+library(dplyr)
+
+prob.pred <- prediction(pred_prob[,2], test_df$default)
+
+# Representamos las curvas usando las prestaciones del paquete
+# ROC
+prob.pred %>%
+  performance(measure = "tpr", x.measure = "fpr") %>%
+  plot()
+# AUC: mientras mas cercano a 1, mejor predicciones
+auc <- performance(prob.pred, measure = "auc")@y.values[[1]]
+
+prob.pred %>%
+  performance("err") %>%
+  plot()
+
+prob.pred %>%
+  performance("fnr") %>%
+  plot()
+
+prob.pred %>%
+  performance("fpr") %>%
+  plot()
+
+# Podemos combinar las 3 ultimas en un mismo grafico
+df_perfor <- data.frame(Error.Rate = performance(prob.pred, "err")@y.values[[1]],
+                        FNR = performance(prob.pred, "fnr")@y.values[[1]],
+                        FPR = performance(prob.pred, "fpr")@y.values[[1]],
+                        TPR = performance(prob.pred, "tpr")@y.values[[1]],
+                        CutOffs = performance(prob.pred, "err")@x.values[[1]])
+
+# plot tasas de error
+ggplot(df_perfor, aes(x = CutOffs)) +
+  geom_line(aes(y = Error.Rate, colour = "Tasa Error General")) +
+  geom_line(aes(y = FNR, colour = "FNR")) +
+  geom_line(aes(y = FPR, colour = "FPR")) +
+  scale_colour_discrete(name = "Medidas" ) +
+  xlab("Puntos de corte") + ylab("Tasas de Error") +
+  theme_light()
+
+# plot de la curva ROC
+ggplot(df_perfor, aes(x = FPR, y = TPR)) +
+  geom_line() +
+  xlab("FPR: 1- especificidad") + ylab("TPR: sensibilidad") +
+  title(paste0("Curva ROC (AUC = ", round(auc, digits = 3),")")) +
+  theme_light()
+

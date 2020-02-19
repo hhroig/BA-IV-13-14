@@ -1,3 +1,0 @@
-"0","prob.pred %>%"
-"0","  performance(""fnr"") %>%"
-"0","  plot()"

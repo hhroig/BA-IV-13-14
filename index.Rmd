@@ -26,8 +26,8 @@ knitr::opts_chunk$set(cache = T)
 
 La bibliografía fundamental para estas dos sesiones es el libro de [@james2013introduction]. En el mismo, podrán encontrar las principales ideas ya estudiadas, así como ejemplos prácticos sencillos en R (ver el paquete `ISLR` [@R-ISLR]). También recomendamos los libros [@Rebala2019] y [@Burger2018], como material complementario.
 
-Los paquetes de R empleados para ajustar los algoritmos supervisados *K-Nearest-Neighbors*, *Linear Discriminant Analysis (LDA)*, y *Quadratic Discriminant Analysis (QDA)*; son `caret`[@R-caret] y `class`[@R-class].
+Los paquetes de R empleados para ajustar los algoritmos supervisados *K-Nearest-Neighbors*, *Linear Discriminant Analysis (LDA)*, y *Quadratic Discriminant Analysis (QDA)*; son `caret`[@R-caret] y `class`[@R-class]. Para el paquete `caret`, se recomienda además revisar la documentación en [topepo.github.io/caret](http://topepo.github.io/caret/index.html).
 
-La organización del documento corresponde, en general, a la seguida durante las prácitcas.
+La organización del documento corresponde, en general, a la seguida durante las prácticas.
 
 Have fun! :)

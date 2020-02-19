@@ -1,0 +1,26 @@
+{
+    "collab_server" : "",
+    "contents" : "",
+    "created" : 1582129464098.000,
+    "dirty" : false,
+    "encoding" : "UTF-8",
+    "folds" : "",
+    "hash" : "1004583847",
+    "id" : "21D66DBE",
+    "lastKnownWriteTime" : 1582055097,
+    "last_content_update" : 1582055097,
+    "path" : "~/OneDrive - Universidad Carlos III de Madrid/Big_Analytics_Ed4/14_15_Aprendizaje_Supervisado_Harold_A_Hdez_Roig/codes_practica/default_balance_data_analysis/data_default_LDA_QDA_ROC.R",
+    "project_path" : null,
+    "properties" : {
+        "cursorPosition" : "88,0",
+        "docOutlineVisible" : "1",
+        "scrollLine" : "80"
+    },
+    "read_only" : false,
+    "read_only_alternatives" : [
+    ],
+    "relative_order" : 6,
+    "source_on_save" : false,
+    "source_window" : "",
+    "type" : "r_source"
+}

@@ -1,0 +1,33 @@
+"0","library(ROCR)"
+"2","Loading required package: gplots
+"
+"2","
+Attaching package: ‘gplots’
+
+"
+"2","The following object is masked from ‘package:stats’:
+
+    lowess
+
+"
+"0","library(dplyr)"
+"2","
+Attaching package: ‘dplyr’
+
+"
+"2","The following objects are masked from ‘package:stats’:
+
+    filter, lag
+
+"
+"2","The following objects are masked from ‘package:base’:
+
+    intersect, setdiff, setequal, union
+
+"
+"0","prob.pred <- prediction(pred_prob[,2], test_df$default)"
+"0",""
+"0","# ROC"
+"0","prob.pred %>%"
+"0","  performance(measure = ""tpr"", x.measure = ""fpr"") %>%"
+"0","  plot()"

@@ -1,7 +1,0 @@
-"0","# plot de la curva ROC"
-"0","roc.lda <- ggplot(df_perfor, aes(x = FPR, y = TPR)) +"
-"0","  geom_line() +"
-"0","  xlab(""FPR: 1- especificidad"") + ylab(""TPR: sensibilidad"") +"
-"0","  ggtitle(paste0(""Curva ROC - LDA (Area Under Curve = "", round(auc.lda, digits = 3),"")"")) +"
-"0","  theme_light()"
-"0","roc.lda"

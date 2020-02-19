@@ -147,8 +147,8 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="4.2.1" data-path="compara.html"><a href="compara.html#análisis-en-la-muestra-test"><i class="fa fa-check"></i><b>4.2.1</b> Análisis en la muestra test</a></li>
 <li class="chapter" data-level="4.2.2" data-path="compara.html"><a href="compara.html#análisis-en-la-muestra-de-entrenamiento"><i class="fa fa-check"></i><b>4.2.2</b> Análisis en la muestra de entrenamiento</a></li>
 </ul></li>
-<li class="chapter" data-level="4.3" data-path="compara.html"><a href="compara.html#wisconsin-breast-cancer-data"><i class="fa fa-check"></i><b>4.3</b> Wisconsin Breast-Cancer Data</a></li>
 </ul></li>
+<li class="chapter" data-level="5" data-path="wiscon.html"><a href="wiscon.html"><i class="fa fa-check"></i><b>5</b> Wisconsin Breast-Cancer Data</a></li>
 <li class="chapter" data-level="" data-path="bibliografía.html"><a href="bibliografía.html"><i class="fa fa-check"></i>Bibliografía</a></li>
 </ul>
 
@@ -192,7 +192,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 ##  $ student: Factor w/ 2 levels &quot;No&quot;,&quot;Yes&quot;: 1 2 1 1 1 2 1 2 1 1 ...
 ##  $ balance: num  730 817 1074 529 786 ...
 ##  $ income : num  44362 12106 31767 35704 38463 ...</code></pre>
-<p>El objetivo es predecir si un sujeto de la muestre fallará en el pago de su trajeta de crédito. Por tanto, la variable respuesta es <code>default</code>, categórica con solo los niveles <code>Yes</code> y <code>No</code>. Tenemos información sobre el balance mensual de crédito en <code>balance</code>, el salario anual en <code>income</code> y si es estudiante o no en <code>student</code>. Solo un <span class="math inline">\(3\%\)</span> de la muestra (<span class="math inline">\(n = 10000\)</span>), así que es una muestra muy desbalanceada.</p>
+<p>El objetivo es predecir si un sujeto de la muestre fallará en el pago de su tarjeta de crédito. Por tanto, la variable respuesta es <code>default</code>, categórica con solo los niveles <code>Yes</code> y <code>No</code>. Tenemos información sobre el balance mensual de crédito en <code>balance</code>, el salario anual en <code>income</code> y si es estudiante o no en <code>student</code>. Solo un <span class="math inline">\(3\%\)</span> de la muestra (<span class="math inline">\(n = 10000\)</span>), así que es una muestra muy desbalanceada.</p>
 <div class="sourceCode" id="cb66"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb66-1" data-line-number="1"><span class="kw">summary</span>(Default)</a></code></pre></div>
 <pre><code>##  default    student       balance           income     
 ##  No :9667   No :7056   Min.   :   0.0   Min.   :  772  
@@ -206,7 +206,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <pre><code>## 
 ##     No    Yes 
 ## 0.9667 0.0333</code></pre>
-<p>Nos concentramos en predecir <code>default</code> a partir de las variables predictoras <code>balance</code> e <code>income</code>. En el siguiente diagrama de dispersión se observa cierte solapamiento entre las clases a predecir, pero una clara diferenciación de acuerdo a la variable <code>balance</code>.</p>
+<p>Nos concentramos en predecir <code>default</code> a partir de las variables predictoras <code>balance</code> e <code>income</code>. En el siguiente diagrama de dispersión se observa cierto solapamiento entre las clases a predecir, pero una clara diferenciación de acuerdo a la variable <code>balance</code>.</p>
 <div class="sourceCode" id="cb70"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb70-1" data-line-number="1"><span class="kw">library</span>(ggplot2)</a>
 <a class="sourceLine" id="cb70-2" data-line-number="2"><span class="kw">library</span>(gridExtra)</a>
 <a class="sourceLine" id="cb70-3" data-line-number="3"></a>

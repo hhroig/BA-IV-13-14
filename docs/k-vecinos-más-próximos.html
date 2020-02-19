@@ -147,8 +147,8 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="4.2.1" data-path="compara.html"><a href="compara.html#análisis-en-la-muestra-test"><i class="fa fa-check"></i><b>4.2.1</b> Análisis en la muestra test</a></li>
 <li class="chapter" data-level="4.2.2" data-path="compara.html"><a href="compara.html#análisis-en-la-muestra-de-entrenamiento"><i class="fa fa-check"></i><b>4.2.2</b> Análisis en la muestra de entrenamiento</a></li>
 </ul></li>
-<li class="chapter" data-level="4.3" data-path="compara.html"><a href="compara.html#wisconsin-breast-cancer-data"><i class="fa fa-check"></i><b>4.3</b> Wisconsin Breast-Cancer Data</a></li>
 </ul></li>
+<li class="chapter" data-level="5" data-path="wiscon.html"><a href="wiscon.html"><i class="fa fa-check"></i><b>5</b> Wisconsin Breast-Cancer Data</a></li>
 <li class="chapter" data-level="" data-path="bibliografía.html"><a href="bibliografía.html"><i class="fa fa-check"></i>Bibliografía</a></li>
 </ul>
 
@@ -304,7 +304,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <a class="sourceLine" id="cb7-10" data-line-number="10">Y &lt;-<span class="st"> </span>iris[train.ID,<span class="dv">5</span>]</a>
 <a class="sourceLine" id="cb7-11" data-line-number="11"><span class="co"># respuesta (categórica) test</span></a>
 <a class="sourceLine" id="cb7-12" data-line-number="12">Y.test &lt;-<span class="st"> </span>iris[<span class="op">-</span>train.ID,<span class="dv">5</span>]</a></code></pre></div>
-<p>Usando la función <code>knn</code> podemos predecir las clases de los datos en <code>X.test</code>. Otro problema es cómo seleccionar la cantidad de vecinos <code>k</code> apropriada. Una <em>regla de pulgar</em> (<em>thumb rule</em>) es fijar <span class="math inline">\(k = \sqrt{n_{train}}\)</span>. Para analizar la precisión del modelo creamos la <em>matriz de confusión</em> y calculamos la tasa de error correspondiente para el conjunto de datos test.</p>
+<p>Usando la función <code>knn</code> podemos predecir las clases de los datos en <code>X.test</code>. Otro problema es cómo seleccionar la cantidad de vecinos <code>k</code> apropiada. Una <em>regla de pulgar</em> (<em>thumb rule</em>) es fijar <span class="math inline">\(k = \sqrt{n_{train}}\)</span>. Para analizar la precisión del modelo creamos la <em>matriz de confusión</em> y calculamos la tasa de error correspondiente para el conjunto de datos test.</p>
 <div class="sourceCode" id="cb8"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb8-1" data-line-number="1"><span class="co"># KNN </span></a>
 <a class="sourceLine" id="cb8-2" data-line-number="2">pr &lt;-<span class="st"> </span><span class="kw">knn</span>(X.train, X.test, <span class="dt">cl=</span>Y, <span class="dt">k =</span> <span class="kw">round</span>(<span class="kw">sqrt</span>(<span class="kw">nrow</span>(X.train))))</a>
 <a class="sourceLine" id="cb8-3" data-line-number="3"></a>
@@ -367,7 +367,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </div>
 <div id="el-paquete-caret" class="section level2">
 <h2><span class="header-section-number">2.2</span> El paquete <code>caret</code></h2>
-<p>El paquete <code>caret</code> (<em><strong>C</strong>lassification <strong>A</strong>nd <strong>RE</strong>gression <strong>T</strong>raining</em>) es uno de los más populares para entrenar modelos de <em>machine learning</em>. Contiene interface uniforme para la mayoría de los algoritmos que se tratan en este curso y, en particular, los 3 que veremos en estas sesiones. Las ventajas del paquete son que permite hacer:</p>
+<p>El paquete <code>caret</code> (<em><strong>C</strong>lassification <strong>A</strong>nd <strong>RE</strong>gression <strong>T</strong>raining</em>) es uno de los más populares para entrenar modelos de <em>machine learning</em>. Contiene una interface uniforme para la mayoría de los algoritmos que se tratan en este curso y, en particular, los 3 que veremos en estas sesiones. Las ventajas del paquete son que permite hacer:</p>
 <ul>
 <li>partición de los datos</li>
 <li>pre-procesado de los datos</li>
@@ -378,7 +378,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <p>Más información disponible en <a href="http://topepo.github.io/caret/index.html">topepo.github.io/caret</a>.</p>
 <div id="visualización" class="section level3">
 <h3><span class="header-section-number">2.2.1</span> Visualización</h3>
-<p>Seguiremos con los datos <code>iris</code>. El paso inicial: análisis dsecriptivo y visualización de los datos podríamos obviarlo… pero a modo didáctico reproducimos el mismo análisis, esta vez usando la función <code>featurePlot</code> de <code>caret</code>.</p>
+<p>Seguiremos con los datos <code>iris</code>. El paso inicial: análisis descriptivo y visualización de los datos podríamos obviarlo… pero a modo didáctico reproducimos el mismo análisis, esta vez usando la función <code>featurePlot</code> de <code>caret</code>.</p>
 <div class="sourceCode" id="cb12"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb12-1" data-line-number="1"><span class="kw">library</span>(caret)</a></code></pre></div>
 <pre><code>## Loading required package: lattice</code></pre>
 <div class="sourceCode" id="cb14"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb14-1" data-line-number="1"><span class="kw">str</span>(iris)</a></code></pre></div>
@@ -610,7 +610,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 ## Petal.Length 100.00     100.00     100.0
 ## Sepal.Length  90.80      72.07      90.8
 ## Sepal.Width   56.32      56.32       0.0</code></pre>
-<p>Aunque esto no debe usarse como método de selección de variables, sí motiva el estudio del problema al disminiuir la dimensión <span class="math inline">\(p = 4\)</span>. Por ejemplo, veamos la precisión del modelo al dejar solo <code>Petal.Length</code> y <code>Petal.Width</code>.</p>
+<p>Aunque esto no debe usarse como método de selección de variables, sí motiva el estudio del problema al disminuir la dimensión <span class="math inline">\(p = 4\)</span>. Por ejemplo, veamos la precisión del modelo al dejar solo <code>Petal.Length</code> y <code>Petal.Width</code>.</p>
 <div class="sourceCode" id="cb32"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb32-1" data-line-number="1"><span class="co"># seleccionamos los predictores que queremos y la respuesta</span></a>
 <a class="sourceLine" id="cb32-2" data-line-number="2">df_petal &lt;-<span class="st"> </span>iris[,<span class="kw">c</span>(<span class="st">&quot;Petal.Length&quot;</span>, <span class="st">&quot;Petal.Width&quot;</span>, <span class="st">&quot;Species&quot;</span>)]</a>
 <a class="sourceLine" id="cb32-3" data-line-number="3">train_df_petal &lt;-<span class="st"> </span>df_petal[train.ID, ]</a>
@@ -746,7 +746,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </div>
 <div id="regresión" class="section level2">
 <h2><span class="header-section-number">2.3</span> Regresión</h2>
-<p>Abordamos ahora el problema de regresión con KNN, o sea, la respuesta es cuantitativa-continua. Seguimos usando el paquete <code>caret</code> que tiene implementado el algoritmo y ofrece vacilidades para el preprocesado de los datos y la validación del modelo.</p>
+<p>Abordamos ahora el problema de regresión con KNN, o sea, la respuesta es cuantitativa-continua. Seguimos usando el paquete <code>caret</code> que tiene implementado el algoritmo y ofrece facilidades para el preprocesado de los datos y la validación del modelo.</p>
 <p>Particularmente, atacaremos el problema de predecir el precio medio de las viviendas (<code>medv</code>) en los suburbios de Boston, usando otras 13 variables predictoras.</p>
 <div class="sourceCode" id="cb41"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb41-1" data-line-number="1"><span class="kw">library</span>(MASS)</a>
 <a class="sourceLine" id="cb41-2" data-line-number="2"><span class="kw">library</span>(caret)</a>

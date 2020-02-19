@@ -1,5 +1,6 @@
 {
-    "cursorPosition" : "49,50",
+    "cursorPosition" : "111,173",
     "docOutlineVisible" : "1",
-    "scrollLine" : "35"
+    "ignored_words" : "Fold,cv,knn,center,scale,accuracy,repeatedcv,boot,Petal,Length,Width,Species,Train,lstat,age,rad,rm,ptratio,medv,Nearest,Neighbors,setosa,virginica,versicolor,Ronald,Fisher,ref,tab,dataset,facethist,machine,learning\n",
+    "scrollLine" : "107"
 }
