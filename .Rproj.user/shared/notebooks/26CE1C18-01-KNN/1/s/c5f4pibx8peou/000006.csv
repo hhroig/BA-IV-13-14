@@ -1,0 +1,2 @@
+"0","# seleccionemos solo algunas variables:"
+"0","boston <- Boston[, c(""lstat"", ""rm"", ""ptratio"", ""medv"")]"

@@ -1,0 +1,7 @@
+"0","library(caret)"
+"0","library(ggplot2)"
+"0","library(gridExtra)"
+"0","library(ISLR)"
+"0",""
+"0","data(""Default"")"
+"0","head(Default)"

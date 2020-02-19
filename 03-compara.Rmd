@@ -1,0 +1,231 @@
+# Comparación entre Modelos {#compara}
+
+Hasta ahora hemos visto cómo comparar el ajuste de un modelo para diferentes hiperparámetros, por ejemplo, en el caso RDA se escoge el modelo con mayor `Accuracy` para diferentes combinaciones de $(\lambda, \gamma)$; o la selección del $K$ óptimo en KNN. Este enfoque lo que hace es estudiar la distribución del `Accuracy` (o cualquier otra medida de precisión como el `Kappa`) para cada modelo independientemente (*within-model*).
+
+El enfoque que abordamos en esta sección es la comparación de las ditribuciones de estas medidas de precisión, ahora entre los diferentes modelos (*between-models*). 
+
+## Comparando según Accuracy
+
+Empezamos comparando los modelos ajustados en la Sección \@ref(DA). Vamos a usar los mismos datos de entrenamiento para cada modelo, y además "plantaremos una semilla" para que el remuestreo se haga en los mismos conjuntos.
+
+```{r}
+library(caret)
+library(ISLR)
+
+df <- Default[, c("income", "balance", "default")]
+set.seed(123)
+train.ID <- createDataPartition(df$default, p = 0.8, list = FALSE)
+
+train_df <- df[train.ID, ]
+test_df <- df[-train.ID, ]
+
+# definimos como control una validación cruzada con 10 hojas y repeticiones
+fit_control <- trainControl(method='repeatedcv', number = 10, repeats = 5)
+
+```
+
+**LDA**:
+
+```{r}
+# LDA
+set.seed(321)
+model_lda_def <- train(default ~.,
+                       data = train_df,
+                       method = "lda",
+                       trControl = fit_control)
+
+```
+
+**QDA**:
+
+```{r}
+# QDA
+set.seed(321)
+model_qda_def <- train(default ~.,
+                       data = train_df,
+                       method = "qda",
+                       trControl = fit_control)
+
+```
+
+**RDA**:
+
+```{r}
+# RDA
+
+mi.grid <- data.frame(lambda = c(0) , 
+                       gamma = c(0))
+
+set.seed(321)
+model_rda_def <- train(default ~.,
+                       data = train_df,
+                       method = "rda",
+                       tuneGrid = mi.grid,
+                       trControl = fit_control)
+
+```
+
+Agregamos también un **KNN**:
+
+```{r}
+set.seed(321)
+model_knn_def <- train(default ~.,
+                       data = train_df,
+                       method = "knn",
+                       trControl = fit_control,
+                       preProcess = c("center", "scale"),
+                       tuneLength = 5)
+
+```
+
+Ahora, usamos la función `resamples` para agrupar todos los resultados calculados de cada modelo:
+
+```{r}
+resamps <- resamples(list(LDA = model_lda_def,
+                          QDA = model_qda_def,
+                          RDA = model_rda_def,
+                          KNN = model_knn_def))
+resamps
+
+summary(resamps)
+```
+
+
+```{r , out.width='80%', fig.asp=.75, fig.align='center'}
+# box plots
+bwplot(resamps, metric = "Accuracy")
+```
+
+Los 4 métodos se comportan de forma similar en términos de precisión. Como se ha fijado una semilla y todos los subconjuntos donde se han ajustado los modelos son iguales, es posible hacer inferencias sobre las diferencias entre modelos. Vamos a calcular las diferencias (2 a 2) y luego hacer un t-test bajo la hipótesis nula de que no hay diferencias entre modelos.
+
+```{r}
+difValues <- diff(resamps)
+difValues
+
+summary(difValues)
+```
+
+Los resutados indican lo que sospechábamos: no hay difernecias significativas entre los modelos, salvo tal vez entre *LDA* y *KNN* (p-valor $> 0.05$). En estos casos, hacer un diagrama con los intervalos de confianza es muy ilustrativo. 
+
+```{r , out.width='80%', fig.asp=.75, fig.align='center'}
+# intervalos de confianza para las diferencias
+dotplot(difValues)
+```
+
+Solo el intervalo de confianza para la diferencia entre LDA y KNN no contiene al cero, por tanto, hay diferencias significativas para el nivel de confianza fijado.
+
+## Curva ROC
+
+### Análisis en la muestra test
+
+Hasta ahora solo hemos estudiado la precisión de los modelos usando el `Accuracy`, pero hay un gran número de medidas cuya aplicación está estrechamente ligada a la naturaleza del problema. Por ejemplo, el clasificador de Bayes asigna una observación a la clase con mayor probabilidad *a posteriori* $p_k(X)$. Para el problema de los datos `Default`, donde solo tenemos las clases `Yes` (el cliente falla en el pago de su tarjeta de crédito) y `No` (el cliente no falla en el pago), asignamos una observación a la clase `Yes` si se cumple: $$ \Pr (\text{ default = Yes} | X = x) > 0.5. $$
+
+Pero seguramente el interés del banco es asignar la clase correcta a los malos pagadores y así obtener ganancias, debegando créditos. Esto puede lograrse bajando este **umbral** de $0.5$ a $0.2$, o sea, asginamos una observación a la clase `Yes` si: $$ \Pr (\text{ default = Yes} | X = x) > 0.2. $$
+
+Decisiones como estas deben basarse en la experiencia de expertos (e.g. el banco que aprueba el crédito). Vamos a estudiar los tipos de errores que se comenten al variar el umbral de decisión. Para ello, empezamos estimando las probabilidades a posteriori del método LDA en nuestra muestra test:
+
+```{r}
+# hagamos las predicciones del conjunto de prueba
+pred_prob <- predict(model_lda_def, newdata = test_df, type = "prob")
+
+```
+
+Usamos el paquete `ROCR` [@R-ROCR] para calcular la Curva _**R**eceiver **O**perating **C**haracteristic_ (*ROC*) que compara simultáneamente dos tipos de errores: la *Razón de Falsos Positivos* (*FPR*, siglas en inglés) y la *Razón de Verdaderos Positivos* (*TPR*, siglas en inglés), para un grid de valores del umbral.
+
+```{r, out.width='80%', fig.asp=.75, fig.align='center'}
+library(ROCR)
+library(dplyr)
+
+prob.pred <- prediction(pred_prob[,2], test_df$default)
+
+# ROC
+prob.pred %>%
+  performance(measure = "tpr", x.measure = "fpr") %>%
+  plot()
+
+# AUC: mientras mas cercano a 1, mejor predicciones
+auc.lda <- performance(prob.pred, measure = "auc")@y.values[[1]]
+auc.lda
+```
+
+El *Área bajo la Curva ROC* (*AUC*, siglas en inglés) resume el rendimiento del clasificador, para todos los posibles umbrales. Una curva ROC ideal debería alcanzar el borde superior izquierdo, por tanto, mientras más cercano a 1 esté el AUC, mejor será. En nuestro ejemplo el área es de $0.95$, lo cual indica muy buen ajuste. Por otro lado, un AUC cercano a 0.5 indica que el clasificador asigna las clases al azar.
+
+Con el mismo paquete podemos representar otras curvas. Por ejemplo, podemos estudiar por separado, y para diferentes umbrales:  
+
+1. La *tasa de error* general para diferentes umbrales: $$ \Pr (\hat{Y} \neq Y) \approx (FP + FN)/(P+N); $$
+donde FP: Falsos Positivos, FN: False Negativos, P: Positivos en la muestra (reales) y N: Negativos en la muestra (reales).
+
+```{r, out.width='80%', fig.asp=.75, fig.align='center'}
+prob.pred %>%
+  performance("err") %>%
+  plot()
+
+```
+
+2. La *Razón de Verdaderos Positivos*: $$ P(\hat Y = + | Y = +) \approx TP/P;$$
+
+```{r, out.width='80%', fig.asp=.75, fig.align='center'}
+prob.pred %>%
+  performance("tpr") %>%
+  plot()
+
+```
+
+3. La *Razón de Falsos Positivos*: $$ \Pr(\hat Y = + | Y = -) \approx FP/N;$$ 
+
+```{r, out.width='80%', fig.asp=.75, fig.align='center'}
+prob.pred %>%
+  performance("fpr") %>%
+  plot()
+```
+
+4. La *Razón de Falsos Negativos*: $$ \Pr(\hat Y = - | Y = +) \approx FN/P;$$ 
+
+```{r, out.width='80%', fig.asp=.75, fig.align='center'}
+prob.pred %>%
+  performance("fnr") %>%
+  plot()
+```
+
+Toda la información sobre los errores podemos representarla en un mismo gráfico y así ver el equilibrio entre error y umbral:
+
+```{r, out.width='80%', fig.asp=.75, fig.align='center'}
+# Podemos combinar las 3 ultimas en un mismo grafico
+df_perfor <- data.frame(Error.Rate = performance(prob.pred, "err")@y.values[[1]],
+                        FNR = performance(prob.pred, "fnr")@y.values[[1]],
+                        FPR = performance(prob.pred, "fpr")@y.values[[1]],
+                        TPR = performance(prob.pred, "tpr")@y.values[[1]],
+                        CutOffs = performance(prob.pred, "err")@x.values[[1]])
+
+# plot tasas de error
+errores.lda <- ggplot(df_perfor, aes(x = CutOffs)) +
+  geom_line(aes(y = Error.Rate, colour = "Tasa Error General")) +
+  geom_line(aes(y = FNR, colour = "FNR")) +
+  geom_line(aes(y = FPR, colour = "FPR")) +
+  scale_colour_discrete(name = "Medidas" ) +
+  xlab("Puntos de corte") + ylab("Tasas de Error") +
+  theme_light()
+errores.lda
+
+```
+
+La curva ROC podemos hacerla en `ggplot` como se muestra a continuación:
+
+```{r, out.width='80%', fig.asp=.75, fig.align='center'}
+# plot de la curva ROC
+roc.lda <- ggplot(df_perfor, aes(x = FPR, y = TPR)) +
+  geom_line() +
+  xlab("FPR: 1- especificidad") + ylab("TPR: sensibilidad") +
+  ggtitle(paste0("Curva ROC - LDA (Area Under Curve = ", round(auc.lda, digits = 3),")")) +
+  theme_light()
+roc.lda
+```
+
+### Análisis en la muestra de entrenamiento
+
+Las curvas ROC también son útiles para comparar el rendimiento entre modelos, justo como hicimos con el `Accuracy`.
+
+## Wisconsin Breast-Cancer Data
+
+Los datos de cancer de mama Wisconsin...
+

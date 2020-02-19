@@ -1,0 +1,5 @@
+"0","featurePlot(x = iris[, 1:4], "
+"0","            y = iris$Species, "
+"0","            plot = ""pairs"","
+"0","            ## Add a key at the top"
+"0","            auto.key = list(columns = 3))"

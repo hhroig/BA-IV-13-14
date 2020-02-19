@@ -1,0 +1,4 @@
+"0","knitr::kable("
+"0","  head(iris, 10), caption = 'Estructura del dataset Iris',"
+"0","  booktabs = TRUE"
+"0",")"

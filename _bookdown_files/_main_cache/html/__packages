@@ -1,0 +1,12 @@
+base
+class
+ggplot2
+GGally
+lattice
+caret
+MASS
+gridExtra
+ISLR
+gplots
+ROCR
+dplyr

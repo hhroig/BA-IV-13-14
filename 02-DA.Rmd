@@ -1,0 +1,255 @@
+# Análisis Discriminante {#DA}
+
+En esta sección nos concentramos en el problema de clasificación. Particularmente, estudiaremos los métodos de *Análisis Discriminante Lineal (LDA)*, *Cuadrático (QDA)* y *Regularizado (RDA)*. Usaremos el conjunto de datos `Default` del paquete `ISLR`:
+
+```{r}
+library(caret)
+library(ISLR)
+
+data("Default")
+head(Default, 10)
+
+str(Default)
+
+```
+El objetivo es predecir si un sujeto de la muestre fallará en el pago de su trajeta de crédito. Por tanto, la variable respuesta es `default`, categórica con solo los niveles `Yes` y `No`. Tenemos información sobre el balance mensual de crédito en `balance`, el salario anual en `income` y si es estudiante o no en `student`. Solo un $3\%$ de la muestra ($n = 10000$), así que es una muestra muy desbalanceada.
+
+```{r}
+summary(Default)
+
+# ver el balance de la muestra
+prop.table(table(Default$default))
+```
+
+Nos concentramos en predecir `default` a partir de las variables predictoras `balance` e `income`. En el siguiente diagrama de dispersión se observa cierte solapamiento entre las clases a predecir, pero una clara diferenciación de acuerdo a la variable `balance`.
+
+```{r , out.width='80%', fig.asp=.75, fig.align='center'}
+library(ggplot2)
+library(gridExtra)
+
+## Scatter plot con densidades ----
+plot.2d <- ggplot(Default, aes(x = balance, y = income, group = default)) +
+  geom_point(aes(shape = default, color = default), alpha = 0.5) +
+  theme_light()
+
+# Empty plot
+empty <- ggplot()+geom_point(aes(1,1), color="white") +
+  theme(
+    plot.background = element_blank(),
+    panel.grid.major = element_blank(),
+    panel.grid.minor = element_blank(),
+    panel.border = element_blank(),
+    panel.background = element_blank(),
+    axis.title.x = element_blank(),
+    axis.title.y = element_blank(),
+    axis.text.x = element_blank(),
+    axis.text.y = element_blank(),
+    axis.ticks = element_blank()
+  )
+# arriba
+dens.balance <- ggplot(Default, aes(x = balance, group = default)) +
+  geom_density(aes(color = default, fill = default), alpha = 0.2) +
+  theme_light()+
+  theme(legend.position = "none")
+# derecha
+dens.income <- ggplot(Default, aes(x = income, group = default)) +
+  geom_density(aes(color = default, fill = default), alpha = 0.2) +
+  theme_light() + coord_flip() +
+  theme(legend.position = "none")
+
+grid.arrange(dens.balance, empty, plot.2d, dens.income, ncol=2, nrow=2, widths=c(4, 1), heights=c(1, 4))
+```
+
+## Análisis Discriminante Lineal {#LDA}
+
+```{r}
+df <- Default[, c("income", "balance", "default")]
+set.seed(123)
+train.ID <- createDataPartition(df$default, p = 0.8, list = FALSE)
+
+train_df <- df[train.ID, ]
+test_df <- df[-train.ID, ]
+
+# definimos como control una validación cruzada con 10 hojas, sin repeticiones
+fit_control <- trainControl(method='cv', number = 10)
+
+set.seed(123)
+model_lda_def <- train(default ~.,
+                       data = train_df,
+                       method = "lda",
+                       trControl = fit_control)
+model_lda_def
+model_lda_def$finalModel
+
+```
+
+La precisión durante el entrenamiento es de un $\approx 97\%$. También vemos que las probabilidades a priori $\pi_i, i = 1,2$ de pertenecer a cada clase son aproximadamente $97\%$ y $3\%$ respectivamente, lo cual corresponde a la razón de fallo que se comenta al inicio. El resultado `Coefficients of linear discriminants` indica las constantes que se multiplican a cada elemento de la muestra $(\text{income}_i, \text{balance}_i)$, $i = 1, \ldots, n_{\text{train}}$, para obtener su correspondiente valor de la *función discriminante lineal*: 
+$$ \delta_k(x) = x^T \Sigma^{-1} \mu_k  - \dfrac{1}{2} \mu_k^T \Sigma^{-1} \mu_k+ log(\pi_k) $$
+Todo indica que la variable `balance` tiene un mayor peso en la discriminación. Como alternativa, podemos comprobarlo usando `varImp`:
+```{r}
+varImp(model_lda_def)
+```
+
+
+Veamos ahora qué tal es el ajuste en los datos test.
+
+```{r}
+# hagamos las predicciones del conjunto de prueba
+prediction_lda_def <- predict(model_lda_def, newdata = test_df)
+confusionMatrix(prediction_lda_def, reference = test_df$default)
+
+# extraemos el Accuracy o Precisión
+confusionMatrix(prediction_lda_def, reference = test_df$default)$overall[1]
+
+# la tasa de error
+tasa.error.lda <- 1-confusionMatrix(prediction_lda_def, reference = test_df$default)$overall[1]
+names(tasa.error.lda) <- "Error LDA"
+tasa.error.lda
+```
+
+Como estamos en un problema de clasificación en dos dimensiones ($p = 2$), es posible representar la frontera de decisión del algoritmo, usando la función `decision_bound`. Debemos modificar los campos para que coincidan con las variables de `Default`:
+
+```{r}
+decision_bound = function(train_df_in, test_df_in, model_in){
+  # plot decision boundary  for df <- Default[, c("income", "balance", "default")]
+
+  require(MASS)
+  require(caret)
+  require(ggplot2)
+  require(gridExtra)
+
+  # Paso 1: crear un grid de valores desde min a max de ambos predictores
+  pl = seq(min(train_df_in$balance), max(train_df_in$balance), length.out = 80)
+  pw = seq(min(train_df_in$income), max(train_df_in$income), length.out = 80)
+
+  lgrid <- expand.grid(balance=pl, income=pw)
+
+  # Paso 2: obtener las predicciones tanto para el grid como para el test
+  modelPredGrid <- predict(model_in, newdata=lgrid)
+  train_df_in$Pred.Class <- predict(model_in, newdata = train_df_in)
+  test_df_in$Pred.Class <- predict(model_in, newdata = test_df_in)
+
+  # Paso 3: ggplot con la funcion contour
+  gg1 <- ggplot(data=lgrid) +
+    stat_contour(aes(x=balance, y=income, z=as.numeric(modelPredGrid)), bins=2) +
+    geom_point(aes(x=balance, y=income, colour=modelPredGrid), alpha=0.1) +
+    labs(colour = "Clases") + ggtitle("Train") +
+    geom_point(data=train_df_in,
+               aes(x=balance, y=income,
+                   colour=default), size=5, shape=1) +
+    theme_light()
+
+  gg2 <- ggplot(data=lgrid) +
+    stat_contour(aes(x=balance, y=income, z=as.numeric(modelPredGrid)), bins=2) +
+    geom_point(aes(x=balance, y=income, colour=modelPredGrid), alpha=0.1) +
+    labs(colour = "Clases") + ggtitle("Test") +
+    geom_point(data=test_df_in,
+               aes(x=balance, y=income,
+                   colour=default), size=5, shape=1) +
+    theme_light()
+  grid.arrange(gg1, gg2, ncol=1, nrow=2)
+}
+```
+
+```{r , out.width='80%', fig.asp=.75, fig.align='center'}
+decision_bound(train_df, test_df, model_lda_def)
+```
+
+## Análisis Discriminante Cuadrático {#QDA}
+
+El ajuste para el modelo QDA lo hacemos con el mismo control y la misma partición de la muestra.
+
+```{r}
+set.seed(123)
+model_qda_def <- train(default ~.,
+                       data = train_df,
+                       method = "qda",
+                       trControl = fit_control)
+model_qda_def
+model_qda_def$finalModel
+```
+
+Los resultados al entrenar son similares al caso LDA. Veamos las predicciones para la muestra test.
+
+```{r}
+# hagamos las predicciones del conjunto de prueba
+prediction_qda_def <- predict(model_qda_def, newdata = test_df)
+confusionMatrix(prediction_qda_def, reference = test_df$default)
+
+# extraemos el Accuracy o Precisión
+confusionMatrix(prediction_qda_def, reference = test_df$default)$overall[1]
+# la tasa de error
+tasa.error.qda <- 1-confusionMatrix(prediction_qda_def, reference = test_df$default)$overall[1]
+names(tasa.error.qda) <- "Error QDA"
+tasa.error.qda
+```
+Tampoco se logran mejorar los resultados. Finalmente, representamos la frontera de decisión del algoritmo.
+
+```{r , out.width='80%', fig.asp=.75, fig.align='center'}
+decision_bound(train_df, test_df, model_qda_def)
+```
+
+¡Ahora observamos que las regiones están separadas por curvas, en lugar de la recta del LDA!
+
+## Análisis Discriminante Regularizado {#RDA}
+
+**Opción 1**: el paquete `caret` crea el grid para $(\lambda, \gamma)$:
+
+```{r}
+set.seed(123)
+model_rda_def <- train(default ~.,
+                       data = train_df,
+                       method = "rda",
+                       tuneLength = 2,
+                       trControl = fit_control)
+
+model_rda_def
+model_rda_def$finalModel
+```
+
+```{r, out.width='80%', fig.asp=.75, fig.align='center'}
+# en este caso el ggplot nos da información sobre los 
+# hiperparametros y su correspondiente Accuracy
+ggplot(model_rda_def) + theme_light()
+```
+
+**Opción 2**: podemos proporcionar un grid predefinido de valores $(\lambda, \gamma)$ en un `data.frame` que le pasamos a `tuneGrid`:
+
+```{r}
+# el grid se puede definir tambien "a mano"
+mi.grid <- data.frame(lambda = c(0, 0.3, 0.6, 1) , 
+                       gamma = c(0, 0, 0, 0))
+set.seed(123)
+model_rda_def <- train(default ~.,
+                       data = train_df,
+                       method = "rda",
+                       tuneGrid = mi.grid,
+                       trControl = fit_control)
+model_rda_def
+model_rda_def$finalModel
+```
+
+```{r, out.width='80%', fig.asp=.75, fig.align='center'}
+# en este caso el ggplot nos da información sobre los 
+# hiperparametros y su correspondiente Accuracy
+ggplot(model_rda_def) + theme_light()
+```
+
+Los resultados indican que los hiperparámetros óptimos en este caso corresponden a $(\lambda, \gamma) = (0,0)$. ¡Este es el caso del algoritmo LDA! Esto que hemos hecho es comparar diferentes modelos (porque han sido ajustados con diferentes hiperparámetros) resultantes del mismo algoritmo. Veamos las predicciones para la muestra test, la tasa de error correspondiente y la frontera de decisión.
+
+```{r}
+# hagamos las predicciones del conjunto de prueba
+prediction_rda_def <- predict(model_rda_def, newdata = test_df)
+confusionMatrix(prediction_rda_def, reference = test_df$default)
+
+# extraemos el Accuracy o Precisión
+confusionMatrix(prediction_rda_def, reference = test_df$default)$overall[1]
+# la tasa de error
+tasa.error.rda <- 1-confusionMatrix(prediction_rda_def, reference = test_df$default)$overall[1]
+names(tasa.error.rda) <- "Error RDA"
+tasa.error.rda
+```
+
+```{r , out.width='80%', fig.asp=.75, fig.align='center'}
+decision_bound(train_df, test_df, model_rda_def)
+```

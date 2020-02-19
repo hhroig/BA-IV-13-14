@@ -1,0 +1,3 @@
+"0","# hagamos las predicciones del conjunto de prueba"
+"0","pred_prob <- predict(model_lda_def, newdata = test_df, type = ""prob"")"
+"0",""

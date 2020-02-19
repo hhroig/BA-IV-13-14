@@ -1,0 +1,495 @@
+<!DOCTYPE html>
+<html lang="" xml:lang="">
+<head>
+
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <title>4 Comparación entre Modelos | Introducción al Aprendizaje Supervisado</title>
+  <meta name="description" content="Sesiones 14-15 IV Edición del Big Analytics: de la información al conocimiento." />
+  <meta name="generator" content="bookdown 0.17 and GitBook 2.6.7" />
+
+  <meta property="og:title" content="4 Comparación entre Modelos | Introducción al Aprendizaje Supervisado" />
+  <meta property="og:type" content="book" />
+  
+  
+  <meta property="og:description" content="Sesiones 14-15 IV Edición del Big Analytics: de la información al conocimiento." />
+  
+
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:title" content="4 Comparación entre Modelos | Introducción al Aprendizaje Supervisado" />
+  
+  <meta name="twitter:description" content="Sesiones 14-15 IV Edición del Big Analytics: de la información al conocimiento." />
+  
+
+<meta name="author" content="Harold A. Hernández-Roig (hahernan@est-econ.uc3m.es)" />
+
+
+
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+  
+  
+<link rel="prev" href="DA.html"/>
+<link rel="next" href="bibliografía.html"/>
+<script src="libs/jquery-2.2.3/jquery.min.js"></script>
+<link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-highlight.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-search.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-fontsettings.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-clipboard.css" rel="stylesheet" />
+
+
+
+
+
+
+
+
+
+
+
+<style type="text/css">
+a.sourceLine { display: inline-block; line-height: 1.25; }
+a.sourceLine { pointer-events: none; color: inherit; text-decoration: inherit; }
+a.sourceLine:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode { white-space: pre; position: relative; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+code.sourceCode { white-space: pre-wrap; }
+a.sourceLine { text-indent: -1em; padding-left: 1em; }
+}
+pre.numberSource a.sourceLine
+  { position: relative; left: -4em; }
+pre.numberSource a.sourceLine::before
+  { content: attr(data-line-number);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; pointer-events: all; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {  }
+@media screen {
+a.sourceLine::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #7d9029; } /* Attribute */
+code span.bn { color: #40a070; } /* BaseN */
+code span.bu { } /* BuiltIn */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4070a0; } /* Char */
+code span.cn { color: #880000; } /* Constant */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code span.dt { color: #902000; } /* DataType */
+code span.dv { color: #40a070; } /* DecVal */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #40a070; } /* Float */
+code span.fu { color: #06287e; } /* Function */
+code span.im { } /* Import */
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.op { color: #666666; } /* Operator */
+code span.ot { color: #007020; } /* Other */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.st { color: #4070a0; } /* String */
+code span.va { color: #19177c; } /* Variable */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+</style>
+
+</head>
+
+<body>
+
+
+
+  <div class="book without-animation with-summary font-size-2 font-family-1" data-basepath=".">
+
+    <div class="book-summary">
+      <nav role="navigation">
+
+<ul class="summary">
+<li class="chapter" data-level="1" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i><b>1</b> Introducción</a></li>
+<li class="chapter" data-level="2" data-path="k-vecinos-más-próximos.html"><a href="k-vecinos-más-próximos.html"><i class="fa fa-check"></i><b>2</b> K - Vecinos más Próximos</a><ul>
+<li class="chapter" data-level="2.1" data-path="k-vecinos-más-próximos.html"><a href="k-vecinos-más-próximos.html#clasificación-con-el-paquete-class"><i class="fa fa-check"></i><b>2.1</b> Clasificación con el paquete <code>class</code></a></li>
+<li class="chapter" data-level="2.2" data-path="k-vecinos-más-próximos.html"><a href="k-vecinos-más-próximos.html#el-paquete-caret"><i class="fa fa-check"></i><b>2.2</b> El paquete <code>caret</code></a><ul>
+<li class="chapter" data-level="2.2.1" data-path="k-vecinos-más-próximos.html"><a href="k-vecinos-más-próximos.html#visualización"><i class="fa fa-check"></i><b>2.2.1</b> Visualización</a></li>
+<li class="chapter" data-level="2.2.2" data-path="k-vecinos-más-próximos.html"><a href="k-vecinos-más-próximos.html#clasificación-con-knn"><i class="fa fa-check"></i><b>2.2.2</b> Clasificación con KNN</a></li>
+<li class="chapter" data-level="2.2.3" data-path="k-vecinos-más-próximos.html"><a href="k-vecinos-más-próximos.html#importancia-de-las-variables"><i class="fa fa-check"></i><b>2.2.3</b> Importancia de las variables</a></li>
+</ul></li>
+<li class="chapter" data-level="2.3" data-path="k-vecinos-más-próximos.html"><a href="k-vecinos-más-próximos.html#regresión"><i class="fa fa-check"></i><b>2.3</b> Regresión</a></li>
+</ul></li>
+<li class="chapter" data-level="3" data-path="DA.html"><a href="DA.html"><i class="fa fa-check"></i><b>3</b> Análisis Discriminante</a><ul>
+<li class="chapter" data-level="3.1" data-path="DA.html"><a href="DA.html#LDA"><i class="fa fa-check"></i><b>3.1</b> Análisis Discriminante Lineal</a></li>
+<li class="chapter" data-level="3.2" data-path="DA.html"><a href="DA.html#QDA"><i class="fa fa-check"></i><b>3.2</b> Análisis Discriminante Cuadrático</a></li>
+<li class="chapter" data-level="3.3" data-path="DA.html"><a href="DA.html#RDA"><i class="fa fa-check"></i><b>3.3</b> Análisis Discriminante Regularizado</a></li>
+</ul></li>
+<li class="chapter" data-level="4" data-path="compara.html"><a href="compara.html"><i class="fa fa-check"></i><b>4</b> Comparación entre Modelos</a><ul>
+<li class="chapter" data-level="4.1" data-path="compara.html"><a href="compara.html#comparando-según-accuracy"><i class="fa fa-check"></i><b>4.1</b> Comparando según Accuracy</a></li>
+<li class="chapter" data-level="4.2" data-path="compara.html"><a href="compara.html#curva-roc"><i class="fa fa-check"></i><b>4.2</b> Curva ROC</a><ul>
+<li class="chapter" data-level="4.2.1" data-path="compara.html"><a href="compara.html#análisis-en-la-muestra-test"><i class="fa fa-check"></i><b>4.2.1</b> Análisis en la muestra test</a></li>
+<li class="chapter" data-level="4.2.2" data-path="compara.html"><a href="compara.html#análisis-en-la-muestra-de-entrenamiento"><i class="fa fa-check"></i><b>4.2.2</b> Análisis en la muestra de entrenamiento</a></li>
+</ul></li>
+<li class="chapter" data-level="4.3" data-path="compara.html"><a href="compara.html#wisconsin-breast-cancer-data"><i class="fa fa-check"></i><b>4.3</b> Wisconsin Breast-Cancer Data</a></li>
+</ul></li>
+<li class="chapter" data-level="" data-path="bibliografía.html"><a href="bibliografía.html"><i class="fa fa-check"></i>Bibliografía</a></li>
+</ul>
+
+      </nav>
+    </div>
+
+    <div class="book-body">
+      <div class="body-inner">
+        <div class="book-header" role="navigation">
+          <h1>
+            <i class="fa fa-circle-o-notch fa-spin"></i><a href="./">Introducción al Aprendizaje Supervisado</a>
+          </h1>
+        </div>
+
+        <div class="page-wrapper" tabindex="-1" role="main">
+          <div class="page-inner">
+
+            <section class="normal" id="section-">
+<div id="compara" class="section level1">
+<h1><span class="header-section-number">4</span> Comparación entre Modelos</h1>
+<p>Hasta ahora hemos visto cómo comparar el ajuste de un modelo para diferentes hiperparámetros, por ejemplo, en el caso RDA se escoge el modelo con mayor <code>Accuracy</code> para diferentes combinaciones de <span class="math inline">\((\lambda, \gamma)\)</span>; o la selección del <span class="math inline">\(K\)</span> óptimo en KNN. Este enfoque lo que hace es estudiar la distribución del <code>Accuracy</code> (o cualquier otra medida de precisión como el <code>Kappa</code>) para cada modelo independientemente (<em>within-model</em>).</p>
+<p>El enfoque que abordamos en esta sección es la comparación de las ditribuciones de estas medidas de precisión, ahora entre los diferentes modelos (<em>between-models</em>).</p>
+<div id="comparando-según-accuracy" class="section level2">
+<h2><span class="header-section-number">4.1</span> Comparando según Accuracy</h2>
+<p>Empezamos comparando los modelos ajustados en la Sección <a href="DA.html#DA">3</a>. Vamos a usar los mismos datos de entrenamiento para cada modelo, y además “plantaremos una semilla” para que el remuestreo se haga en los mismos conjuntos.</p>
+<div class="sourceCode" id="cb113"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb113-1" data-line-number="1"><span class="kw">library</span>(caret)</a>
+<a class="sourceLine" id="cb113-2" data-line-number="2"><span class="kw">library</span>(ISLR)</a>
+<a class="sourceLine" id="cb113-3" data-line-number="3"></a>
+<a class="sourceLine" id="cb113-4" data-line-number="4">df &lt;-<span class="st"> </span>Default[, <span class="kw">c</span>(<span class="st">&quot;income&quot;</span>, <span class="st">&quot;balance&quot;</span>, <span class="st">&quot;default&quot;</span>)]</a>
+<a class="sourceLine" id="cb113-5" data-line-number="5"><span class="kw">set.seed</span>(<span class="dv">123</span>)</a>
+<a class="sourceLine" id="cb113-6" data-line-number="6">train.ID &lt;-<span class="st"> </span><span class="kw">createDataPartition</span>(df<span class="op">$</span>default, <span class="dt">p =</span> <span class="fl">0.8</span>, <span class="dt">list =</span> <span class="ot">FALSE</span>)</a>
+<a class="sourceLine" id="cb113-7" data-line-number="7"></a>
+<a class="sourceLine" id="cb113-8" data-line-number="8">train_df &lt;-<span class="st"> </span>df[train.ID, ]</a>
+<a class="sourceLine" id="cb113-9" data-line-number="9">test_df &lt;-<span class="st"> </span>df[<span class="op">-</span>train.ID, ]</a>
+<a class="sourceLine" id="cb113-10" data-line-number="10"></a>
+<a class="sourceLine" id="cb113-11" data-line-number="11"><span class="co"># definimos como control una validación cruzada con 10 hojas y repeticiones</span></a>
+<a class="sourceLine" id="cb113-12" data-line-number="12">fit_control &lt;-<span class="st"> </span><span class="kw">trainControl</span>(<span class="dt">method=</span><span class="st">&#39;repeatedcv&#39;</span>, <span class="dt">number =</span> <span class="dv">10</span>, <span class="dt">repeats =</span> <span class="dv">5</span>)</a></code></pre></div>
+<p><strong>LDA</strong>:</p>
+<div class="sourceCode" id="cb114"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb114-1" data-line-number="1"><span class="co"># LDA</span></a>
+<a class="sourceLine" id="cb114-2" data-line-number="2"><span class="kw">set.seed</span>(<span class="dv">321</span>)</a>
+<a class="sourceLine" id="cb114-3" data-line-number="3">model_lda_def &lt;-<span class="st"> </span><span class="kw">train</span>(default <span class="op">~</span>.,</a>
+<a class="sourceLine" id="cb114-4" data-line-number="4">                       <span class="dt">data =</span> train_df,</a>
+<a class="sourceLine" id="cb114-5" data-line-number="5">                       <span class="dt">method =</span> <span class="st">&quot;lda&quot;</span>,</a>
+<a class="sourceLine" id="cb114-6" data-line-number="6">                       <span class="dt">trControl =</span> fit_control)</a></code></pre></div>
+<p><strong>QDA</strong>:</p>
+<div class="sourceCode" id="cb115"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb115-1" data-line-number="1"><span class="co"># QDA</span></a>
+<a class="sourceLine" id="cb115-2" data-line-number="2"><span class="kw">set.seed</span>(<span class="dv">321</span>)</a>
+<a class="sourceLine" id="cb115-3" data-line-number="3">model_qda_def &lt;-<span class="st"> </span><span class="kw">train</span>(default <span class="op">~</span>.,</a>
+<a class="sourceLine" id="cb115-4" data-line-number="4">                       <span class="dt">data =</span> train_df,</a>
+<a class="sourceLine" id="cb115-5" data-line-number="5">                       <span class="dt">method =</span> <span class="st">&quot;qda&quot;</span>,</a>
+<a class="sourceLine" id="cb115-6" data-line-number="6">                       <span class="dt">trControl =</span> fit_control)</a></code></pre></div>
+<p><strong>RDA</strong>:</p>
+<div class="sourceCode" id="cb116"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb116-1" data-line-number="1"><span class="co"># RDA</span></a>
+<a class="sourceLine" id="cb116-2" data-line-number="2"></a>
+<a class="sourceLine" id="cb116-3" data-line-number="3">mi.grid &lt;-<span class="st"> </span><span class="kw">data.frame</span>(<span class="dt">lambda =</span> <span class="kw">c</span>(<span class="dv">0</span>) , </a>
+<a class="sourceLine" id="cb116-4" data-line-number="4">                       <span class="dt">gamma =</span> <span class="kw">c</span>(<span class="dv">0</span>))</a>
+<a class="sourceLine" id="cb116-5" data-line-number="5"></a>
+<a class="sourceLine" id="cb116-6" data-line-number="6"><span class="kw">set.seed</span>(<span class="dv">321</span>)</a>
+<a class="sourceLine" id="cb116-7" data-line-number="7">model_rda_def &lt;-<span class="st"> </span><span class="kw">train</span>(default <span class="op">~</span>.,</a>
+<a class="sourceLine" id="cb116-8" data-line-number="8">                       <span class="dt">data =</span> train_df,</a>
+<a class="sourceLine" id="cb116-9" data-line-number="9">                       <span class="dt">method =</span> <span class="st">&quot;rda&quot;</span>,</a>
+<a class="sourceLine" id="cb116-10" data-line-number="10">                       <span class="dt">tuneGrid =</span> mi.grid,</a>
+<a class="sourceLine" id="cb116-11" data-line-number="11">                       <span class="dt">trControl =</span> fit_control)</a></code></pre></div>
+<p>Agregamos también un <strong>KNN</strong>:</p>
+<div class="sourceCode" id="cb117"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb117-1" data-line-number="1"><span class="kw">set.seed</span>(<span class="dv">321</span>)</a>
+<a class="sourceLine" id="cb117-2" data-line-number="2">model_knn_def &lt;-<span class="st"> </span><span class="kw">train</span>(default <span class="op">~</span>.,</a>
+<a class="sourceLine" id="cb117-3" data-line-number="3">                       <span class="dt">data =</span> train_df,</a>
+<a class="sourceLine" id="cb117-4" data-line-number="4">                       <span class="dt">method =</span> <span class="st">&quot;knn&quot;</span>,</a>
+<a class="sourceLine" id="cb117-5" data-line-number="5">                       <span class="dt">trControl =</span> fit_control,</a>
+<a class="sourceLine" id="cb117-6" data-line-number="6">                       <span class="dt">preProcess =</span> <span class="kw">c</span>(<span class="st">&quot;center&quot;</span>, <span class="st">&quot;scale&quot;</span>),</a>
+<a class="sourceLine" id="cb117-7" data-line-number="7">                       <span class="dt">tuneLength =</span> <span class="dv">5</span>)</a></code></pre></div>
+<p>Ahora, usamos la función <code>resamples</code> para agrupar todos los resultados calculados de cada modelo:</p>
+<div class="sourceCode" id="cb118"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb118-1" data-line-number="1">resamps &lt;-<span class="st"> </span><span class="kw">resamples</span>(<span class="kw">list</span>(<span class="dt">LDA =</span> model_lda_def,</a>
+<a class="sourceLine" id="cb118-2" data-line-number="2">                          <span class="dt">QDA =</span> model_qda_def,</a>
+<a class="sourceLine" id="cb118-3" data-line-number="3">                          <span class="dt">RDA =</span> model_rda_def,</a>
+<a class="sourceLine" id="cb118-4" data-line-number="4">                          <span class="dt">KNN =</span> model_knn_def))</a>
+<a class="sourceLine" id="cb118-5" data-line-number="5">resamps</a></code></pre></div>
+<pre><code>## 
+## Call:
+## resamples.default(x = list(LDA = model_lda_def, QDA = model_qda_def, RDA
+##  = model_rda_def, KNN = model_knn_def))
+## 
+## Models: LDA, QDA, RDA, KNN 
+## Number of resamples: 50 
+## Performance metrics: Accuracy, Kappa 
+## Time estimates for: everything, final model fit</code></pre>
+<div class="sourceCode" id="cb120"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb120-1" data-line-number="1"><span class="kw">summary</span>(resamps)</a></code></pre></div>
+<pre><code>## 
+## Call:
+## summary.resamples(object = resamps)
+## 
+## Models: LDA, QDA, RDA, KNN 
+## Number of resamples: 50 
+## 
+## Accuracy 
+##          Min.   1st Qu.    Median      Mean   3rd Qu.      Max. NA&#39;s
+## LDA 0.9650437 0.9712140 0.9737500 0.9732539 0.9750234 0.9800250    0
+## QDA 0.9650437 0.9712230 0.9725172 0.9733785 0.9762426 0.9800250    0
+## RDA 0.9650437 0.9712230 0.9725172 0.9733785 0.9762426 0.9800250    0
+## KNN 0.9675000 0.9712859 0.9737828 0.9740536 0.9762500 0.9825218    0
+## 
+## Kappa 
+##          Min.   1st Qu.    Median      Mean   3rd Qu.      Max. NA&#39;s
+## LDA 0.1274436 0.2932769 0.3612833 0.3694266 0.4450344 0.5755961    0
+## QDA 0.1648794 0.3059514 0.3966133 0.3950321 0.4595555 0.5944787    0
+## RDA 0.1648794 0.3059514 0.3966133 0.3950321 0.4595555 0.5944787    0
+## KNN 0.2653811 0.3977481 0.4629179 0.4570037 0.5016312 0.6422322    0</code></pre>
+<div class="sourceCode" id="cb122"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb122-1" data-line-number="1"><span class="co"># box plots</span></a>
+<a class="sourceLine" id="cb122-2" data-line-number="2"><span class="kw">bwplot</span>(resamps, <span class="dt">metric =</span> <span class="st">&quot;Accuracy&quot;</span>)</a></code></pre></div>
+<p><img src="_main_files/figure-html/unnamed-chunk-53-1.png" width="80%" style="display: block; margin: auto;" /></p>
+<p>Los 4 métodos se comportan de forma similar en términos de precisión. Como se ha fijado una semilla y todos los subconjuntos donde se han ajustado los modelos son iguales, es posible hacer inferencias sobre las diferencias entre modelos. Vamos a calcular las diferencias (2 a 2) y luego hacer un t-test bajo la hipótesis nula de que no hay diferencias entre modelos.</p>
+<div class="sourceCode" id="cb123"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb123-1" data-line-number="1">difValues &lt;-<span class="st"> </span><span class="kw">diff</span>(resamps)</a>
+<a class="sourceLine" id="cb123-2" data-line-number="2">difValues</a></code></pre></div>
+<pre><code>## 
+## Call:
+## diff.resamples(x = resamps)
+## 
+## Models: LDA, QDA, RDA, KNN 
+## Metrics: Accuracy, Kappa 
+## Number of differences: 6 
+## p-value adjustment: bonferroni</code></pre>
+<div class="sourceCode" id="cb125"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb125-1" data-line-number="1"><span class="kw">summary</span>(difValues)</a></code></pre></div>
+<pre><code>## 
+## Call:
+## summary.diff.resamples(object = difValues)
+## 
+## p-value adjustment: bonferroni 
+## Upper diagonal: estimates of the difference
+## Lower diagonal: p-value for H0: difference = 0
+## 
+## Accuracy 
+##     LDA     QDA        RDA        KNN       
+## LDA         -0.0001247 -0.0001247 -0.0007997
+## QDA 1.00000             0.0000000 -0.0006750
+## RDA 1.00000 NA                    -0.0006750
+## KNN 0.03606 0.06672    0.06672              
+## 
+## Kappa 
+##     LDA       QDA       RDA       KNN     
+## LDA           -0.02561  -0.02561  -0.08758
+## QDA 0.0001052            0.00000  -0.06197
+## RDA 0.0001052 NA                  -0.06197
+## KNN 1.406e-13 8.481e-11 8.481e-11</code></pre>
+<p>Los resutados indican lo que sospechábamos: no hay difernecias significativas entre los modelos, salvo tal vez entre <em>LDA</em> y <em>KNN</em> (p-valor <span class="math inline">\(&gt; 0.05\)</span>). En estos casos, hacer un diagrama con los intervalos de confianza es muy ilustrativo.</p>
+<div class="sourceCode" id="cb127"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb127-1" data-line-number="1"><span class="co"># intervalos de confianza para las diferencias</span></a>
+<a class="sourceLine" id="cb127-2" data-line-number="2"><span class="kw">dotplot</span>(difValues)</a></code></pre></div>
+<p><img src="_main_files/figure-html/unnamed-chunk-55-1.png" width="80%" style="display: block; margin: auto;" /></p>
+<p>Solo el intervalo de confianza para la diferencia entre LDA y KNN no contiene al cero, por tanto, hay diferencias significativas para el nivel de confianza fijado.</p>
+</div>
+<div id="curva-roc" class="section level2">
+<h2><span class="header-section-number">4.2</span> Curva ROC</h2>
+<div id="análisis-en-la-muestra-test" class="section level3">
+<h3><span class="header-section-number">4.2.1</span> Análisis en la muestra test</h3>
+<p>Hasta ahora solo hemos estudiado la precisión de los modelos usando el <code>Accuracy</code>, pero hay un gran número de medidas cuya aplicación está estrechamente ligada a la naturaleza del problema. Por ejemplo, el clasificador de Bayes asigna una observación a la clase con mayor probabilidad <em>a posteriori</em> <span class="math inline">\(p_k(X)\)</span>. Para el problema de los datos <code>Default</code>, donde solo tenemos las clases <code>Yes</code> (el cliente falla en el pago de su tarjeta de crédito) y <code>No</code> (el cliente no falla en el pago), asignamos una observación a la clase <code>Yes</code> si se cumple: <span class="math display">\[ \Pr (\text{ default = Yes} | X = x) &gt; 0.5. \]</span></p>
+<p>Pero seguramente el interés del banco es asignar la clase correcta a los malos pagadores y así obtener ganancias, debegando créditos. Esto puede lograrse bajando este <strong>umbral</strong> de <span class="math inline">\(0.5\)</span> a <span class="math inline">\(0.2\)</span>, o sea, asginamos una observación a la clase <code>Yes</code> si: <span class="math display">\[ \Pr (\text{ default = Yes} | X = x) &gt; 0.2. \]</span></p>
+<p>Decisiones como estas deben basarse en la experiencia de expertos (e.g. el banco que aprueba el crédito). Vamos a estudiar los tipos de errores que se comenten al variar el umbral de decisión. Para ello, empezamos estimando las probabilidades a posteriori del método LDA en nuestra muestra test:</p>
+<div class="sourceCode" id="cb128"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb128-1" data-line-number="1"><span class="co"># hagamos las predicciones del conjunto de prueba</span></a>
+<a class="sourceLine" id="cb128-2" data-line-number="2">pred_prob &lt;-<span class="st"> </span><span class="kw">predict</span>(model_lda_def, <span class="dt">newdata =</span> test_df, <span class="dt">type =</span> <span class="st">&quot;prob&quot;</span>)</a></code></pre></div>
+<p>Usamos el paquete <code>ROCR</code> <span class="citation">(Sing et al. <a href="#ref-R-ROCR">2015</a>)</span> para calcular la Curva <em><strong>R</strong>eceiver <strong>O</strong>perating <strong>C</strong>haracteristic</em> (<em>ROC</em>) que compara simultáneamente dos tipos de errores: la <em>Razón de Falsos Positivos</em> (<em>FPR</em>, siglas en inglés) y la <em>Razón de Verdaderos Positivos</em> (<em>TPR</em>, siglas en inglés), para un grid de valores del umbral.</p>
+<div class="sourceCode" id="cb129"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb129-1" data-line-number="1"><span class="kw">library</span>(ROCR)</a></code></pre></div>
+<pre><code>## Loading required package: gplots</code></pre>
+<pre><code>## 
+## Attaching package: &#39;gplots&#39;</code></pre>
+<pre><code>## The following object is masked from &#39;package:stats&#39;:
+## 
+##     lowess</code></pre>
+<div class="sourceCode" id="cb133"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb133-1" data-line-number="1"><span class="kw">library</span>(dplyr)</a></code></pre></div>
+<pre><code>## 
+## Attaching package: &#39;dplyr&#39;</code></pre>
+<pre><code>## The following object is masked from &#39;package:gridExtra&#39;:
+## 
+##     combine</code></pre>
+<pre><code>## The following object is masked from &#39;package:MASS&#39;:
+## 
+##     select</code></pre>
+<pre><code>## The following object is masked from &#39;package:GGally&#39;:
+## 
+##     nasa</code></pre>
+<pre><code>## The following objects are masked from &#39;package:stats&#39;:
+## 
+##     filter, lag</code></pre>
+<pre><code>## The following objects are masked from &#39;package:base&#39;:
+## 
+##     intersect, setdiff, setequal, union</code></pre>
+<div class="sourceCode" id="cb140"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb140-1" data-line-number="1">prob.pred &lt;-<span class="st"> </span><span class="kw">prediction</span>(pred_prob[,<span class="dv">2</span>], test_df<span class="op">$</span>default)</a>
+<a class="sourceLine" id="cb140-2" data-line-number="2"></a>
+<a class="sourceLine" id="cb140-3" data-line-number="3"><span class="co"># ROC</span></a>
+<a class="sourceLine" id="cb140-4" data-line-number="4">prob.pred <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb140-5" data-line-number="5"><span class="st">  </span><span class="kw">performance</span>(<span class="dt">measure =</span> <span class="st">&quot;tpr&quot;</span>, <span class="dt">x.measure =</span> <span class="st">&quot;fpr&quot;</span>) <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb140-6" data-line-number="6"><span class="st">  </span><span class="kw">plot</span>()</a></code></pre></div>
+<p><img src="_main_files/figure-html/unnamed-chunk-57-1.png" width="80%" style="display: block; margin: auto;" /></p>
+<div class="sourceCode" id="cb141"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb141-1" data-line-number="1"><span class="co"># AUC: mientras mas cercano a 1, mejor predicciones</span></a>
+<a class="sourceLine" id="cb141-2" data-line-number="2">auc.lda &lt;-<span class="st"> </span><span class="kw">performance</span>(prob.pred, <span class="dt">measure =</span> <span class="st">&quot;auc&quot;</span>)<span class="op">@</span>y.values[[<span class="dv">1</span>]]</a>
+<a class="sourceLine" id="cb141-3" data-line-number="3">auc.lda</a></code></pre></div>
+<pre><code>## [1] 0.9526643</code></pre>
+<p>El <em>Área bajo la Curva ROC</em> (<em>AUC</em>, siglas en inglés) resume el rendimiento del clasificador, para todos los posibles umbrales. Una curva ROC ideal debería alcanzar el borde superior izquierdo, por tanto, mientras más cercano a 1 esté el AUC, mejor será. En nuestro ejemplo el área es de <span class="math inline">\(0.95\)</span>, lo cual indica muy buen ajuste. Por otro lado, un AUC cercano a 0.5 indica que el clasificador asigna las clases al azar.</p>
+<p>Con el mismo paquete podemos representar otras curvas. Por ejemplo, podemos estudiar por separado, y para diferentes umbrales:</p>
+<ol style="list-style-type: decimal">
+<li>La <em>tasa de error</em> general para diferentes umbrales: <span class="math display">\[ \Pr (\hat{Y} \neq Y) \approx (FP + FN)/(P+N); \]</span>
+donde FP: Falsos Positivos, FN: False Negativos, P: Positivos en la muestra (reales) y N: Negativos en la muestra (reales).</li>
+</ol>
+<div class="sourceCode" id="cb143"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb143-1" data-line-number="1">prob.pred <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb143-2" data-line-number="2"><span class="st">  </span><span class="kw">performance</span>(<span class="st">&quot;err&quot;</span>) <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb143-3" data-line-number="3"><span class="st">  </span><span class="kw">plot</span>()</a></code></pre></div>
+<p><img src="_main_files/figure-html/unnamed-chunk-58-1.png" width="80%" style="display: block; margin: auto;" /></p>
+<ol start="2" style="list-style-type: decimal">
+<li>La <em>Razón de Verdaderos Positivos</em>: <span class="math display">\[ P(\hat Y = + | Y = +) \approx TP/P;\]</span></li>
+</ol>
+<div class="sourceCode" id="cb144"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb144-1" data-line-number="1">prob.pred <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb144-2" data-line-number="2"><span class="st">  </span><span class="kw">performance</span>(<span class="st">&quot;tpr&quot;</span>) <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb144-3" data-line-number="3"><span class="st">  </span><span class="kw">plot</span>()</a></code></pre></div>
+<p><img src="_main_files/figure-html/unnamed-chunk-59-1.png" width="80%" style="display: block; margin: auto;" /></p>
+<ol start="3" style="list-style-type: decimal">
+<li>La <em>Razón de Falsos Positivos</em>: <span class="math display">\[ \Pr(\hat Y = + | Y = -) \approx FP/N;\]</span></li>
+</ol>
+<div class="sourceCode" id="cb145"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb145-1" data-line-number="1">prob.pred <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb145-2" data-line-number="2"><span class="st">  </span><span class="kw">performance</span>(<span class="st">&quot;fpr&quot;</span>) <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb145-3" data-line-number="3"><span class="st">  </span><span class="kw">plot</span>()</a></code></pre></div>
+<p><img src="_main_files/figure-html/unnamed-chunk-60-1.png" width="80%" style="display: block; margin: auto;" /></p>
+<ol start="4" style="list-style-type: decimal">
+<li>La <em>Razón de Falsos Negativos</em>: <span class="math display">\[ \Pr(\hat Y = - | Y = +) \approx FN/P;\]</span></li>
+</ol>
+<div class="sourceCode" id="cb146"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb146-1" data-line-number="1">prob.pred <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb146-2" data-line-number="2"><span class="st">  </span><span class="kw">performance</span>(<span class="st">&quot;fnr&quot;</span>) <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb146-3" data-line-number="3"><span class="st">  </span><span class="kw">plot</span>()</a></code></pre></div>
+<p><img src="_main_files/figure-html/unnamed-chunk-61-1.png" width="80%" style="display: block; margin: auto;" /></p>
+<p>Toda la información sobre los errores podemos representarla en un mismo gráfico y así ver el equilibrio entre error y umbral:</p>
+<div class="sourceCode" id="cb147"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb147-1" data-line-number="1"><span class="co"># Podemos combinar las 3 ultimas en un mismo grafico</span></a>
+<a class="sourceLine" id="cb147-2" data-line-number="2">df_perfor &lt;-<span class="st"> </span><span class="kw">data.frame</span>(<span class="dt">Error.Rate =</span> <span class="kw">performance</span>(prob.pred, <span class="st">&quot;err&quot;</span>)<span class="op">@</span>y.values[[<span class="dv">1</span>]],</a>
+<a class="sourceLine" id="cb147-3" data-line-number="3">                        <span class="dt">FNR =</span> <span class="kw">performance</span>(prob.pred, <span class="st">&quot;fnr&quot;</span>)<span class="op">@</span>y.values[[<span class="dv">1</span>]],</a>
+<a class="sourceLine" id="cb147-4" data-line-number="4">                        <span class="dt">FPR =</span> <span class="kw">performance</span>(prob.pred, <span class="st">&quot;fpr&quot;</span>)<span class="op">@</span>y.values[[<span class="dv">1</span>]],</a>
+<a class="sourceLine" id="cb147-5" data-line-number="5">                        <span class="dt">TPR =</span> <span class="kw">performance</span>(prob.pred, <span class="st">&quot;tpr&quot;</span>)<span class="op">@</span>y.values[[<span class="dv">1</span>]],</a>
+<a class="sourceLine" id="cb147-6" data-line-number="6">                        <span class="dt">CutOffs =</span> <span class="kw">performance</span>(prob.pred, <span class="st">&quot;err&quot;</span>)<span class="op">@</span>x.values[[<span class="dv">1</span>]])</a>
+<a class="sourceLine" id="cb147-7" data-line-number="7"></a>
+<a class="sourceLine" id="cb147-8" data-line-number="8"><span class="co"># plot tasas de error</span></a>
+<a class="sourceLine" id="cb147-9" data-line-number="9">errores.lda &lt;-<span class="st"> </span><span class="kw">ggplot</span>(df_perfor, <span class="kw">aes</span>(<span class="dt">x =</span> CutOffs)) <span class="op">+</span></a>
+<a class="sourceLine" id="cb147-10" data-line-number="10"><span class="st">  </span><span class="kw">geom_line</span>(<span class="kw">aes</span>(<span class="dt">y =</span> Error.Rate, <span class="dt">colour =</span> <span class="st">&quot;Tasa Error General&quot;</span>)) <span class="op">+</span></a>
+<a class="sourceLine" id="cb147-11" data-line-number="11"><span class="st">  </span><span class="kw">geom_line</span>(<span class="kw">aes</span>(<span class="dt">y =</span> FNR, <span class="dt">colour =</span> <span class="st">&quot;FNR&quot;</span>)) <span class="op">+</span></a>
+<a class="sourceLine" id="cb147-12" data-line-number="12"><span class="st">  </span><span class="kw">geom_line</span>(<span class="kw">aes</span>(<span class="dt">y =</span> FPR, <span class="dt">colour =</span> <span class="st">&quot;FPR&quot;</span>)) <span class="op">+</span></a>
+<a class="sourceLine" id="cb147-13" data-line-number="13"><span class="st">  </span><span class="kw">scale_colour_discrete</span>(<span class="dt">name =</span> <span class="st">&quot;Medidas&quot;</span> ) <span class="op">+</span></a>
+<a class="sourceLine" id="cb147-14" data-line-number="14"><span class="st">  </span><span class="kw">xlab</span>(<span class="st">&quot;Puntos de corte&quot;</span>) <span class="op">+</span><span class="st"> </span><span class="kw">ylab</span>(<span class="st">&quot;Tasas de Error&quot;</span>) <span class="op">+</span></a>
+<a class="sourceLine" id="cb147-15" data-line-number="15"><span class="st">  </span><span class="kw">theme_light</span>()</a>
+<a class="sourceLine" id="cb147-16" data-line-number="16">errores.lda</a></code></pre></div>
+<p><img src="_main_files/figure-html/unnamed-chunk-62-1.png" width="80%" style="display: block; margin: auto;" /></p>
+<p>La curva ROC podemos hacerla en <code>ggplot</code> como se muestra a continuación:</p>
+<div class="sourceCode" id="cb148"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb148-1" data-line-number="1"><span class="co"># plot de la curva ROC</span></a>
+<a class="sourceLine" id="cb148-2" data-line-number="2">roc.lda &lt;-<span class="st"> </span><span class="kw">ggplot</span>(df_perfor, <span class="kw">aes</span>(<span class="dt">x =</span> FPR, <span class="dt">y =</span> TPR)) <span class="op">+</span></a>
+<a class="sourceLine" id="cb148-3" data-line-number="3"><span class="st">  </span><span class="kw">geom_line</span>() <span class="op">+</span></a>
+<a class="sourceLine" id="cb148-4" data-line-number="4"><span class="st">  </span><span class="kw">xlab</span>(<span class="st">&quot;FPR: 1- especificidad&quot;</span>) <span class="op">+</span><span class="st"> </span><span class="kw">ylab</span>(<span class="st">&quot;TPR: sensibilidad&quot;</span>) <span class="op">+</span></a>
+<a class="sourceLine" id="cb148-5" data-line-number="5"><span class="st">  </span><span class="kw">ggtitle</span>(<span class="kw">paste0</span>(<span class="st">&quot;Curva ROC - LDA (Area Under Curve = &quot;</span>, <span class="kw">round</span>(auc.lda, <span class="dt">digits =</span> <span class="dv">3</span>),<span class="st">&quot;)&quot;</span>)) <span class="op">+</span></a>
+<a class="sourceLine" id="cb148-6" data-line-number="6"><span class="st">  </span><span class="kw">theme_light</span>()</a>
+<a class="sourceLine" id="cb148-7" data-line-number="7">roc.lda</a></code></pre></div>
+<p><img src="_main_files/figure-html/unnamed-chunk-63-1.png" width="80%" style="display: block; margin: auto;" /></p>
+</div>
+<div id="análisis-en-la-muestra-de-entrenamiento" class="section level3">
+<h3><span class="header-section-number">4.2.2</span> Análisis en la muestra de entrenamiento</h3>
+<p>Las curvas ROC también son útiles para comparar el rendimiento entre modelos, justo como hicimos con el <code>Accuracy</code>.</p>
+</div>
+</div>
+<div id="wisconsin-breast-cancer-data" class="section level2">
+<h2><span class="header-section-number">4.3</span> Wisconsin Breast-Cancer Data</h2>
+<p>Los datos de cancer de mama Wisconsin…</p>
+
+</div>
+</div>
+<h3>Bibliografía</h3>
+<div id="refs" class="references">
+<div id="ref-R-ROCR">
+<p>Sing, Tobias, Oliver Sander, Niko Beerenwinkel, and Thomas Lengauer. 2015. <em>ROCR: Visualizing the Performance of Scoring Classifiers</em>. <a href="https://CRAN.R-project.org/package=ROCR">https://CRAN.R-project.org/package=ROCR</a>.</p>
+</div>
+</div>
+            </section>
+
+          </div>
+        </div>
+      </div>
+<a href="DA.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="bibliografía.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+    </div>
+  </div>
+<script src="libs/gitbook-2.6.7/js/app.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/lunr.js"></script>
+<script src="libs/gitbook-2.6.7/js/clipboard.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-search.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-sharing.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-fontsettings.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-bookdown.js"></script>
+<script src="libs/gitbook-2.6.7/js/jquery.highlight.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-clipboard.js"></script>
+<script>
+gitbook.require(["gitbook"], function(gitbook) {
+gitbook.start({
+"sharing": {
+"github": false,
+"facebook": true,
+"twitter": true,
+"linkedin": false,
+"weibo": false,
+"instapaper": false,
+"vk": false,
+"all": ["facebook", "twitter", "linkedin", "weibo", "instapaper"]
+},
+"fontsettings": {
+"theme": "white",
+"family": "sans",
+"size": 2
+},
+"edit": {
+"link": null,
+"text": null
+},
+"history": {
+"link": null,
+"text": null
+},
+"view": {
+"link": null,
+"text": null
+},
+"download": null,
+"toc": {
+"collapse": "subsection"
+}
+});
+});
+</script>
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    var src = "true";
+    if (src === "" || src === "true") src = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-MML-AM_CHTML";
+    if (location.protocol !== "file:")
+      if (/^https?:/.test(src))
+        src = src.replace(/^https?:/, '');
+    script.src = src;
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+</body>
+
+</html>

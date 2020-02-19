@@ -1,0 +1,7 @@
+"0","# tasa de error test"
+"0","test.error <- sum(pr != Y.test)/sum(tab)"
+"0","test.error"
+"1","[1]"
+"1"," 0.03333333"
+"1","
+"
