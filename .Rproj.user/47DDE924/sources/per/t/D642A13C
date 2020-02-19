@@ -5,15 +5,16 @@
     "dirty" : false,
     "encoding" : "UTF-8",
     "folds" : "",
-    "hash" : "4244360771",
+    "hash" : "2704659176",
     "id" : "D642A13C",
-    "lastKnownWriteTime" : 1582132048,
-    "last_content_update" : 1582132048,
+    "lastKnownWriteTime" : 1582137989,
+    "last_content_update" : 1582137989965,
     "path" : "~/OneDrive - Universidad Carlos III de Madrid/Big_Analytics_Ed4/14_15_Aprendizaje_Supervisado_Harold_A_Hdez_Roig/bookdown-Aprendizaje-Supervisado/04-wiscon.Rmd",
     "project_path" : "04-wiscon.Rmd",
     "properties" : {
-        "cursorPosition" : "3,0",
-        "scrollLine" : "0"
+        "cursorPosition" : "59,45",
+        "ignored_words" : "Fisher,Wisconsin,Breast,wiscon,radius,of,distances,from,center,points,on,the,perimeter,texture,standard,deviation,scale,values,area,smoothness,variation,lengths,compactness,concavity,severity,concave,portions,contour,number,symmetry,fractal,dimension,coastline,approximation,breast\n",
+        "scrollLine" : "54"
     },
     "read_only" : false,
     "read_only_alternatives" : [

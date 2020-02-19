@@ -1,0 +1,3 @@
+"0","# Ajustemos nuestros modelos con los datos transformados:"
+"0","train_df <- df.pca[train.ID, ]"
+"0","test_df <- df.pca[-train.ID, ]"

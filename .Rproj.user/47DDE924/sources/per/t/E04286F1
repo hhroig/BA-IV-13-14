@@ -12,10 +12,10 @@
     "path" : "~/OneDrive - Universidad Carlos III de Madrid/Big_Analytics_Ed4/14_15_Aprendizaje_Supervisado_Harold_A_Hdez_Roig/bookdown-Aprendizaje-Supervisado/01-KNN.Rmd",
     "project_path" : "01-KNN.Rmd",
     "properties" : {
-        "cursorPosition" : "111,173",
+        "cursorPosition" : "8,17",
         "docOutlineVisible" : "1",
         "ignored_words" : "Fold,cv,knn,center,scale,accuracy,repeatedcv,boot,Petal,Length,Width,Species,Train,lstat,age,rad,rm,ptratio,medv,Nearest,Neighbors,setosa,virginica,versicolor,Ronald,Fisher,ref,tab,dataset,facethist,machine,learning\n",
-        "scrollLine" : "107"
+        "scrollLine" : "0"
     },
     "read_only" : false,
     "read_only_alternatives" : [

@@ -1,0 +1,6 @@
+"0","# en este caso estamos reduciendo la cantidad de variables iniciales"
+"0","# a solamente ¡2!"
+"0","preProc.res <- preProcess(df, method = c('pca'), pcaComp = 2)"
+"0","df.pca <- predict(preProc.res, df)"
+"0",""
+"0","head(df.pca, 7)"

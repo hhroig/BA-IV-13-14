@@ -5,16 +5,16 @@
     "dirty" : false,
     "encoding" : "UTF-8",
     "folds" : "",
-    "hash" : "0",
+    "hash" : "1908181667",
     "id" : "AE70E30F",
-    "lastKnownWriteTime" : 1582133211,
-    "last_content_update" : 1582133211270,
+    "lastKnownWriteTime" : 1582133918,
+    "last_content_update" : 1582133918731,
     "path" : "~/OneDrive - Universidad Carlos III de Madrid/Big_Analytics_Ed4/14_15_Aprendizaje_Supervisado_Harold_A_Hdez_Roig/bookdown-Aprendizaje-Supervisado/index.Rmd",
     "project_path" : "index.Rmd",
     "properties" : {
-        "cursorPosition" : "26,279",
+        "cursorPosition" : "6,56",
         "ignored_words" : "Nearest,Neighbors,Discriminant,Analysis,Quadratic\n",
-        "scrollLine" : "11"
+        "scrollLine" : "0"
     },
     "read_only" : false,
     "read_only_alternatives" : [
