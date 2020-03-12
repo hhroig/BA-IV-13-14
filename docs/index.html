@@ -31,7 +31,7 @@
   
   
 
-<link rel="next" href="k-vecinos-mas-proximos.html"/>
+<link rel="next" href="k-vecinos-más-próximos.html"/>
 <script src="libs/jquery-2.2.3/jquery.min.js"></script>
 <link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
 <link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
@@ -68,7 +68,7 @@ a.sourceLine { text-indent: -1em; padding-left: 1em; }
 pre.numberSource a.sourceLine
   { position: relative; left: -4em; }
 pre.numberSource a.sourceLine::before
-  { content: attr(title);
+  { content: attr(data-line-number);
     position: relative; left: -1em; text-align: right; vertical-align: baseline;
     border: none; pointer-events: all; display: inline-block;
     -webkit-touch-callout: none; -webkit-user-select: none;
@@ -127,14 +127,15 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 
 <ul class="summary">
 <li class="chapter" data-level="1" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i><b>1</b> Introducción</a></li>
-<li class="chapter" data-level="2" data-path="k-vecinos-mas-proximos.html"><a href="k-vecinos-mas-proximos.html"><i class="fa fa-check"></i><b>2</b> K - Vecinos más Próximos</a><ul>
-<li class="chapter" data-level="2.1" data-path="k-vecinos-mas-proximos.html"><a href="k-vecinos-mas-proximos.html#clasificacion-con-el-paquete-class"><i class="fa fa-check"></i><b>2.1</b> Clasificación con el paquete <code>class</code></a></li>
-<li class="chapter" data-level="2.2" data-path="k-vecinos-mas-proximos.html"><a href="k-vecinos-mas-proximos.html#el-paquete-caret"><i class="fa fa-check"></i><b>2.2</b> El paquete <code>caret</code></a><ul>
-<li class="chapter" data-level="2.2.1" data-path="k-vecinos-mas-proximos.html"><a href="k-vecinos-mas-proximos.html#visualizacion"><i class="fa fa-check"></i><b>2.2.1</b> Visualización</a></li>
-<li class="chapter" data-level="2.2.2" data-path="k-vecinos-mas-proximos.html"><a href="k-vecinos-mas-proximos.html#clasificacion-con-knn"><i class="fa fa-check"></i><b>2.2.2</b> Clasificación con KNN</a></li>
-<li class="chapter" data-level="2.2.3" data-path="k-vecinos-mas-proximos.html"><a href="k-vecinos-mas-proximos.html#importancia-de-las-variables"><i class="fa fa-check"></i><b>2.2.3</b> Importancia de las variables</a></li>
+<li class="chapter" data-level="2" data-path="k-vecinos-más-próximos.html"><a href="k-vecinos-más-próximos.html"><i class="fa fa-check"></i><b>2</b> K - Vecinos más Próximos</a><ul>
+<li class="chapter" data-level="2.1" data-path="k-vecinos-más-próximos.html"><a href="k-vecinos-más-próximos.html#clasificación-con-el-paquete-class"><i class="fa fa-check"></i><b>2.1</b> Clasificación con el paquete <code>class</code></a></li>
+<li class="chapter" data-level="2.2" data-path="k-vecinos-más-próximos.html"><a href="k-vecinos-más-próximos.html#el-paquete-caret"><i class="fa fa-check"></i><b>2.2</b> El paquete <code>caret</code></a><ul>
+<li class="chapter" data-level="2.2.1" data-path="k-vecinos-más-próximos.html"><a href="k-vecinos-más-próximos.html#visualización"><i class="fa fa-check"></i><b>2.2.1</b> Visualización</a></li>
+<li class="chapter" data-level="2.2.2" data-path="k-vecinos-más-próximos.html"><a href="k-vecinos-más-próximos.html#clasificación-con-knn"><i class="fa fa-check"></i><b>2.2.2</b> Clasificación con KNN</a></li>
+<li class="chapter" data-level="2.2.3" data-path="k-vecinos-más-próximos.html"><a href="k-vecinos-más-próximos.html#importancia-de-las-variables"><i class="fa fa-check"></i><b>2.2.3</b> Importancia de las variables</a></li>
 </ul></li>
-<li class="chapter" data-level="2.3" data-path="k-vecinos-mas-proximos.html"><a href="k-vecinos-mas-proximos.html#regresion"><i class="fa fa-check"></i><b>2.3</b> Regresión</a></li>
+<li class="chapter" data-level="2.3" data-path="k-vecinos-más-próximos.html"><a href="k-vecinos-más-próximos.html#regresión"><i class="fa fa-check"></i><b>2.3</b> Regresión</a></li>
+<li class="chapter" data-level="2.4" data-path="k-vecinos-más-próximos.html"><a href="k-vecinos-más-próximos.html#weighted-knn"><i class="fa fa-check"></i><b>2.4</b> Weighted KNN</a></li>
 </ul></li>
 <li class="chapter" data-level="3" data-path="DA.html"><a href="DA.html"><i class="fa fa-check"></i><b>3</b> Análisis Discriminante</a><ul>
 <li class="chapter" data-level="3.1" data-path="DA.html"><a href="DA.html#LDA"><i class="fa fa-check"></i><b>3.1</b> Análisis Discriminante Lineal</a></li>
@@ -142,16 +143,16 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="3.3" data-path="DA.html"><a href="DA.html#RDA"><i class="fa fa-check"></i><b>3.3</b> Análisis Discriminante Regularizado</a></li>
 </ul></li>
 <li class="chapter" data-level="4" data-path="compara.html"><a href="compara.html"><i class="fa fa-check"></i><b>4</b> Comparación entre Modelos</a><ul>
-<li class="chapter" data-level="4.1" data-path="compara.html"><a href="compara.html#comparando-segun-accuracy"><i class="fa fa-check"></i><b>4.1</b> Comparando según <code>Accuracy</code></a></li>
+<li class="chapter" data-level="4.1" data-path="compara.html"><a href="compara.html#comparando-según-accuracy"><i class="fa fa-check"></i><b>4.1</b> Comparando según <code>Accuracy</code></a></li>
 <li class="chapter" data-level="4.2" data-path="compara.html"><a href="compara.html#curva-roc"><i class="fa fa-check"></i><b>4.2</b> Curva <em>ROC</em></a><ul>
-<li class="chapter" data-level="4.2.1" data-path="compara.html"><a href="compara.html#analisis-en-la-muestra-test"><i class="fa fa-check"></i><b>4.2.1</b> Análisis en la muestra test</a></li>
-<li class="chapter" data-level="4.2.2" data-path="compara.html"><a href="compara.html#analisis-en-la-muestra-de-entrenamiento"><i class="fa fa-check"></i><b>4.2.2</b> Análisis en la muestra de entrenamiento</a></li>
+<li class="chapter" data-level="4.2.1" data-path="compara.html"><a href="compara.html#análisis-en-la-muestra-test"><i class="fa fa-check"></i><b>4.2.1</b> Análisis en la muestra test</a></li>
+<li class="chapter" data-level="4.2.2" data-path="compara.html"><a href="compara.html#análisis-en-la-muestra-de-entrenamiento"><i class="fa fa-check"></i><b>4.2.2</b> Análisis en la muestra de entrenamiento</a></li>
 </ul></li>
 </ul></li>
 <li class="chapter" data-level="5" data-path="wiscon.html"><a href="wiscon.html"><i class="fa fa-check"></i><b>5</b> Wisconsin Breast-Cancer Data</a><ul>
-<li class="chapter" data-level="5.1" data-path="wiscon.html"><a href="wiscon.html#comentarios-finales-reduccion-de-la-dimension"><i class="fa fa-check"></i><b>5.1</b> Comentarios finales: reducción de la dimensión</a></li>
+<li class="chapter" data-level="5.1" data-path="wiscon.html"><a href="wiscon.html#comentarios-finales-reducción-de-la-dimensión"><i class="fa fa-check"></i><b>5.1</b> Comentarios finales: reducción de la dimensión</a></li>
 </ul></li>
-<li class="chapter" data-level="" data-path="bibliografia.html"><a href="bibliografia.html"><i class="fa fa-check"></i>Bibliografía</a></li>
+<li class="chapter" data-level="" data-path="bibliografía.html"><a href="bibliografía.html"><i class="fa fa-check"></i>Bibliografía</a></li>
 </ul>
 
       </nav>
@@ -174,11 +175,11 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <p class="author"><em>Harold A. Hernández-Roig (<a href="mailto:hahernan@est-econ.uc3m.es" class="email">hahernan@est-econ.uc3m.es</a>)</em></p>
 <p class="date"><em>20-21 Febrero 2020</em></p>
 </div>
-<div id="introduccion" class="section level1">
+<div id="introducción" class="section level1">
 <h1><span class="header-section-number">1</span> Introducción</h1>
 <p>¡Bienvenidos a las sesiones de <em>Aprendizaje Supervisado (13-14)</em> del <em>Big Analytics: de la Información al Conocimiento, IV Ed.</em>!</p>
 <p>La bibliografía fundamental para estas dos sesiones es el libro de <span class="citation">(James et al. <a href="#ref-james2013introduction">2013</a>)</span>. En el mismo, podrán encontrar las principales ideas ya estudiadas, así como ejemplos prácticos sencillos en R (ver el paquete <code>ISLR</code> <span class="citation">(James et al. <a href="#ref-R-ISLR">2017</a>)</span>). También recomendamos los libros <span class="citation">(Rebala, Ravi, and Churiwala <a href="#ref-Rebala2019">2019</a>)</span> y <span class="citation">(Burger <a href="#ref-Burger2018">2018</a>)</span>, como material complementario.</p>
-<p>Los paquetes de R empleados para ajustar los algoritmos supervisados <em>K-Nearest-Neighbors</em>, <em>Linear Discriminant Analysis (LDA)</em>, y <em>Quadratic Discriminant Analysis (QDA)</em>; son <code>caret</code><span class="citation">(Jed Wing et al. <a href="#ref-R-caret">2019</a>)</span> y <code>class</code><span class="citation">(Ripley <a href="#ref-R-class">2019</a>)</span>. Para el paquete <code>caret</code>, se recomienda además revisar la documentación en <a href="http://topepo.github.io/caret/index.html">topepo.github.io/caret</a>.</p>
+<p>Los paquetes de R empleados para ajustar los algoritmos supervisados <em>K-Nearest-Neighbors</em>, <em>Linear Discriminant Analysis (LDA)</em>, y <em>Quadratic Discriminant Analysis (QDA)</em>; son <code>caret</code><span class="citation">(Kuhn <a href="#ref-R-caret">2020</a>)</span> y <code>class</code><span class="citation">(Ripley <a href="#ref-R-class">2019</a>)</span>. Para el paquete <code>caret</code>, se recomienda además revisar la documentación en <a href="http://topepo.github.io/caret/index.html">topepo.github.io/caret</a>.</p>
 <p>La organización del documento corresponde, en general, a la seguida durante las prácticas.</p>
 <p>Have fun! :)</p>
 
@@ -186,7 +187,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <h3>Bibliografía</h3>
 <div id="refs" class="references">
 <div id="ref-Burger2018">
-<p>Burger, Scott V. 2018. <em>Introduction to machine learning with R - Rigorous mathematical modeling</em>. Vol. 1. O’Reilly. <a href="http://arxiv.org/abs/0904.3664v1">http://arxiv.org/abs/0904.3664v1</a>.</p>
+<p>Burger, Scott V. 2018. <em>Introduction to machine learning with R - Rigorous mathematical modeling</em>. Vol. 1. O’Reilly.</p>
 </div>
 <div id="ref-R-ISLR">
 <p>James, Gareth, Daniela Witten, Trevor Hastie, and Rob Tibshirani. 2017. <em>ISLR: Data for an Introduction to Statistical Learning with Applications in R</em>. <a href="https://CRAN.R-project.org/package=ISLR">https://CRAN.R-project.org/package=ISLR</a>.</p>
@@ -195,7 +196,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <p>James, Gareth, Daniela Witten, Trevor Hastie, and Robert Tibshirani. 2013. <em>An Introduction to Statistical Learning with Applications in R*</em>. Vol. 6. Springer.</p>
 </div>
 <div id="ref-R-caret">
-<p>Jed Wing, Max Kuhn. Contributions from, Steve Weston, Andre Williams, Chris Keefer, Allan Engelhardt, Tony Cooper, Zachary Mayer, et al. 2019. <em>Caret: Classification and Regression Training</em>. <a href="https://CRAN.R-project.org/package=caret">https://CRAN.R-project.org/package=caret</a>.</p>
+<p>Kuhn, Max. 2020. <em>Caret: Classification and Regression Training</em>. <a href="https://CRAN.R-project.org/package=caret">https://CRAN.R-project.org/package=caret</a>.</p>
 </div>
 <div id="ref-Rebala2019">
 <p>Rebala, Gopinath, Ajay Ravi, and Sanjay Churiwala. 2019. <em>An Introduction to Machine Learning</em>. Cham: Springer International Publishing. <a href="https://doi.org/10.1007/978-3-030-15729-6">https://doi.org/10.1007/978-3-030-15729-6</a>.</p>
@@ -210,7 +211,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
         </div>
       </div>
 
-<a href="k-vecinos-mas-proximos.html" class="navigation navigation-next navigation-unique" aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+<a href="k-vecinos-más-próximos.html" class="navigation navigation-next navigation-unique" aria-label="Next page"><i class="fa fa-angle-right"></i></a>
     </div>
   </div>
 <script src="libs/gitbook-2.6.7/js/app.min.js"></script>
@@ -252,7 +253,7 @@ gitbook.start({
 "link": null,
 "text": null
 },
-"download": null,
+"download": ["_main.pdf"],
 "toc": {
 "collapse": "subsection"
 }

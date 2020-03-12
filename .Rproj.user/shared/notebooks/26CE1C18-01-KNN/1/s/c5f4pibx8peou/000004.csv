@@ -1,7 +1,0 @@
-"0","# importancia de las variables según impacto en la predicción"
-"0","varImp(knn_reg_model)"
-"1","loess r-squared"
-"1"," "
-"1","variable importance
-
-"

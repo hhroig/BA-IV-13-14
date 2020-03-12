@@ -1,7 +1,0 @@
-"0","# ver correlaciones y posibles relaciones:"
-"0",""
-"0","# todos los predictores:"
-"0","# ggpairs(Boston, ggplot2::aes(y = medv, alpha = 0.2)) + theme_light()"
-"0","# algunos predictores:"
-"0","ggpairs(Boston[, c(""lstat"", ""age"", ""rad"", ""rm"", ""ptratio"", ""medv"")]) + theme_light()"
-"0",""

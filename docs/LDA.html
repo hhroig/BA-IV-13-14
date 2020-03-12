@@ -1,0 +1,389 @@
+<!DOCTYPE html>
+<html lang="" xml:lang="">
+<head>
+
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <title>3.1 Análisis Discriminante Lineal | Introducción al Aprendizaje Supervisado</title>
+  <meta name="description" content="Sesiones 13-15 IV Edición del Big Analytics: de la información al conocimiento." />
+  <meta name="generator" content="bookdown 0.17 and GitBook 2.6.7" />
+
+  <meta property="og:title" content="3.1 Análisis Discriminante Lineal | Introducción al Aprendizaje Supervisado" />
+  <meta property="og:type" content="book" />
+  
+  
+  <meta property="og:description" content="Sesiones 13-15 IV Edición del Big Analytics: de la información al conocimiento." />
+  
+
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:title" content="3.1 Análisis Discriminante Lineal | Introducción al Aprendizaje Supervisado" />
+  
+  <meta name="twitter:description" content="Sesiones 13-15 IV Edición del Big Analytics: de la información al conocimiento." />
+  
+
+<meta name="author" content="Harold A. Hernández-Roig (hahernan@est-econ.uc3m.es)" />
+
+
+
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+  
+  
+<link rel="prev" href="DA.html"/>
+<link rel="next" href="QDA.html"/>
+<script src="assets/jquery-2.2.3/jquery.min.js"></script>
+<link href="assets/gitbook-2.6.7/css/style.css" rel="stylesheet" />
+<link href="assets/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
+<link href="assets/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
+<link href="assets/gitbook-2.6.7/css/plugin-highlight.css" rel="stylesheet" />
+<link href="assets/gitbook-2.6.7/css/plugin-search.css" rel="stylesheet" />
+<link href="assets/gitbook-2.6.7/css/plugin-fontsettings.css" rel="stylesheet" />
+<link href="assets/gitbook-2.6.7/css/plugin-clipboard.css" rel="stylesheet" />
+
+
+
+
+
+
+
+
+
+
+
+<style type="text/css">
+a.sourceLine { display: inline-block; line-height: 1.25; }
+a.sourceLine { pointer-events: none; color: inherit; text-decoration: inherit; }
+a.sourceLine:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode { white-space: pre; position: relative; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+code.sourceCode { white-space: pre-wrap; }
+a.sourceLine { text-indent: -1em; padding-left: 1em; }
+}
+pre.numberSource a.sourceLine
+  { position: relative; left: -4em; }
+pre.numberSource a.sourceLine::before
+  { content: attr(data-line-number);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; pointer-events: all; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {  }
+@media screen {
+a.sourceLine::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #7d9029; } /* Attribute */
+code span.bn { color: #40a070; } /* BaseN */
+code span.bu { } /* BuiltIn */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4070a0; } /* Char */
+code span.cn { color: #880000; } /* Constant */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code span.dt { color: #902000; } /* DataType */
+code span.dv { color: #40a070; } /* DecVal */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #40a070; } /* Float */
+code span.fu { color: #06287e; } /* Function */
+code span.im { } /* Import */
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.op { color: #666666; } /* Operator */
+code span.ot { color: #007020; } /* Other */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.st { color: #4070a0; } /* String */
+code span.va { color: #19177c; } /* Variable */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+</style>
+
+</head>
+
+<body>
+
+
+
+  <div class="book without-animation with-summary font-size-2 font-family-1" data-basepath=".">
+
+    <div class="book-summary">
+      <nav role="navigation">
+
+<ul class="summary">
+<li class="chapter" data-level="1" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i><b>1</b> Introducción</a></li>
+<li class="chapter" data-level="2" data-path="k-vecinos-más-próximos.html"><a href="k-vecinos-más-próximos.html"><i class="fa fa-check"></i><b>2</b> K - Vecinos más Próximos</a><ul>
+<li class="chapter" data-level="2.1" data-path="clasificación-con-el-paquete-class.html"><a href="clasificación-con-el-paquete-class.html"><i class="fa fa-check"></i><b>2.1</b> Clasificación con el paquete <code>class</code></a></li>
+<li class="chapter" data-level="2.2" data-path="el-paquete-caret.html"><a href="el-paquete-caret.html"><i class="fa fa-check"></i><b>2.2</b> El paquete <code>caret</code></a><ul>
+<li class="chapter" data-level="2.2.1" data-path="el-paquete-caret.html"><a href="el-paquete-caret.html#visualización"><i class="fa fa-check"></i><b>2.2.1</b> Visualización</a></li>
+<li class="chapter" data-level="2.2.2" data-path="el-paquete-caret.html"><a href="el-paquete-caret.html#clasificación-con-knn"><i class="fa fa-check"></i><b>2.2.2</b> Clasificación con KNN</a></li>
+<li class="chapter" data-level="2.2.3" data-path="el-paquete-caret.html"><a href="el-paquete-caret.html#importancia-de-las-variables"><i class="fa fa-check"></i><b>2.2.3</b> Importancia de las variables</a></li>
+</ul></li>
+<li class="chapter" data-level="2.3" data-path="regresión.html"><a href="regresión.html"><i class="fa fa-check"></i><b>2.3</b> Regresión</a></li>
+<li class="chapter" data-level="2.4" data-path="weighted-knn.html"><a href="weighted-knn.html"><i class="fa fa-check"></i><b>2.4</b> Weighted KNN</a></li>
+</ul></li>
+<li class="chapter" data-level="3" data-path="DA.html"><a href="DA.html"><i class="fa fa-check"></i><b>3</b> Análisis Discriminante</a><ul>
+<li class="chapter" data-level="3.1" data-path="LDA.html"><a href="LDA.html"><i class="fa fa-check"></i><b>3.1</b> Análisis Discriminante Lineal</a></li>
+<li class="chapter" data-level="3.2" data-path="QDA.html"><a href="QDA.html"><i class="fa fa-check"></i><b>3.2</b> Análisis Discriminante Cuadrático</a></li>
+<li class="chapter" data-level="3.3" data-path="RDA.html"><a href="RDA.html"><i class="fa fa-check"></i><b>3.3</b> Análisis Discriminante Regularizado</a></li>
+</ul></li>
+<li class="chapter" data-level="4" data-path="compara.html"><a href="compara.html"><i class="fa fa-check"></i><b>4</b> Comparación entre Modelos</a><ul>
+<li class="chapter" data-level="4.1" data-path="comparando-según-accuracy.html"><a href="comparando-según-accuracy.html"><i class="fa fa-check"></i><b>4.1</b> Comparando según <code>Accuracy</code></a></li>
+<li class="chapter" data-level="4.2" data-path="curva-roc.html"><a href="curva-roc.html"><i class="fa fa-check"></i><b>4.2</b> Curva <em>ROC</em></a><ul>
+<li class="chapter" data-level="4.2.1" data-path="curva-roc.html"><a href="curva-roc.html#análisis-en-la-muestra-test"><i class="fa fa-check"></i><b>4.2.1</b> Análisis en la muestra test</a></li>
+<li class="chapter" data-level="4.2.2" data-path="curva-roc.html"><a href="curva-roc.html#análisis-en-la-muestra-de-entrenamiento"><i class="fa fa-check"></i><b>4.2.2</b> Análisis en la muestra de entrenamiento</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="5" data-path="wiscon.html"><a href="wiscon.html"><i class="fa fa-check"></i><b>5</b> Wisconsin Breast-Cancer Data</a><ul>
+<li class="chapter" data-level="5.1" data-path="comentarios-finales-reducción-de-la-dimensión.html"><a href="comentarios-finales-reducción-de-la-dimensión.html"><i class="fa fa-check"></i><b>5.1</b> Comentarios finales: reducción de la dimensión</a></li>
+</ul></li>
+<li class="chapter" data-level="" data-path="bibliografía.html"><a href="bibliografía.html"><i class="fa fa-check"></i>Bibliografía</a></li>
+</ul>
+
+      </nav>
+    </div>
+
+    <div class="book-body">
+      <div class="body-inner">
+        <div class="book-header" role="navigation">
+          <h1>
+            <i class="fa fa-circle-o-notch fa-spin"></i><a href="./">Introducción al Aprendizaje Supervisado</a>
+          </h1>
+        </div>
+
+        <div class="page-wrapper" tabindex="-1" role="main">
+          <div class="page-inner">
+
+            <section class="normal" id="section-">
+<div id="LDA" class="section level2">
+<h2><span class="header-section-number">3.1</span> Análisis Discriminante Lineal</h2>
+<div class="sourceCode" id="cb83"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb83-1" data-line-number="1">df &lt;-<span class="st"> </span>Default[, <span class="kw">c</span>(<span class="st">&quot;income&quot;</span>, <span class="st">&quot;balance&quot;</span>, <span class="st">&quot;default&quot;</span>)]</a>
+<a class="sourceLine" id="cb83-2" data-line-number="2"><span class="kw">set.seed</span>(<span class="dv">123</span>)</a>
+<a class="sourceLine" id="cb83-3" data-line-number="3">train.ID &lt;-<span class="st"> </span><span class="kw">createDataPartition</span>(df<span class="op">$</span>default, <span class="dt">p =</span> <span class="fl">0.8</span>, <span class="dt">list =</span> <span class="ot">FALSE</span>)</a>
+<a class="sourceLine" id="cb83-4" data-line-number="4"></a>
+<a class="sourceLine" id="cb83-5" data-line-number="5">train_df &lt;-<span class="st"> </span>df[train.ID, ]</a>
+<a class="sourceLine" id="cb83-6" data-line-number="6">test_df &lt;-<span class="st"> </span>df[<span class="op">-</span>train.ID, ]</a>
+<a class="sourceLine" id="cb83-7" data-line-number="7"></a>
+<a class="sourceLine" id="cb83-8" data-line-number="8"><span class="co"># definimos como control una validación cruzada con 10 hojas, sin repeticiones</span></a>
+<a class="sourceLine" id="cb83-9" data-line-number="9">fit_control &lt;-<span class="st"> </span><span class="kw">trainControl</span>(<span class="dt">method=</span><span class="st">&#39;cv&#39;</span>, <span class="dt">number =</span> <span class="dv">10</span>)</a>
+<a class="sourceLine" id="cb83-10" data-line-number="10"></a>
+<a class="sourceLine" id="cb83-11" data-line-number="11"><span class="kw">set.seed</span>(<span class="dv">123</span>)</a>
+<a class="sourceLine" id="cb83-12" data-line-number="12">model_lda_def &lt;-<span class="st"> </span><span class="kw">train</span>(default <span class="op">~</span>.,</a>
+<a class="sourceLine" id="cb83-13" data-line-number="13">                       <span class="dt">data =</span> train_df,</a>
+<a class="sourceLine" id="cb83-14" data-line-number="14">                       <span class="dt">method =</span> <span class="st">&quot;lda&quot;</span>,</a>
+<a class="sourceLine" id="cb83-15" data-line-number="15">                       <span class="dt">trControl =</span> fit_control)</a>
+<a class="sourceLine" id="cb83-16" data-line-number="16">model_lda_def</a></code></pre></div>
+<pre><code>## Linear Discriminant Analysis 
+## 
+## 8001 samples
+##    2 predictor
+##    2 classes: &#39;No&#39;, &#39;Yes&#39; 
+## 
+## No pre-processing
+## Resampling: Cross-Validated (10 fold) 
+## Summary of sample sizes: 7200, 7200, 7201, 7202, 7201, 7202, ... 
+## Resampling results:
+## 
+##   Accuracy  Kappa    
+##   0.973379  0.3710518</code></pre>
+<div class="sourceCode" id="cb85"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb85-1" data-line-number="1">model_lda_def<span class="op">$</span>finalModel</a></code></pre></div>
+<pre><code>## Call:
+## lda(x, grouping = y)
+## 
+## Prior probabilities of groups:
+##         No        Yes 
+## 0.96662917 0.03337083 
+## 
+## Group means:
+##       income   balance
+## No  33513.73  805.9109
+## Yes 32450.16 1753.3628
+## 
+## Coefficients of linear discriminants:
+##                  LD1
+## income  9.334558e-06
+## balance 2.233976e-03</code></pre>
+<p>La precisión durante el entrenamiento es de un <span class="math inline">\(\approx 97\%\)</span>. También vemos que las probabilidades a priori <span class="math inline">\(\pi_i, i = 1,2\)</span> de pertenecer a cada clase son aproximadamente <span class="math inline">\(97\%\)</span> y <span class="math inline">\(3\%\)</span> respectivamente, lo cual corresponde a la razón de fallo que se comenta al inicio. El resultado <code>Coefficients of linear discriminants</code> indica las constantes que se multiplican a cada elemento de la muestra <span class="math inline">\((\text{income}_i, \text{balance}_i)\)</span>, <span class="math inline">\(i = 1, \ldots, n_{\text{train}}\)</span>, para obtener su correspondiente valor de la <em>función discriminante lineal</em>:
+<span class="math display">\[ \delta_k(x) = x^T \Sigma^{-1} \mu_k  - \dfrac{1}{2} \mu_k^T \Sigma^{-1} \mu_k+ log(\pi_k) \]</span>
+Todo indica que la variable <code>balance</code> tiene un mayor peso en la discriminación. Como alternativa, podemos comprobarlo usando <code>varImp</code>:</p>
+<div class="sourceCode" id="cb87"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb87-1" data-line-number="1"><span class="kw">varImp</span>(model_lda_def)</a></code></pre></div>
+<pre><code>## ROC curve variable importance
+## 
+##         Importance
+## balance        100
+## income           0</code></pre>
+<p>Veamos ahora qué tal es el ajuste en los datos test.</p>
+<div class="sourceCode" id="cb89"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb89-1" data-line-number="1"><span class="co"># hagamos las predicciones del conjunto de prueba</span></a>
+<a class="sourceLine" id="cb89-2" data-line-number="2">prediction_lda_def &lt;-<span class="st"> </span><span class="kw">predict</span>(model_lda_def, <span class="dt">newdata =</span> test_df)</a>
+<a class="sourceLine" id="cb89-3" data-line-number="3"><span class="kw">confusionMatrix</span>(prediction_lda_def, <span class="dt">reference =</span> test_df<span class="op">$</span>default)</a></code></pre></div>
+<pre><code>## Confusion Matrix and Statistics
+## 
+##           Reference
+## Prediction   No  Yes
+##        No  1927   54
+##        Yes    6   12
+##                                          
+##                Accuracy : 0.97           
+##                  95% CI : (0.9615, 0.977)
+##     No Information Rate : 0.967          
+##     P-Value [Acc &gt; NIR] : 0.2488         
+##                                          
+##                   Kappa : 0.2755         
+##                                          
+##  Mcnemar&#39;s Test P-Value : 1.298e-09      
+##                                          
+##             Sensitivity : 0.9969         
+##             Specificity : 0.1818         
+##          Pos Pred Value : 0.9727         
+##          Neg Pred Value : 0.6667         
+##              Prevalence : 0.9670         
+##          Detection Rate : 0.9640         
+##    Detection Prevalence : 0.9910         
+##       Balanced Accuracy : 0.5894         
+##                                          
+##        &#39;Positive&#39; Class : No             
+## </code></pre>
+<div class="sourceCode" id="cb91"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb91-1" data-line-number="1"><span class="co"># extraemos el Accuracy o Precisión</span></a>
+<a class="sourceLine" id="cb91-2" data-line-number="2"><span class="kw">confusionMatrix</span>(prediction_lda_def, <span class="dt">reference =</span> test_df<span class="op">$</span>default)<span class="op">$</span>overall[<span class="dv">1</span>]</a></code></pre></div>
+<pre><code>## Accuracy 
+## 0.969985</code></pre>
+<div class="sourceCode" id="cb93"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb93-1" data-line-number="1"><span class="co"># la tasa de error</span></a>
+<a class="sourceLine" id="cb93-2" data-line-number="2">tasa.error.lda &lt;-<span class="st"> </span><span class="dv">1</span><span class="op">-</span><span class="kw">confusionMatrix</span>(prediction_lda_def, <span class="dt">reference =</span> test_df<span class="op">$</span>default)<span class="op">$</span>overall[<span class="dv">1</span>]</a>
+<a class="sourceLine" id="cb93-3" data-line-number="3"><span class="kw">names</span>(tasa.error.lda) &lt;-<span class="st"> &quot;Error LDA&quot;</span></a>
+<a class="sourceLine" id="cb93-4" data-line-number="4">tasa.error.lda</a></code></pre></div>
+<pre><code>##  Error LDA 
+## 0.03001501</code></pre>
+<p>Como estamos en un problema de clasificación en dos dimensiones (<span class="math inline">\(p = 2\)</span>), es posible representar la frontera de decisión del algoritmo, usando la función <code>decision_bound</code>. Debemos modificar los campos para que coincidan con las variables de <code>Default</code>:</p>
+<div class="sourceCode" id="cb95"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb95-1" data-line-number="1">decision_bound =<span class="st"> </span><span class="cf">function</span>(train_df_in, test_df_in, model_in){</a>
+<a class="sourceLine" id="cb95-2" data-line-number="2">  <span class="co"># plot decision boundary  for df &lt;- Default[, c(&quot;income&quot;, &quot;balance&quot;, &quot;default&quot;)]</span></a>
+<a class="sourceLine" id="cb95-3" data-line-number="3"></a>
+<a class="sourceLine" id="cb95-4" data-line-number="4">  <span class="kw">require</span>(MASS)</a>
+<a class="sourceLine" id="cb95-5" data-line-number="5">  <span class="kw">require</span>(caret)</a>
+<a class="sourceLine" id="cb95-6" data-line-number="6">  <span class="kw">require</span>(ggplot2)</a>
+<a class="sourceLine" id="cb95-7" data-line-number="7">  <span class="kw">require</span>(gridExtra)</a>
+<a class="sourceLine" id="cb95-8" data-line-number="8"></a>
+<a class="sourceLine" id="cb95-9" data-line-number="9">  <span class="co"># Paso 1: crear un grid de valores desde min a max de ambos predictores</span></a>
+<a class="sourceLine" id="cb95-10" data-line-number="10">  pl =<span class="st"> </span><span class="kw">seq</span>(<span class="kw">min</span>(train_df_in<span class="op">$</span>balance), <span class="kw">max</span>(train_df_in<span class="op">$</span>balance), <span class="dt">length.out =</span> <span class="dv">80</span>)</a>
+<a class="sourceLine" id="cb95-11" data-line-number="11">  pw =<span class="st"> </span><span class="kw">seq</span>(<span class="kw">min</span>(train_df_in<span class="op">$</span>income), <span class="kw">max</span>(train_df_in<span class="op">$</span>income), <span class="dt">length.out =</span> <span class="dv">80</span>)</a>
+<a class="sourceLine" id="cb95-12" data-line-number="12"></a>
+<a class="sourceLine" id="cb95-13" data-line-number="13">  lgrid &lt;-<span class="st"> </span><span class="kw">expand.grid</span>(<span class="dt">balance=</span>pl, <span class="dt">income=</span>pw)</a>
+<a class="sourceLine" id="cb95-14" data-line-number="14"></a>
+<a class="sourceLine" id="cb95-15" data-line-number="15">  <span class="co"># Paso 2: obtener las predicciones tanto para el grid como para el test</span></a>
+<a class="sourceLine" id="cb95-16" data-line-number="16">  modelPredGrid &lt;-<span class="st"> </span><span class="kw">predict</span>(model_in, <span class="dt">newdata=</span>lgrid)</a>
+<a class="sourceLine" id="cb95-17" data-line-number="17">  train_df_in<span class="op">$</span>Pred.Class &lt;-<span class="st"> </span><span class="kw">predict</span>(model_in, <span class="dt">newdata =</span> train_df_in)</a>
+<a class="sourceLine" id="cb95-18" data-line-number="18">  test_df_in<span class="op">$</span>Pred.Class &lt;-<span class="st"> </span><span class="kw">predict</span>(model_in, <span class="dt">newdata =</span> test_df_in)</a>
+<a class="sourceLine" id="cb95-19" data-line-number="19"></a>
+<a class="sourceLine" id="cb95-20" data-line-number="20">  <span class="co"># Paso 3: ggplot con la funcion contour</span></a>
+<a class="sourceLine" id="cb95-21" data-line-number="21">  gg1 &lt;-<span class="st"> </span><span class="kw">ggplot</span>(<span class="dt">data=</span>lgrid) <span class="op">+</span></a>
+<a class="sourceLine" id="cb95-22" data-line-number="22"><span class="st">    </span><span class="kw">stat_contour</span>(<span class="kw">aes</span>(<span class="dt">x=</span>balance, <span class="dt">y=</span>income, <span class="dt">z=</span><span class="kw">as.numeric</span>(modelPredGrid)), <span class="dt">bins=</span><span class="dv">2</span>) <span class="op">+</span></a>
+<a class="sourceLine" id="cb95-23" data-line-number="23"><span class="st">    </span><span class="kw">geom_point</span>(<span class="kw">aes</span>(<span class="dt">x=</span>balance, <span class="dt">y=</span>income, <span class="dt">colour=</span>modelPredGrid), <span class="dt">alpha=</span><span class="fl">0.1</span>) <span class="op">+</span></a>
+<a class="sourceLine" id="cb95-24" data-line-number="24"><span class="st">    </span><span class="kw">labs</span>(<span class="dt">colour =</span> <span class="st">&quot;Clases&quot;</span>) <span class="op">+</span><span class="st"> </span><span class="kw">ggtitle</span>(<span class="st">&quot;Train&quot;</span>) <span class="op">+</span></a>
+<a class="sourceLine" id="cb95-25" data-line-number="25"><span class="st">    </span><span class="kw">geom_point</span>(<span class="dt">data=</span>train_df_in,</a>
+<a class="sourceLine" id="cb95-26" data-line-number="26">               <span class="kw">aes</span>(<span class="dt">x=</span>balance, <span class="dt">y=</span>income,</a>
+<a class="sourceLine" id="cb95-27" data-line-number="27">                   <span class="dt">colour=</span>default), <span class="dt">size=</span><span class="dv">5</span>, <span class="dt">shape=</span><span class="dv">1</span>) <span class="op">+</span></a>
+<a class="sourceLine" id="cb95-28" data-line-number="28"><span class="st">    </span><span class="kw">theme_light</span>()</a>
+<a class="sourceLine" id="cb95-29" data-line-number="29"></a>
+<a class="sourceLine" id="cb95-30" data-line-number="30">  gg2 &lt;-<span class="st"> </span><span class="kw">ggplot</span>(<span class="dt">data=</span>lgrid) <span class="op">+</span></a>
+<a class="sourceLine" id="cb95-31" data-line-number="31"><span class="st">    </span><span class="kw">stat_contour</span>(<span class="kw">aes</span>(<span class="dt">x=</span>balance, <span class="dt">y=</span>income, <span class="dt">z=</span><span class="kw">as.numeric</span>(modelPredGrid)), <span class="dt">bins=</span><span class="dv">2</span>) <span class="op">+</span></a>
+<a class="sourceLine" id="cb95-32" data-line-number="32"><span class="st">    </span><span class="kw">geom_point</span>(<span class="kw">aes</span>(<span class="dt">x=</span>balance, <span class="dt">y=</span>income, <span class="dt">colour=</span>modelPredGrid), <span class="dt">alpha=</span><span class="fl">0.1</span>) <span class="op">+</span></a>
+<a class="sourceLine" id="cb95-33" data-line-number="33"><span class="st">    </span><span class="kw">labs</span>(<span class="dt">colour =</span> <span class="st">&quot;Clases&quot;</span>) <span class="op">+</span><span class="st"> </span><span class="kw">ggtitle</span>(<span class="st">&quot;Test&quot;</span>) <span class="op">+</span></a>
+<a class="sourceLine" id="cb95-34" data-line-number="34"><span class="st">    </span><span class="kw">geom_point</span>(<span class="dt">data=</span>test_df_in,</a>
+<a class="sourceLine" id="cb95-35" data-line-number="35">               <span class="kw">aes</span>(<span class="dt">x=</span>balance, <span class="dt">y=</span>income,</a>
+<a class="sourceLine" id="cb95-36" data-line-number="36">                   <span class="dt">colour=</span>default), <span class="dt">size=</span><span class="dv">5</span>, <span class="dt">shape=</span><span class="dv">1</span>) <span class="op">+</span></a>
+<a class="sourceLine" id="cb95-37" data-line-number="37"><span class="st">    </span><span class="kw">theme_light</span>()</a>
+<a class="sourceLine" id="cb95-38" data-line-number="38">  <span class="kw">grid.arrange</span>(gg1, gg2, <span class="dt">ncol=</span><span class="dv">1</span>, <span class="dt">nrow=</span><span class="dv">2</span>)</a>
+<a class="sourceLine" id="cb95-39" data-line-number="39">}</a></code></pre></div>
+<div class="sourceCode" id="cb96"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb96-1" data-line-number="1"><span class="kw">decision_bound</span>(train_df, test_df, model_lda_def)</a></code></pre></div>
+<p><img src="_main_files/figure-html/unnamed-chunk-43-1.png" width="80%" style="display: block; margin: auto;" /></p>
+</div>
+            </section>
+
+          </div>
+        </div>
+      </div>
+<a href="DA.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="QDA.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+    </div>
+  </div>
+<script src="assets/gitbook-2.6.7/js/app.min.js"></script>
+<script src="assets/gitbook-2.6.7/js/lunr.js"></script>
+<script src="assets/gitbook-2.6.7/js/clipboard.min.js"></script>
+<script src="assets/gitbook-2.6.7/js/plugin-search.js"></script>
+<script src="assets/gitbook-2.6.7/js/plugin-sharing.js"></script>
+<script src="assets/gitbook-2.6.7/js/plugin-fontsettings.js"></script>
+<script src="assets/gitbook-2.6.7/js/plugin-bookdown.js"></script>
+<script src="assets/gitbook-2.6.7/js/jquery.highlight.js"></script>
+<script src="assets/gitbook-2.6.7/js/plugin-clipboard.js"></script>
+<script>
+gitbook.require(["gitbook"], function(gitbook) {
+gitbook.start({
+"sharing": {
+"github": false,
+"facebook": true,
+"twitter": true,
+"linkedin": false,
+"weibo": false,
+"instapaper": false,
+"vk": false,
+"all": ["facebook", "twitter", "linkedin", "weibo", "instapaper"]
+},
+"fontsettings": {
+"theme": "white",
+"family": "sans",
+"size": 2
+},
+"edit": {
+"link": null,
+"text": null
+},
+"history": {
+"link": null,
+"text": null
+},
+"view": {
+"link": null,
+"text": null
+},
+"download": ["_main.pdf"],
+"toc": {
+"collapse": "subsection"
+},
+"toolbar": {
+"position": "static"
+}
+});
+});
+</script>
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    var src = "true";
+    if (src === "" || src === "true") src = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-MML-AM_CHTML";
+    if (location.protocol !== "file:")
+      if (/^https?:/.test(src))
+        src = src.replace(/^https?:/, '');
+    script.src = src;
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+</body>
+
+</html>

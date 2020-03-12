@@ -1,8 +1,0 @@
-"0","featurePlot(x = iris[, 1:4], "
-"0","            y = iris$Species, "
-"0","            plot = ""box"", "
-"0","            ## Pass in options to bwplot() "
-"0","            scales = list(y = list(relation=""free""),"
-"0","                          x = list(rot = 90)),  "
-"0","            layout = c(4,1 ), "
-"0","            auto.key = list(columns = 2))"

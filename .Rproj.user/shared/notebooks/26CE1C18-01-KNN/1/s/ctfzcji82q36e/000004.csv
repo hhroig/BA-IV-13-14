@@ -1,3 +1,0 @@
-"0","knitr::kable("
-"0","  tab, caption = 'Matriz de Confusión - KNN Iris',"
-"0","  booktabs = TRUE)"

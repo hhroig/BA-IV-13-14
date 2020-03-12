@@ -1,5 +1,0 @@
-"0","set.seed(666)"
-"0","train.ID <- createDataPartition(df$diagnosis, p = 0.7, list = FALSE)"
-"0",""
-"0","train_df <- df[train.ID, ]"
-"0","test_df <- df[-train.ID, ]"

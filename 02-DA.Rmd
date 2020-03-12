@@ -235,7 +235,7 @@ model_rda_def$finalModel
 ggplot(model_rda_def) + theme_light()
 ```
 
-Los resultados indican que los hiperparámetros óptimos en este caso corresponden a $(\lambda, \gamma) = (0,0)$. ¡Este es el caso del algoritmo LDA! Esto que hemos hecho es comparar diferentes modelos (porque han sido ajustados con diferentes hiperparámetros) resultantes del mismo algoritmo. Veamos las predicciones para la muestra test, la tasa de error correspondiente y la frontera de decisión.
+Los resultados indican que los hiperparámetros óptimos en este caso corresponden a $(\lambda, \gamma) = (0.6, 0)$. Esto que hemos hecho es comparar diferentes modelos (porque han sido ajustados con diferentes hiperparámetros) resultantes del mismo algoritmo. Veamos las predicciones para la muestra test, la tasa de error correspondiente y la frontera de decisión.
 
 ```{r}
 # hagamos las predicciones del conjunto de prueba

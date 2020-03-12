@@ -1,3 +1,0 @@
-"0","ggplot(df.pca,  aes(x = PC1, y = PC2, group = diagnosis)) +"
-"0","  geom_point(aes(color = diagnosis ), alpha = 0.8) +"
-"0","  theme_light()"

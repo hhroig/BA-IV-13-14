@@ -1,8 +1,0 @@
-"0",""
-"0","# AUC: mientras mas cercano a 1, mejor predicciones"
-"0","auc.lda <- performance(prob.pred, measure = ""auc"")@y.values[[1]]"
-"0","auc.lda"
-"1","[1]"
-"1"," 0.9526643"
-"1","
-"

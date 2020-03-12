@@ -1,7 +1,0 @@
-"0","# creamos una partición test"
-"0","df <- iris"
-"0","set.seed(123)"
-"0","train.ID <- createDataPartition(df$Species, p = 0.8, list = FALSE)"
-"0",""
-"0","train_df <- df[train.ID, ]"
-"0","test_df <- df[-train.ID, ]"

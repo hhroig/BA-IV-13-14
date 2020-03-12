@@ -1,0 +1,398 @@
+<!DOCTYPE html>
+<html lang="" xml:lang="">
+<head>
+
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <title>2.4 Weighted KNN | Introducción al Aprendizaje Supervisado</title>
+  <meta name="description" content="Sesiones 13-15 IV Edición del Big Analytics: de la información al conocimiento." />
+  <meta name="generator" content="bookdown 0.17 and GitBook 2.6.7" />
+
+  <meta property="og:title" content="2.4 Weighted KNN | Introducción al Aprendizaje Supervisado" />
+  <meta property="og:type" content="book" />
+  
+  
+  <meta property="og:description" content="Sesiones 13-15 IV Edición del Big Analytics: de la información al conocimiento." />
+  
+
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:title" content="2.4 Weighted KNN | Introducción al Aprendizaje Supervisado" />
+  
+  <meta name="twitter:description" content="Sesiones 13-15 IV Edición del Big Analytics: de la información al conocimiento." />
+  
+
+<meta name="author" content="Harold A. Hernández-Roig (hahernan@est-econ.uc3m.es)" />
+
+
+
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+  
+  
+<link rel="prev" href="regresión.html"/>
+<link rel="next" href="DA.html"/>
+<script src="assets/jquery-2.2.3/jquery.min.js"></script>
+<link href="assets/gitbook-2.6.7/css/style.css" rel="stylesheet" />
+<link href="assets/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
+<link href="assets/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
+<link href="assets/gitbook-2.6.7/css/plugin-highlight.css" rel="stylesheet" />
+<link href="assets/gitbook-2.6.7/css/plugin-search.css" rel="stylesheet" />
+<link href="assets/gitbook-2.6.7/css/plugin-fontsettings.css" rel="stylesheet" />
+<link href="assets/gitbook-2.6.7/css/plugin-clipboard.css" rel="stylesheet" />
+
+
+
+
+
+
+
+
+
+
+
+<style type="text/css">
+a.sourceLine { display: inline-block; line-height: 1.25; }
+a.sourceLine { pointer-events: none; color: inherit; text-decoration: inherit; }
+a.sourceLine:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode { white-space: pre; position: relative; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+code.sourceCode { white-space: pre-wrap; }
+a.sourceLine { text-indent: -1em; padding-left: 1em; }
+}
+pre.numberSource a.sourceLine
+  { position: relative; left: -4em; }
+pre.numberSource a.sourceLine::before
+  { content: attr(data-line-number);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; pointer-events: all; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {  }
+@media screen {
+a.sourceLine::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #7d9029; } /* Attribute */
+code span.bn { color: #40a070; } /* BaseN */
+code span.bu { } /* BuiltIn */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4070a0; } /* Char */
+code span.cn { color: #880000; } /* Constant */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code span.dt { color: #902000; } /* DataType */
+code span.dv { color: #40a070; } /* DecVal */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #40a070; } /* Float */
+code span.fu { color: #06287e; } /* Function */
+code span.im { } /* Import */
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.op { color: #666666; } /* Operator */
+code span.ot { color: #007020; } /* Other */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.st { color: #4070a0; } /* String */
+code span.va { color: #19177c; } /* Variable */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+</style>
+
+</head>
+
+<body>
+
+
+
+  <div class="book without-animation with-summary font-size-2 font-family-1" data-basepath=".">
+
+    <div class="book-summary">
+      <nav role="navigation">
+
+<ul class="summary">
+<li class="chapter" data-level="1" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i><b>1</b> Introducción</a></li>
+<li class="chapter" data-level="2" data-path="k-vecinos-más-próximos.html"><a href="k-vecinos-más-próximos.html"><i class="fa fa-check"></i><b>2</b> K - Vecinos más Próximos</a><ul>
+<li class="chapter" data-level="2.1" data-path="clasificación-con-el-paquete-class.html"><a href="clasificación-con-el-paquete-class.html"><i class="fa fa-check"></i><b>2.1</b> Clasificación con el paquete <code>class</code></a></li>
+<li class="chapter" data-level="2.2" data-path="el-paquete-caret.html"><a href="el-paquete-caret.html"><i class="fa fa-check"></i><b>2.2</b> El paquete <code>caret</code></a><ul>
+<li class="chapter" data-level="2.2.1" data-path="el-paquete-caret.html"><a href="el-paquete-caret.html#visualización"><i class="fa fa-check"></i><b>2.2.1</b> Visualización</a></li>
+<li class="chapter" data-level="2.2.2" data-path="el-paquete-caret.html"><a href="el-paquete-caret.html#clasificación-con-knn"><i class="fa fa-check"></i><b>2.2.2</b> Clasificación con KNN</a></li>
+<li class="chapter" data-level="2.2.3" data-path="el-paquete-caret.html"><a href="el-paquete-caret.html#importancia-de-las-variables"><i class="fa fa-check"></i><b>2.2.3</b> Importancia de las variables</a></li>
+</ul></li>
+<li class="chapter" data-level="2.3" data-path="regresión.html"><a href="regresión.html"><i class="fa fa-check"></i><b>2.3</b> Regresión</a></li>
+<li class="chapter" data-level="2.4" data-path="weighted-knn.html"><a href="weighted-knn.html"><i class="fa fa-check"></i><b>2.4</b> Weighted KNN</a></li>
+</ul></li>
+<li class="chapter" data-level="3" data-path="DA.html"><a href="DA.html"><i class="fa fa-check"></i><b>3</b> Análisis Discriminante</a><ul>
+<li class="chapter" data-level="3.1" data-path="LDA.html"><a href="LDA.html"><i class="fa fa-check"></i><b>3.1</b> Análisis Discriminante Lineal</a></li>
+<li class="chapter" data-level="3.2" data-path="QDA.html"><a href="QDA.html"><i class="fa fa-check"></i><b>3.2</b> Análisis Discriminante Cuadrático</a></li>
+<li class="chapter" data-level="3.3" data-path="RDA.html"><a href="RDA.html"><i class="fa fa-check"></i><b>3.3</b> Análisis Discriminante Regularizado</a></li>
+</ul></li>
+<li class="chapter" data-level="4" data-path="compara.html"><a href="compara.html"><i class="fa fa-check"></i><b>4</b> Comparación entre Modelos</a><ul>
+<li class="chapter" data-level="4.1" data-path="comparando-según-accuracy.html"><a href="comparando-según-accuracy.html"><i class="fa fa-check"></i><b>4.1</b> Comparando según <code>Accuracy</code></a></li>
+<li class="chapter" data-level="4.2" data-path="curva-roc.html"><a href="curva-roc.html"><i class="fa fa-check"></i><b>4.2</b> Curva <em>ROC</em></a><ul>
+<li class="chapter" data-level="4.2.1" data-path="curva-roc.html"><a href="curva-roc.html#análisis-en-la-muestra-test"><i class="fa fa-check"></i><b>4.2.1</b> Análisis en la muestra test</a></li>
+<li class="chapter" data-level="4.2.2" data-path="curva-roc.html"><a href="curva-roc.html#análisis-en-la-muestra-de-entrenamiento"><i class="fa fa-check"></i><b>4.2.2</b> Análisis en la muestra de entrenamiento</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="5" data-path="wiscon.html"><a href="wiscon.html"><i class="fa fa-check"></i><b>5</b> Wisconsin Breast-Cancer Data</a><ul>
+<li class="chapter" data-level="5.1" data-path="comentarios-finales-reducción-de-la-dimensión.html"><a href="comentarios-finales-reducción-de-la-dimensión.html"><i class="fa fa-check"></i><b>5.1</b> Comentarios finales: reducción de la dimensión</a></li>
+</ul></li>
+<li class="chapter" data-level="" data-path="bibliografía.html"><a href="bibliografía.html"><i class="fa fa-check"></i>Bibliografía</a></li>
+</ul>
+
+      </nav>
+    </div>
+
+    <div class="book-body">
+      <div class="body-inner">
+        <div class="book-header" role="navigation">
+          <h1>
+            <i class="fa fa-circle-o-notch fa-spin"></i><a href="./">Introducción al Aprendizaje Supervisado</a>
+          </h1>
+        </div>
+
+        <div class="page-wrapper" tabindex="-1" role="main">
+          <div class="page-inner">
+
+            <section class="normal" id="section-">
+<div id="weighted-knn" class="section level2">
+<h2><span class="header-section-number">2.4</span> Weighted KNN</h2>
+<p>El método de K-Vecinos Más Próximos Ponderados (WKNN: <em>Weighted K-Nearest Neighbors</em>) es una variante del KNN. El principio básico es el mismo: predecir una respuesta en función de los puntos más cercanos de la muestra. La diferencia es que WKNN da más importancia a los más próximos, dentro de los K prefijados. Esto se logra ponderando o dando pesos a los vecinos.</p>
+<p>En <code>caret</code> podemos fijar el método <code>kknn</code> que implementa WKNN, tanto para regresión como para clasificación. Ahora debemos optimizar 3 hiperparámetros:</p>
+<div class="sourceCode" id="cb62"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb62-1" data-line-number="1"><span class="kw">getModelInfo</span>(<span class="st">&quot;kknn&quot;</span>)<span class="op">$</span>kknn<span class="op">$</span>parameters</a></code></pre></div>
+<pre><code>##   parameter     class           label
+## 1      kmax   numeric Max. #Neighbors
+## 2  distance   numeric        Distance
+## 3    kernel character          Kernel</code></pre>
+<p>El número de vecinos <code>K</code> se corresponde al campo<code>kmax</code>. El campo <code>distance</code> se refiere al order del parámetro <span class="math inline">\(p\)</span> en la <em>Distancia de Minkowski</em>. El <code>kernel</code> es la transformación de los ejes de coordenadas, las opciones son:</p>
+<div class="sourceCode" id="cb64"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb64-1" data-line-number="1">kerns &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="st">&quot;rectangular&quot;</span>, <span class="st">&quot;triangular&quot;</span>, <span class="st">&quot;epanechnikov&quot;</span>, <span class="st">&quot;biweight&quot;</span>, <span class="st">&quot;triweight&quot;</span>, </a>
+<a class="sourceLine" id="cb64-2" data-line-number="2">                                 <span class="st">&quot;cos&quot;</span>, <span class="st">&quot;inv&quot;</span>, <span class="st">&quot;gaussian&quot;</span>)</a></code></pre></div>
+<p>Veamos un ejemplo con los datos <code>iris</code>. Empezamos fijando un grid o malla de posibles valores de los hiperparámetros a optimizar:</p>
+<div class="sourceCode" id="cb65"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb65-1" data-line-number="1"><span class="co"># muestra, por eso es necesario una particion balanceada con createDataPartition</span></a>
+<a class="sourceLine" id="cb65-2" data-line-number="2">df &lt;-<span class="st"> </span>iris</a>
+<a class="sourceLine" id="cb65-3" data-line-number="3"><span class="kw">set.seed</span>(<span class="dv">123</span>)</a>
+<a class="sourceLine" id="cb65-4" data-line-number="4">train.ID &lt;-<span class="st"> </span><span class="kw">createDataPartition</span>(df<span class="op">$</span>Species, <span class="dt">p =</span> <span class="fl">0.8</span>, <span class="dt">list =</span> <span class="ot">FALSE</span>)</a>
+<a class="sourceLine" id="cb65-5" data-line-number="5"></a>
+<a class="sourceLine" id="cb65-6" data-line-number="6">train_df &lt;-<span class="st"> </span>df[train.ID, ]</a>
+<a class="sourceLine" id="cb65-7" data-line-number="7">test_df &lt;-<span class="st"> </span>df[<span class="op">-</span>train.ID, ]</a>
+<a class="sourceLine" id="cb65-8" data-line-number="8"></a>
+<a class="sourceLine" id="cb65-9" data-line-number="9"><span class="co"># hacemos una validación cruzada con 10-folds 10 veces</span></a>
+<a class="sourceLine" id="cb65-10" data-line-number="10">fit_control &lt;-<span class="st"> </span><span class="kw">trainControl</span>(<span class="dt">method=</span><span class="st">&#39;repeatedcv&#39;</span>, <span class="dt">number =</span> <span class="dv">10</span>, <span class="dt">repeats =</span> <span class="dv">10</span>)</a>
+<a class="sourceLine" id="cb65-11" data-line-number="11"></a>
+<a class="sourceLine" id="cb65-12" data-line-number="12"><span class="co"># fijamos el grid de valores de los hiperparámetros:</span></a>
+<a class="sourceLine" id="cb65-13" data-line-number="13">buscar_mejor &lt;-<span class="st"> </span><span class="kw">expand.grid</span>( <span class="dt">kmax =</span>  <span class="dv">3</span><span class="op">:</span><span class="dv">9</span>,</a>
+<a class="sourceLine" id="cb65-14" data-line-number="14">                             <span class="dt">distance =</span> <span class="dv">1</span><span class="op">:</span><span class="dv">2</span>,</a>
+<a class="sourceLine" id="cb65-15" data-line-number="15">                             <span class="dt">kernel =</span> <span class="kw">c</span>(<span class="st">&quot;rectangular&quot;</span>, <span class="co">#standard knn</span></a>
+<a class="sourceLine" id="cb65-16" data-line-number="16">                                        <span class="st">&quot;triangular&quot;</span>,</a>
+<a class="sourceLine" id="cb65-17" data-line-number="17">                                        <span class="st">&quot;gaussian&quot;</span>))</a></code></pre></div>
+<p>El modelo se ajusta igual a como ya hemos estudiado:</p>
+<div class="sourceCode" id="cb66"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb66-1" data-line-number="1"><span class="kw">set.seed</span>(<span class="dv">321</span>)</a>
+<a class="sourceLine" id="cb66-2" data-line-number="2">model.w.knn &lt;-<span class="st"> </span><span class="kw">train</span>(Species <span class="op">~</span>.,</a>
+<a class="sourceLine" id="cb66-3" data-line-number="3">                     <span class="dt">data =</span> train_df,</a>
+<a class="sourceLine" id="cb66-4" data-line-number="4">                     <span class="dt">method =</span> <span class="st">&quot;kknn&quot;</span>,</a>
+<a class="sourceLine" id="cb66-5" data-line-number="5">                     <span class="dt">trControl =</span> fit_control,</a>
+<a class="sourceLine" id="cb66-6" data-line-number="6">                     <span class="dt">preProcess =</span> <span class="kw">c</span>(<span class="st">&quot;center&quot;</span>, <span class="st">&quot;scale&quot;</span>),</a>
+<a class="sourceLine" id="cb66-7" data-line-number="7">                     <span class="dt">tuneGrid =</span> buscar_mejor)</a>
+<a class="sourceLine" id="cb66-8" data-line-number="8">model.w.knn</a></code></pre></div>
+<pre><code>## k-Nearest Neighbors 
+## 
+## 120 samples
+##   4 predictor
+##   3 classes: &#39;setosa&#39;, &#39;versicolor&#39;, &#39;virginica&#39; 
+## 
+## Pre-processing: centered (4), scaled (4) 
+## Resampling: Cross-Validated (10 fold, repeated 10 times) 
+## Summary of sample sizes: 108, 108, 108, 108, 108, 108, ... 
+## Resampling results across tuning parameters:
+## 
+##   kmax  distance  kernel       Accuracy   Kappa  
+##   3     1         rectangular  0.9600000  0.94000
+##   3     1         triangular   0.9558333  0.93375
+##   3     1         gaussian     0.9583333  0.93750
+##   3     2         rectangular  0.9508333  0.92625
+##   3     2         triangular   0.9550000  0.93250
+##   3     2         gaussian     0.9483333  0.92250
+##   4     1         rectangular  0.9600000  0.94000
+##   4     1         triangular   0.9558333  0.93375
+##   4     1         gaussian     0.9583333  0.93750
+##   4     2         rectangular  0.9491667  0.92375
+##   4     2         triangular   0.9550000  0.93250
+##   4     2         gaussian     0.9458333  0.91875
+##   5     1         rectangular  0.9575000  0.93625
+##   5     1         triangular   0.9558333  0.93375
+##   5     1         gaussian     0.9583333  0.93750
+##   5     2         rectangular  0.9400000  0.91000
+##   5     2         triangular   0.9566667  0.93500
+##   5     2         gaussian     0.9591667  0.93875
+##   6     1         rectangular  0.9575000  0.93625
+##   6     1         triangular   0.9558333  0.93375
+##   6     1         gaussian     0.9550000  0.93250
+##   6     2         rectangular  0.9416667  0.91250
+##   6     2         triangular   0.9558333  0.93375
+##   6     2         gaussian     0.9558333  0.93375
+##   7     1         rectangular  0.9550000  0.93250
+##   7     1         triangular   0.9558333  0.93375
+##   7     1         gaussian     0.9558333  0.93375
+##   7     2         rectangular  0.9433333  0.91500
+##   7     2         triangular   0.9575000  0.93625
+##   7     2         gaussian     0.9558333  0.93375
+##   8     1         rectangular  0.9550000  0.93250
+##   8     1         triangular   0.9558333  0.93375
+##   8     1         gaussian     0.9558333  0.93375
+##   8     2         rectangular  0.9433333  0.91500
+##   8     2         triangular   0.9616667  0.94250
+##   8     2         gaussian     0.9583333  0.93750
+##   9     1         rectangular  0.9550000  0.93250
+##   9     1         triangular   0.9558333  0.93375
+##   9     1         gaussian     0.9558333  0.93375
+##   9     2         rectangular  0.9450000  0.91750
+##   9     2         triangular   0.9675000  0.95125
+##   9     2         gaussian     0.9608333  0.94125
+## 
+## Accuracy was used to select the optimal model using the largest value.
+## The final values used for the model were kmax = 9, distance = 2 and kernel
+##  = triangular.</code></pre>
+<div class="sourceCode" id="cb68"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb68-1" data-line-number="1">model.w.knn<span class="op">$</span>finalModel</a></code></pre></div>
+<pre><code>## 
+## Call:
+## kknn::train.kknn(formula = .outcome ~ ., data = dat, kmax = param$kmax,     distance = param$distance, kernel = as.character(param$kernel))
+## 
+## Type of response variable: nominal
+## Minimal misclassification: 0.01666667
+## Best kernel: triangular
+## Best k: 9</code></pre>
+<div class="sourceCode" id="cb70"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb70-1" data-line-number="1"><span class="kw">plot</span>(model.w.knn)</a></code></pre></div>
+<p><img src="_main_files/figure-html/unnamed-chunk-34-1.png" width="80%" style="display: block; margin: auto;" />
+Observamos que el modelo final, el mejor de acuerdo al <code>Accuracy</code> es aquel con 8 vecinos, donde el parámetro <span class="math inline">\(p=2\)</span> en la Distancia de Minkowski (esto es equivalente a la Distancia Euclídea) y el kernel es triangular. Por otro lado, en lugar de escribir explícitamente el grid de valores a probar, en <code>caret</code> tenemos la opción de realizar una búsqueda aleatoria. Esto podría ser un primer paso para detectar rangos de valores de los hiperparámetros donde luego afinar la búsqueda. Como ejemplo, lo haremos para solo 8 combinaciones de posibles hiperparámetros (en la práctica debemos fijar un mayor número de combinaciones, lo que conlleva un mayor coste computacional):</p>
+<div class="sourceCode" id="cb71"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb71-1" data-line-number="1"><span class="co"># random search WKNN</span></a>
+<a class="sourceLine" id="cb71-2" data-line-number="2">fit_control &lt;-<span class="st"> </span><span class="kw">trainControl</span>(<span class="dt">method=</span><span class="st">&#39;repeatedcv&#39;</span>, <span class="dt">number =</span> <span class="dv">10</span>, </a>
+<a class="sourceLine" id="cb71-3" data-line-number="3">                            <span class="dt">repeats =</span> <span class="dv">10</span>,</a>
+<a class="sourceLine" id="cb71-4" data-line-number="4">                            <span class="dt">search =</span> <span class="st">&quot;random&quot;</span>)</a>
+<a class="sourceLine" id="cb71-5" data-line-number="5"><span class="kw">set.seed</span>(<span class="dv">321</span>)</a>
+<a class="sourceLine" id="cb71-6" data-line-number="6">model.w.knn &lt;-<span class="st"> </span><span class="kw">train</span>(Species <span class="op">~</span>.,</a>
+<a class="sourceLine" id="cb71-7" data-line-number="7">                     <span class="dt">data =</span> train_df,</a>
+<a class="sourceLine" id="cb71-8" data-line-number="8">                     <span class="dt">method =</span> <span class="st">&quot;kknn&quot;</span>,</a>
+<a class="sourceLine" id="cb71-9" data-line-number="9">                     <span class="dt">trControl =</span> fit_control,</a>
+<a class="sourceLine" id="cb71-10" data-line-number="10">                     <span class="dt">preProcess =</span> <span class="kw">c</span>(<span class="st">&quot;center&quot;</span>, <span class="st">&quot;scale&quot;</span>),</a>
+<a class="sourceLine" id="cb71-11" data-line-number="11">                     <span class="dt">tuneLength =</span> <span class="dv">8</span>)</a>
+<a class="sourceLine" id="cb71-12" data-line-number="12">model.w.knn</a></code></pre></div>
+<pre><code>## k-Nearest Neighbors 
+## 
+## 120 samples
+##   4 predictor
+##   3 classes: &#39;setosa&#39;, &#39;versicolor&#39;, &#39;virginica&#39; 
+## 
+## Pre-processing: centered (4), scaled (4) 
+## Resampling: Cross-Validated (10 fold, repeated 10 times) 
+## Summary of sample sizes: 108, 108, 108, 108, 108, 108, ... 
+## Resampling results across tuning parameters:
+## 
+##   kmax  distance   kernel        Accuracy   Kappa  
+##    1    0.8715102  biweight      0.9566667  0.93500
+##   10    1.9213770  cos           0.9658333  0.94875
+##   22    0.6048966  epanechnikov  0.9541667  0.93125
+##   25    1.7765156  triangular    0.9683333  0.95250
+##   28    1.8982141  inv           0.9666667  0.95000
+##   37    0.1352608  rectangular   0.9491667  0.92375
+##   37    2.2990154  inv           0.9725000  0.95875
+##   40    1.2107700  triangular    0.9583333  0.93750
+## 
+## Accuracy was used to select the optimal model using the largest value.
+## The final values used for the model were kmax = 37, distance = 2.299015
+##  and kernel = inv.</code></pre>
+<div class="sourceCode" id="cb73"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb73-1" data-line-number="1"><span class="kw">plot</span>(model.w.knn)</a></code></pre></div>
+<p><img src="_main_files/figure-html/unnamed-chunk-35-1.png" width="80%" style="display: block; margin: auto;" /></p>
+
+</div>
+<!-- </div> -->
+            </section>
+
+          </div>
+        </div>
+      </div>
+<a href="regresión.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="DA.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+    </div>
+  </div>
+<script src="assets/gitbook-2.6.7/js/app.min.js"></script>
+<script src="assets/gitbook-2.6.7/js/lunr.js"></script>
+<script src="assets/gitbook-2.6.7/js/clipboard.min.js"></script>
+<script src="assets/gitbook-2.6.7/js/plugin-search.js"></script>
+<script src="assets/gitbook-2.6.7/js/plugin-sharing.js"></script>
+<script src="assets/gitbook-2.6.7/js/plugin-fontsettings.js"></script>
+<script src="assets/gitbook-2.6.7/js/plugin-bookdown.js"></script>
+<script src="assets/gitbook-2.6.7/js/jquery.highlight.js"></script>
+<script src="assets/gitbook-2.6.7/js/plugin-clipboard.js"></script>
+<script>
+gitbook.require(["gitbook"], function(gitbook) {
+gitbook.start({
+"sharing": {
+"github": false,
+"facebook": true,
+"twitter": true,
+"linkedin": false,
+"weibo": false,
+"instapaper": false,
+"vk": false,
+"all": ["facebook", "twitter", "linkedin", "weibo", "instapaper"]
+},
+"fontsettings": {
+"theme": "white",
+"family": "sans",
+"size": 2
+},
+"edit": {
+"link": null,
+"text": null
+},
+"history": {
+"link": null,
+"text": null
+},
+"view": {
+"link": null,
+"text": null
+},
+"download": ["_main.pdf"],
+"toc": {
+"collapse": "subsection"
+},
+"toolbar": {
+"position": "static"
+}
+});
+});
+</script>
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    var src = "true";
+    if (src === "" || src === "true") src = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-MML-AM_CHTML";
+    if (location.protocol !== "file:")
+      if (/^https?:/.test(src))
+        src = src.replace(/^https?:/, '');
+    script.src = src;
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+</body>
+
+</html>

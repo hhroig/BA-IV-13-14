@@ -1,6 +1,0 @@
-"0","# KNN "
-"0","pr <- knn(X.train, X.test, cl=Y, k = round(sqrt(nrow(X.train))))"
-"0",""
-"0","# matriz de confusión"
-"0","tab <- table(pr,Y.test)"
-"0",""

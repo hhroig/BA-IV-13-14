@@ -3,21 +3,22 @@ title: "Introducción al Aprendizaje Supervisado"
 author: "Harold A. Hernández-Roig (hahernan@est-econ.uc3m.es)"
 date: "20-21 Febrero 2020"
 site: bookdown::bookdown_site
-documentclass: book
 bibliography: [book.bib, packages.bib, analytics.c2.bib]
 biblio-style: apalike
 link-citations: yes
 description: "Sesiones 13-15 IV Edición del Big Analytics: de la información al conocimiento."
+documentclass: book
 output:
-  bookdown::gitbook
+  bookdown::gitbook: default
 ---
+
 
 ```{r include=FALSE}
 # automatically create a bib database for R packages
 knitr::write_bib(c(
   .packages(), 'class', 'caret', 'ISLR', 'ROCR'
 ), 'packages.bib')
-# knitr::opts_chunk$set(cache = T)
+knitr::opts_chunk$set(cache = T)
 ```
 
 # Introducción

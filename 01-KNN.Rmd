@@ -465,3 +465,77 @@ ggplot(df_plot, aes(x = pred, y = real)) +
   xlab(expression(hat( y))) + ylab("y") +
   theme_light()
 ```
+
+## Weighted KNN
+
+El método de K-Vecinos Más Próximos Ponderados (WKNN: *Weighted K-Nearest Neighbors*) es una variante del KNN. El principio básico es el mismo: predecir una respuesta en función de los puntos más cercanos de la muestra. La diferencia es que WKNN da más importancia a los más próximos, dentro de los K prefijados. Esto se logra ponderando o dando pesos a los vecinos.
+
+En `caret` podemos fijar el método `kknn` que implementa WKNN, tanto para regresión como para clasificación. Ahora debemos optimizar 3 hiperparámetros:
+
+```{r}
+getModelInfo("kknn")$kknn$parameters
+```
+El número de vecinos `K` se corresponde al campo`kmax`. El campo `distance` se refiere al order del parámetro $p$ en la *Distancia de Minkowski*. El `kernel` es la transformación de los ejes de coordenadas, las opciones son:
+
+```{r, eval=F}
+kerns <- c("rectangular", "triangular", "epanechnikov", "biweight", "triweight", 
+                                 "cos", "inv", "gaussian")
+```
+
+Veamos un ejemplo con los datos `iris`. Empezamos fijando un grid o malla de posibles valores de los hiperparámetros a optimizar:
+```{r}
+# muestra, por eso es necesario una particion balanceada con createDataPartition
+df <- iris
+set.seed(123)
+train.ID <- createDataPartition(df$Species, p = 0.8, list = FALSE)
+
+train_df <- df[train.ID, ]
+test_df <- df[-train.ID, ]
+
+# hacemos una validación cruzada con 10-folds 10 veces
+fit_control <- trainControl(method='repeatedcv', number = 10, repeats = 10)
+
+# fijamos el grid de valores de los hiperparámetros:
+buscar_mejor <- expand.grid( kmax =  3:9,
+                             distance = 1:2,
+                             kernel = c("rectangular", #standard knn
+                                        "triangular",
+                                        "gaussian"))
+```
+El modelo se ajusta igual a como ya hemos estudiado:
+```{r}
+set.seed(321)
+model.w.knn <- train(Species ~.,
+                     data = train_df,
+                     method = "kknn",
+                     trControl = fit_control,
+                     preProcess = c("center", "scale"),
+                     tuneGrid = buscar_mejor)
+model.w.knn
+
+model.w.knn$finalModel
+
+```
+```{r, out.width='80%', fig.asp=.75, fig.align='center'}
+plot(model.w.knn)
+```
+Observamos que el modelo final---el mejor de acuerdo al `Accuracy`---es aquel con 8 vecinos, donde el parámetro $p=2$ en la Distancia de Minkowski (equivalente a la Distancia Euclídea) y el kernel es triangular. Esto se obtuvo al probar 7 valores de `kmax` $\times$ 2 valores de `distance` $\times$ 3 posibles `kernel`.  
+
+Por otro lado, en lugar de escribir explícitamente el grid de valores a probar, en `caret` tenemos la opción de realizar una búsqueda aleatoria. Esto podría ser un primer paso para detectar rangos de valores de los hiperparámetros donde luego afinar la búsqueda. Como ejemplo, lo haremos para solo 8 combinaciones de posibles hiperparámetros (en la práctica debemos fijar un mayor número de combinaciones, lo que conlleva un mayor coste computacional):
+
+```{r , out.width='80%', fig.asp=.75, fig.align='center'}
+# random search WKNN
+fit_control <- trainControl(method='repeatedcv', number = 10, 
+                            repeats = 10,
+                            search = "random")
+set.seed(321)
+model.w.knn <- train(Species ~.,
+                     data = train_df,
+                     method = "kknn",
+                     trControl = fit_control,
+                     preProcess = c("center", "scale"),
+                     tuneLength = 8)
+model.w.knn
+plot(model.w.knn)
+```
+

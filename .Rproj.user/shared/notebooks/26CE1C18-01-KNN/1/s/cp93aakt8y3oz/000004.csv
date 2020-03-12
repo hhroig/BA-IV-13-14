@@ -1,6 +1,0 @@
-"0","df_plot <- data.frame(pred = predictions, real = test.data$medv)"
-"0","ggplot(df_plot, aes(x = pred, y = real)) +"
-"0","  geom_point() +"
-"0","  geom_abline(slope = 1, intercept = 0) +"
-"0","  xlab(expression(hat( y))) + ylab(""y"") +"
-"0","  theme_light()"

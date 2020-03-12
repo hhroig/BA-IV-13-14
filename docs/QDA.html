@@ -1,0 +1,328 @@
+<!DOCTYPE html>
+<html lang="" xml:lang="">
+<head>
+
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <title>3.2 Análisis Discriminante Cuadrático | Introducción al Aprendizaje Supervisado</title>
+  <meta name="description" content="Sesiones 13-15 IV Edición del Big Analytics: de la información al conocimiento." />
+  <meta name="generator" content="bookdown 0.17 and GitBook 2.6.7" />
+
+  <meta property="og:title" content="3.2 Análisis Discriminante Cuadrático | Introducción al Aprendizaje Supervisado" />
+  <meta property="og:type" content="book" />
+  
+  
+  <meta property="og:description" content="Sesiones 13-15 IV Edición del Big Analytics: de la información al conocimiento." />
+  
+
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:title" content="3.2 Análisis Discriminante Cuadrático | Introducción al Aprendizaje Supervisado" />
+  
+  <meta name="twitter:description" content="Sesiones 13-15 IV Edición del Big Analytics: de la información al conocimiento." />
+  
+
+<meta name="author" content="Harold A. Hernández-Roig (hahernan@est-econ.uc3m.es)" />
+
+
+
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+  
+  
+<link rel="prev" href="LDA.html"/>
+<link rel="next" href="RDA.html"/>
+<script src="assets/jquery-2.2.3/jquery.min.js"></script>
+<link href="assets/gitbook-2.6.7/css/style.css" rel="stylesheet" />
+<link href="assets/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
+<link href="assets/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
+<link href="assets/gitbook-2.6.7/css/plugin-highlight.css" rel="stylesheet" />
+<link href="assets/gitbook-2.6.7/css/plugin-search.css" rel="stylesheet" />
+<link href="assets/gitbook-2.6.7/css/plugin-fontsettings.css" rel="stylesheet" />
+<link href="assets/gitbook-2.6.7/css/plugin-clipboard.css" rel="stylesheet" />
+
+
+
+
+
+
+
+
+
+
+
+<style type="text/css">
+a.sourceLine { display: inline-block; line-height: 1.25; }
+a.sourceLine { pointer-events: none; color: inherit; text-decoration: inherit; }
+a.sourceLine:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode { white-space: pre; position: relative; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+code.sourceCode { white-space: pre-wrap; }
+a.sourceLine { text-indent: -1em; padding-left: 1em; }
+}
+pre.numberSource a.sourceLine
+  { position: relative; left: -4em; }
+pre.numberSource a.sourceLine::before
+  { content: attr(data-line-number);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; pointer-events: all; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {  }
+@media screen {
+a.sourceLine::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #7d9029; } /* Attribute */
+code span.bn { color: #40a070; } /* BaseN */
+code span.bu { } /* BuiltIn */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4070a0; } /* Char */
+code span.cn { color: #880000; } /* Constant */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code span.dt { color: #902000; } /* DataType */
+code span.dv { color: #40a070; } /* DecVal */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #40a070; } /* Float */
+code span.fu { color: #06287e; } /* Function */
+code span.im { } /* Import */
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.op { color: #666666; } /* Operator */
+code span.ot { color: #007020; } /* Other */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.st { color: #4070a0; } /* String */
+code span.va { color: #19177c; } /* Variable */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+</style>
+
+</head>
+
+<body>
+
+
+
+  <div class="book without-animation with-summary font-size-2 font-family-1" data-basepath=".">
+
+    <div class="book-summary">
+      <nav role="navigation">
+
+<ul class="summary">
+<li class="chapter" data-level="1" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i><b>1</b> Introducción</a></li>
+<li class="chapter" data-level="2" data-path="k-vecinos-más-próximos.html"><a href="k-vecinos-más-próximos.html"><i class="fa fa-check"></i><b>2</b> K - Vecinos más Próximos</a><ul>
+<li class="chapter" data-level="2.1" data-path="clasificación-con-el-paquete-class.html"><a href="clasificación-con-el-paquete-class.html"><i class="fa fa-check"></i><b>2.1</b> Clasificación con el paquete <code>class</code></a></li>
+<li class="chapter" data-level="2.2" data-path="el-paquete-caret.html"><a href="el-paquete-caret.html"><i class="fa fa-check"></i><b>2.2</b> El paquete <code>caret</code></a><ul>
+<li class="chapter" data-level="2.2.1" data-path="el-paquete-caret.html"><a href="el-paquete-caret.html#visualización"><i class="fa fa-check"></i><b>2.2.1</b> Visualización</a></li>
+<li class="chapter" data-level="2.2.2" data-path="el-paquete-caret.html"><a href="el-paquete-caret.html#clasificación-con-knn"><i class="fa fa-check"></i><b>2.2.2</b> Clasificación con KNN</a></li>
+<li class="chapter" data-level="2.2.3" data-path="el-paquete-caret.html"><a href="el-paquete-caret.html#importancia-de-las-variables"><i class="fa fa-check"></i><b>2.2.3</b> Importancia de las variables</a></li>
+</ul></li>
+<li class="chapter" data-level="2.3" data-path="regresión.html"><a href="regresión.html"><i class="fa fa-check"></i><b>2.3</b> Regresión</a></li>
+<li class="chapter" data-level="2.4" data-path="weighted-knn.html"><a href="weighted-knn.html"><i class="fa fa-check"></i><b>2.4</b> Weighted KNN</a></li>
+</ul></li>
+<li class="chapter" data-level="3" data-path="DA.html"><a href="DA.html"><i class="fa fa-check"></i><b>3</b> Análisis Discriminante</a><ul>
+<li class="chapter" data-level="3.1" data-path="LDA.html"><a href="LDA.html"><i class="fa fa-check"></i><b>3.1</b> Análisis Discriminante Lineal</a></li>
+<li class="chapter" data-level="3.2" data-path="QDA.html"><a href="QDA.html"><i class="fa fa-check"></i><b>3.2</b> Análisis Discriminante Cuadrático</a></li>
+<li class="chapter" data-level="3.3" data-path="RDA.html"><a href="RDA.html"><i class="fa fa-check"></i><b>3.3</b> Análisis Discriminante Regularizado</a></li>
+</ul></li>
+<li class="chapter" data-level="4" data-path="compara.html"><a href="compara.html"><i class="fa fa-check"></i><b>4</b> Comparación entre Modelos</a><ul>
+<li class="chapter" data-level="4.1" data-path="comparando-según-accuracy.html"><a href="comparando-según-accuracy.html"><i class="fa fa-check"></i><b>4.1</b> Comparando según <code>Accuracy</code></a></li>
+<li class="chapter" data-level="4.2" data-path="curva-roc.html"><a href="curva-roc.html"><i class="fa fa-check"></i><b>4.2</b> Curva <em>ROC</em></a><ul>
+<li class="chapter" data-level="4.2.1" data-path="curva-roc.html"><a href="curva-roc.html#análisis-en-la-muestra-test"><i class="fa fa-check"></i><b>4.2.1</b> Análisis en la muestra test</a></li>
+<li class="chapter" data-level="4.2.2" data-path="curva-roc.html"><a href="curva-roc.html#análisis-en-la-muestra-de-entrenamiento"><i class="fa fa-check"></i><b>4.2.2</b> Análisis en la muestra de entrenamiento</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="5" data-path="wiscon.html"><a href="wiscon.html"><i class="fa fa-check"></i><b>5</b> Wisconsin Breast-Cancer Data</a><ul>
+<li class="chapter" data-level="5.1" data-path="comentarios-finales-reducción-de-la-dimensión.html"><a href="comentarios-finales-reducción-de-la-dimensión.html"><i class="fa fa-check"></i><b>5.1</b> Comentarios finales: reducción de la dimensión</a></li>
+</ul></li>
+<li class="chapter" data-level="" data-path="bibliografía.html"><a href="bibliografía.html"><i class="fa fa-check"></i>Bibliografía</a></li>
+</ul>
+
+      </nav>
+    </div>
+
+    <div class="book-body">
+      <div class="body-inner">
+        <div class="book-header" role="navigation">
+          <h1>
+            <i class="fa fa-circle-o-notch fa-spin"></i><a href="./">Introducción al Aprendizaje Supervisado</a>
+          </h1>
+        </div>
+
+        <div class="page-wrapper" tabindex="-1" role="main">
+          <div class="page-inner">
+
+            <section class="normal" id="section-">
+<div id="QDA" class="section level2">
+<h2><span class="header-section-number">3.2</span> Análisis Discriminante Cuadrático</h2>
+<p>El ajuste para el modelo QDA lo hacemos con el mismo control y la misma partición de la muestra.</p>
+<div class="sourceCode" id="cb97"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb97-1" data-line-number="1"><span class="kw">set.seed</span>(<span class="dv">123</span>)</a>
+<a class="sourceLine" id="cb97-2" data-line-number="2">model_qda_def &lt;-<span class="st"> </span><span class="kw">train</span>(default <span class="op">~</span>.,</a>
+<a class="sourceLine" id="cb97-3" data-line-number="3">                       <span class="dt">data =</span> train_df,</a>
+<a class="sourceLine" id="cb97-4" data-line-number="4">                       <span class="dt">method =</span> <span class="st">&quot;qda&quot;</span>,</a>
+<a class="sourceLine" id="cb97-5" data-line-number="5">                       <span class="dt">trControl =</span> fit_control)</a>
+<a class="sourceLine" id="cb97-6" data-line-number="6">model_qda_def</a></code></pre></div>
+<pre><code>## Quadratic Discriminant Analysis 
+## 
+## 8001 samples
+##    2 predictor
+##    2 classes: &#39;No&#39;, &#39;Yes&#39; 
+## 
+## No pre-processing
+## Resampling: Cross-Validated (10 fold) 
+## Summary of sample sizes: 7200, 7200, 7201, 7202, 7201, 7202, ... 
+## Resampling results:
+## 
+##   Accuracy   Kappa    
+##   0.9730043  0.3787741</code></pre>
+<div class="sourceCode" id="cb99"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb99-1" data-line-number="1">model_qda_def<span class="op">$</span>finalModel</a></code></pre></div>
+<pre><code>## Call:
+## qda(x, grouping = y)
+## 
+## Prior probabilities of groups:
+##         No        Yes 
+## 0.96662917 0.03337083 
+## 
+## Group means:
+##       income   balance
+## No  33513.73  805.9109
+## Yes 32450.16 1753.3628</code></pre>
+<p>Los resultados al entrenar son similares al caso LDA. Veamos las predicciones para la muestra test.</p>
+<div class="sourceCode" id="cb101"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb101-1" data-line-number="1"><span class="co"># hagamos las predicciones del conjunto de prueba</span></a>
+<a class="sourceLine" id="cb101-2" data-line-number="2">prediction_qda_def &lt;-<span class="st"> </span><span class="kw">predict</span>(model_qda_def, <span class="dt">newdata =</span> test_df)</a>
+<a class="sourceLine" id="cb101-3" data-line-number="3"><span class="kw">confusionMatrix</span>(prediction_qda_def, <span class="dt">reference =</span> test_df<span class="op">$</span>default)</a></code></pre></div>
+<pre><code>## Confusion Matrix and Statistics
+## 
+##           Reference
+## Prediction   No  Yes
+##        No  1924   51
+##        Yes    9   15
+##                                          
+##                Accuracy : 0.97           
+##                  95% CI : (0.9615, 0.977)
+##     No Information Rate : 0.967          
+##     P-Value [Acc &gt; NIR] : 0.2488         
+##                                          
+##                   Kappa : 0.3214         
+##                                          
+##  Mcnemar&#39;s Test P-Value : 1.203e-07      
+##                                          
+##             Sensitivity : 0.9953         
+##             Specificity : 0.2273         
+##          Pos Pred Value : 0.9742         
+##          Neg Pred Value : 0.6250         
+##              Prevalence : 0.9670         
+##          Detection Rate : 0.9625         
+##    Detection Prevalence : 0.9880         
+##       Balanced Accuracy : 0.6113         
+##                                          
+##        &#39;Positive&#39; Class : No             
+## </code></pre>
+<div class="sourceCode" id="cb103"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb103-1" data-line-number="1"><span class="co"># extraemos el Accuracy o Precisión</span></a>
+<a class="sourceLine" id="cb103-2" data-line-number="2"><span class="kw">confusionMatrix</span>(prediction_qda_def, <span class="dt">reference =</span> test_df<span class="op">$</span>default)<span class="op">$</span>overall[<span class="dv">1</span>]</a></code></pre></div>
+<pre><code>## Accuracy 
+## 0.969985</code></pre>
+<div class="sourceCode" id="cb105"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb105-1" data-line-number="1"><span class="co"># la tasa de error</span></a>
+<a class="sourceLine" id="cb105-2" data-line-number="2">tasa.error.qda &lt;-<span class="st"> </span><span class="dv">1</span><span class="op">-</span><span class="kw">confusionMatrix</span>(prediction_qda_def, <span class="dt">reference =</span> test_df<span class="op">$</span>default)<span class="op">$</span>overall[<span class="dv">1</span>]</a>
+<a class="sourceLine" id="cb105-3" data-line-number="3"><span class="kw">names</span>(tasa.error.qda) &lt;-<span class="st"> &quot;Error QDA&quot;</span></a>
+<a class="sourceLine" id="cb105-4" data-line-number="4">tasa.error.qda</a></code></pre></div>
+<pre><code>##  Error QDA 
+## 0.03001501</code></pre>
+<p>Tampoco se logran mejorar los resultados. Finalmente, representamos la frontera de decisión del algoritmo.</p>
+<div class="sourceCode" id="cb107"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb107-1" data-line-number="1"><span class="kw">decision_bound</span>(train_df, test_df, model_qda_def)</a></code></pre></div>
+<p><img src="_main_files/figure-html/unnamed-chunk-46-1.png" width="80%" style="display: block; margin: auto;" /></p>
+<p>¡Ahora observamos que las regiones están separadas por curvas, en lugar de la recta del LDA!</p>
+</div>
+            </section>
+
+          </div>
+        </div>
+      </div>
+<a href="LDA.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="RDA.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+    </div>
+  </div>
+<script src="assets/gitbook-2.6.7/js/app.min.js"></script>
+<script src="assets/gitbook-2.6.7/js/lunr.js"></script>
+<script src="assets/gitbook-2.6.7/js/clipboard.min.js"></script>
+<script src="assets/gitbook-2.6.7/js/plugin-search.js"></script>
+<script src="assets/gitbook-2.6.7/js/plugin-sharing.js"></script>
+<script src="assets/gitbook-2.6.7/js/plugin-fontsettings.js"></script>
+<script src="assets/gitbook-2.6.7/js/plugin-bookdown.js"></script>
+<script src="assets/gitbook-2.6.7/js/jquery.highlight.js"></script>
+<script src="assets/gitbook-2.6.7/js/plugin-clipboard.js"></script>
+<script>
+gitbook.require(["gitbook"], function(gitbook) {
+gitbook.start({
+"sharing": {
+"github": false,
+"facebook": true,
+"twitter": true,
+"linkedin": false,
+"weibo": false,
+"instapaper": false,
+"vk": false,
+"all": ["facebook", "twitter", "linkedin", "weibo", "instapaper"]
+},
+"fontsettings": {
+"theme": "white",
+"family": "sans",
+"size": 2
+},
+"edit": {
+"link": null,
+"text": null
+},
+"history": {
+"link": null,
+"text": null
+},
+"view": {
+"link": null,
+"text": null
+},
+"download": ["_main.pdf"],
+"toc": {
+"collapse": "subsection"
+},
+"toolbar": {
+"position": "static"
+}
+});
+});
+</script>
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    var src = "true";
+    if (src === "" || src === "true") src = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-MML-AM_CHTML";
+    if (location.protocol !== "file:")
+      if (/^https?:/.test(src))
+        src = src.replace(/^https?:/, '');
+    script.src = src;
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+</body>
+
+</html>
