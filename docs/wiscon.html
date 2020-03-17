@@ -6,7 +6,7 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
   <title>5 Wisconsin Breast-Cancer Data | Introducción al Aprendizaje Supervisado</title>
   <meta name="description" content="Sesiones 13-15 IV Edición del Big Analytics: de la información al conocimiento." />
-  <meta name="generator" content="bookdown 0.17 and GitBook 2.6.7" />
+  <meta name="generator" content="bookdown 0.18 and GitBook 2.6.7" />
 
   <meta property="og:title" content="5 Wisconsin Breast-Cancer Data | Introducción al Aprendizaje Supervisado" />
   <meta property="og:type" content="book" />
@@ -68,7 +68,7 @@ a.sourceLine { text-indent: -1em; padding-left: 1em; }
 pre.numberSource a.sourceLine
   { position: relative; left: -4em; }
 pre.numberSource a.sourceLine::before
-  { content: attr(data-line-number);
+  { content: attr(title);
     position: relative; left: -1em; text-align: right; vertical-align: baseline;
     border: none; pointer-events: all; display: inline-block;
     -webkit-touch-callout: none; -webkit-user-select: none;
@@ -186,25 +186,25 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li>fractal dimension (“coastline approximation” - 1)</li>
 </ul>
 <p>El resultado es un problema de clasificación binario (<span class="math inline">\(Y =\)</span> <code>diagnosis</code>) con 30 variables predictoras. La muestra de 569 pacientes corresponde a 357 en la clase <code>B</code> y 212 en la clase <code>M</code>. Los datos están disponibles en este repositorio y también en Aula Global.</p>
-<div class="sourceCode" id="cb173"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb173-1" data-line-number="1"><span class="kw">library</span>(caret)</a>
-<a class="sourceLine" id="cb173-2" data-line-number="2"><span class="kw">library</span>(ggplot2)</a>
-<a class="sourceLine" id="cb173-3" data-line-number="3"><span class="kw">library</span>(readr)</a>
-<a class="sourceLine" id="cb173-4" data-line-number="4"><span class="kw">library</span>(dplyr)</a>
-<a class="sourceLine" id="cb173-5" data-line-number="5"><span class="kw">library</span>(gridExtra)</a>
-<a class="sourceLine" id="cb173-6" data-line-number="6"><span class="kw">library</span>(ROCR)</a>
-<a class="sourceLine" id="cb173-7" data-line-number="7"></a>
-<a class="sourceLine" id="cb173-8" data-line-number="8"><span class="co">## Cargar datos ----</span></a>
-<a class="sourceLine" id="cb173-9" data-line-number="9">wiscon &lt;-<span class="st"> </span><span class="kw">read_csv</span>(<span class="st">&quot;data_breast_cancer_wisconsin.csv&quot;</span>)</a>
-<a class="sourceLine" id="cb173-10" data-line-number="10"></a>
-<a class="sourceLine" id="cb173-11" data-line-number="11"><span class="co"># no nos interesan los ID, y la última columna no se ha cargado bien</span></a>
-<a class="sourceLine" id="cb173-12" data-line-number="12">wiscon &lt;-<span class="st"> </span>wiscon[, <span class="dv">2</span><span class="op">:</span><span class="dv">32</span>]</a>
-<a class="sourceLine" id="cb173-13" data-line-number="13"></a>
-<a class="sourceLine" id="cb173-14" data-line-number="14"><span class="co"># la respuesta es diagnosis: B = benign, M = malignant</span></a>
-<a class="sourceLine" id="cb173-15" data-line-number="15">wiscon<span class="op">$</span>diagnosis &lt;-<span class="st"> </span><span class="kw">as.factor</span>(wiscon<span class="op">$</span>diagnosis)</a>
-<a class="sourceLine" id="cb173-16" data-line-number="16"></a>
-<a class="sourceLine" id="cb173-17" data-line-number="17">df &lt;-<span class="st"> </span><span class="kw">as.data.frame</span>(wiscon)</a>
-<a class="sourceLine" id="cb173-18" data-line-number="18"></a>
-<a class="sourceLine" id="cb173-19" data-line-number="19"><span class="kw">str</span>(df)</a></code></pre></div>
+<div class="sourceCode" id="cb173"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb173-1" title="1"><span class="kw">library</span>(caret)</a>
+<a class="sourceLine" id="cb173-2" title="2"><span class="kw">library</span>(ggplot2)</a>
+<a class="sourceLine" id="cb173-3" title="3"><span class="kw">library</span>(readr)</a>
+<a class="sourceLine" id="cb173-4" title="4"><span class="kw">library</span>(dplyr)</a>
+<a class="sourceLine" id="cb173-5" title="5"><span class="kw">library</span>(gridExtra)</a>
+<a class="sourceLine" id="cb173-6" title="6"><span class="kw">library</span>(ROCR)</a>
+<a class="sourceLine" id="cb173-7" title="7"></a>
+<a class="sourceLine" id="cb173-8" title="8"><span class="co">## Cargar datos ----</span></a>
+<a class="sourceLine" id="cb173-9" title="9">wiscon &lt;-<span class="st"> </span><span class="kw">read_csv</span>(<span class="st">&quot;data_breast_cancer_wisconsin.csv&quot;</span>)</a>
+<a class="sourceLine" id="cb173-10" title="10"></a>
+<a class="sourceLine" id="cb173-11" title="11"><span class="co"># no nos interesan los ID, y la última columna no se ha cargado bien</span></a>
+<a class="sourceLine" id="cb173-12" title="12">wiscon &lt;-<span class="st"> </span>wiscon[, <span class="dv">2</span><span class="op">:</span><span class="dv">32</span>]</a>
+<a class="sourceLine" id="cb173-13" title="13"></a>
+<a class="sourceLine" id="cb173-14" title="14"><span class="co"># la respuesta es diagnosis: B = benign, M = malignant</span></a>
+<a class="sourceLine" id="cb173-15" title="15">wiscon<span class="op">$</span>diagnosis &lt;-<span class="st"> </span><span class="kw">as.factor</span>(wiscon<span class="op">$</span>diagnosis)</a>
+<a class="sourceLine" id="cb173-16" title="16"></a>
+<a class="sourceLine" id="cb173-17" title="17">df &lt;-<span class="st"> </span><span class="kw">as.data.frame</span>(wiscon)</a>
+<a class="sourceLine" id="cb173-18" title="18"></a>
+<a class="sourceLine" id="cb173-19" title="19"><span class="kw">str</span>(df)</a></code></pre></div>
 <pre><code>## &#39;data.frame&#39;:    569 obs. of  31 variables:
 ##  $ diagnosis              : Factor w/ 2 levels &quot;B&quot;,&quot;M&quot;: 2 2 2 2 2 2 2 2 2 2 ...
 ##  $ radius_mean            : num  18 20.6 19.7 11.4 20.3 ...
@@ -244,21 +244,21 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 ##   ..$ actual  : chr  &quot;32 columns&quot; &quot;32 columns&quot; &quot;32 columns&quot; &quot;32 columns&quot; ...
 ##   ..$ file    : chr  &quot;&#39;data_breast_cancer_wisconsin.csv&#39;&quot; &quot;&#39;data_breast_cancer_wisconsin.csv&#39;&quot; &quot;&#39;data_breast_cancer_wisconsin.csv&#39;&quot; &quot;&#39;data_breast_cancer_wisconsin.csv&#39;&quot; ...</code></pre>
 <p>Vamos a crear una partición independiente (con una semilla) de test y aplicar todo lo estudiado hasta ahora.</p>
-<div class="sourceCode" id="cb175"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb175-1" data-line-number="1"><span class="kw">set.seed</span>(<span class="dv">666</span>)</a>
-<a class="sourceLine" id="cb175-2" data-line-number="2">train.ID &lt;-<span class="st"> </span><span class="kw">createDataPartition</span>(df<span class="op">$</span>diagnosis, <span class="dt">p =</span> <span class="fl">0.7</span>, <span class="dt">list =</span> <span class="ot">FALSE</span>)</a>
-<a class="sourceLine" id="cb175-3" data-line-number="3"></a>
-<a class="sourceLine" id="cb175-4" data-line-number="4">train_df &lt;-<span class="st"> </span>df[train.ID, ]</a>
-<a class="sourceLine" id="cb175-5" data-line-number="5">test_df &lt;-<span class="st"> </span>df[<span class="op">-</span>train.ID, ]</a></code></pre></div>
+<div class="sourceCode" id="cb175"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb175-1" title="1"><span class="kw">set.seed</span>(<span class="dv">666</span>)</a>
+<a class="sourceLine" id="cb175-2" title="2">train.ID &lt;-<span class="st"> </span><span class="kw">createDataPartition</span>(df<span class="op">$</span>diagnosis, <span class="dt">p =</span> <span class="fl">0.7</span>, <span class="dt">list =</span> <span class="ot">FALSE</span>)</a>
+<a class="sourceLine" id="cb175-3" title="3"></a>
+<a class="sourceLine" id="cb175-4" title="4">train_df &lt;-<span class="st"> </span>df[train.ID, ]</a>
+<a class="sourceLine" id="cb175-5" title="5">test_df &lt;-<span class="st"> </span>df[<span class="op">-</span>train.ID, ]</a></code></pre></div>
 <p>¡A por ello!</p>
 <div id="comentarios-finales-reducción-de-la-dimensión" class="section level2">
 <h2><span class="header-section-number">5.1</span> Comentarios finales: reducción de la dimensión</h2>
 <p>Aunque queda fuera del <em>aprendizaje supervisado</em>, como posible solución a la alta dimensionalidad de los datos, en <code>caret</code> es posible aplicar técnicas <em>no supervisadas</em> que permiten <em>reducir la dimensión</em>. Una de ellas es el <em>Análisis de Componentes Principales</em> (<em>PCA</em>, por sus siglas en inglés). Veamos cómo hacer esto con la función <code>preProcess</code>:</p>
-<div class="sourceCode" id="cb176"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb176-1" data-line-number="1"><span class="co"># en este caso estamos reduciendo la cantidad de variables iniciales</span></a>
-<a class="sourceLine" id="cb176-2" data-line-number="2"><span class="co"># a solamente ¡2!</span></a>
-<a class="sourceLine" id="cb176-3" data-line-number="3">preProc.res &lt;-<span class="st"> </span><span class="kw">preProcess</span>(df, <span class="dt">method =</span> <span class="kw">c</span>(<span class="st">&#39;pca&#39;</span>), <span class="dt">pcaComp =</span> <span class="dv">2</span>)</a>
-<a class="sourceLine" id="cb176-4" data-line-number="4">df.pca &lt;-<span class="st"> </span><span class="kw">predict</span>(preProc.res, df)</a>
-<a class="sourceLine" id="cb176-5" data-line-number="5"></a>
-<a class="sourceLine" id="cb176-6" data-line-number="6"><span class="kw">head</span>(df.pca, <span class="dv">7</span>)</a></code></pre></div>
+<div class="sourceCode" id="cb176"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb176-1" title="1"><span class="co"># en este caso estamos reduciendo la cantidad de variables iniciales</span></a>
+<a class="sourceLine" id="cb176-2" title="2"><span class="co"># a solamente ¡2!</span></a>
+<a class="sourceLine" id="cb176-3" title="3">preProc.res &lt;-<span class="st"> </span><span class="kw">preProcess</span>(df, <span class="dt">method =</span> <span class="kw">c</span>(<span class="st">&#39;pca&#39;</span>), <span class="dt">pcaComp =</span> <span class="dv">2</span>)</a>
+<a class="sourceLine" id="cb176-4" title="4">df.pca &lt;-<span class="st"> </span><span class="kw">predict</span>(preProc.res, df)</a>
+<a class="sourceLine" id="cb176-5" title="5"></a>
+<a class="sourceLine" id="cb176-6" title="6"><span class="kw">head</span>(df.pca, <span class="dv">7</span>)</a></code></pre></div>
 <pre><code>##   diagnosis       PC1        PC2
 ## 1         M -9.184755  -1.946870
 ## 2         M -2.385703   3.764859
@@ -268,14 +268,14 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 ## 6         M -2.378155  -3.946456
 ## 7         M -2.236915   2.687666</code></pre>
 <p>Veamos qué tan separadas quedan las clases ahora:</p>
-<div class="sourceCode" id="cb178"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb178-1" data-line-number="1"><span class="kw">ggplot</span>(df.pca,  <span class="kw">aes</span>(<span class="dt">x =</span> PC1, <span class="dt">y =</span> PC2, <span class="dt">group =</span> diagnosis)) <span class="op">+</span></a>
-<a class="sourceLine" id="cb178-2" data-line-number="2"><span class="st">  </span><span class="kw">geom_point</span>(<span class="kw">aes</span>(<span class="dt">color =</span> diagnosis ), <span class="dt">alpha =</span> <span class="fl">0.8</span>) <span class="op">+</span></a>
-<a class="sourceLine" id="cb178-3" data-line-number="3"><span class="st">  </span><span class="kw">theme_light</span>()</a></code></pre></div>
+<div class="sourceCode" id="cb178"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb178-1" title="1"><span class="kw">ggplot</span>(df.pca,  <span class="kw">aes</span>(<span class="dt">x =</span> PC1, <span class="dt">y =</span> PC2, <span class="dt">group =</span> diagnosis)) <span class="op">+</span></a>
+<a class="sourceLine" id="cb178-2" title="2"><span class="st">  </span><span class="kw">geom_point</span>(<span class="kw">aes</span>(<span class="dt">color =</span> diagnosis ), <span class="dt">alpha =</span> <span class="fl">0.8</span>) <span class="op">+</span></a>
+<a class="sourceLine" id="cb178-3" title="3"><span class="st">  </span><span class="kw">theme_light</span>()</a></code></pre></div>
 <p><img src="_main_files/figure-html/unnamed-chunk-78-1.png" width="80%" style="display: block; margin: auto;" /></p>
 <p>Si volvemos a hacer la partición de los datos (mismos índices para el test);</p>
-<div class="sourceCode" id="cb179"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb179-1" data-line-number="1"><span class="co"># Ajustemos nuestros modelos con los datos transformados:</span></a>
-<a class="sourceLine" id="cb179-2" data-line-number="2">train_df &lt;-<span class="st"> </span>df.pca[train.ID, ]</a>
-<a class="sourceLine" id="cb179-3" data-line-number="3">test_df &lt;-<span class="st"> </span>df.pca[<span class="op">-</span>train.ID, ]</a></code></pre></div>
+<div class="sourceCode" id="cb179"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb179-1" title="1"><span class="co"># Ajustemos nuestros modelos con los datos transformados:</span></a>
+<a class="sourceLine" id="cb179-2" title="2">train_df &lt;-<span class="st"> </span>df.pca[train.ID, ]</a>
+<a class="sourceLine" id="cb179-3" title="3">test_df &lt;-<span class="st"> </span>df.pca[<span class="op">-</span>train.ID, ]</a></code></pre></div>
 <p>entonces, podemos aplicar todos los modelos estudiados a un conjunto de datos de menor complejidad. Esto es una ganancia en tiempo de cómputo… ¿será también en términos predictivos? Intenta también <strong>representar la frontera de decisión</strong> correspondiente a cada método, usando como base la ya conocida <code>decision_bound</code>.</p>
 <p>Finalmente, comentar que el LDA también puede ser visto como un método de reducción de la dimensión. La visión de Fisher del discriminante lineal contempla encontrar la mejor proyección de los datos (a una dimensión inferior) que permita separar bien las clases. Esto se logra persiguiendo la mayor dispersión posible en los datos.</p>
 <p>Más información sobre el PCA puede ser consultada en los libros que se citan al final del documento. Una buena introducción a esta visión del LDA está disponible en las <a href="https://www.csd.uwo.ca/~olga/Courses/CS434a_541a/Lecture8.pdf">lecciones de Prof. Olga Veksler</a>. También se recomiendo el excelente <a href="https://www.datascienceblog.net/post/machine-learning/linear-discriminant-analysis/">post de Matthias Döring</a>.</p>

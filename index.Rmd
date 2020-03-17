@@ -10,6 +10,7 @@ description: "Sesiones 13-15 IV Edición del Big Analytics: de la información a
 documentclass: book
 output:
   bookdown::gitbook: default
+  bookdown::pdf_book: default
 ---
 
 
