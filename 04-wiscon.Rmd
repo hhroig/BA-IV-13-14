@@ -80,9 +80,9 @@ test_df <- df.pca[-train.ID, ]
 
 entonces, podemos aplicar todos los modelos estudiados a un conjunto de datos de menor complejidad. Esto es una ganancia en tiempo de cómputo... ¿será también en términos predictivos? Intenta también **representar la frontera de decisión** correspondiente a cada método, usando como base la ya conocida `decision_bound`.
 
-El LDA también puede ser visto como un método de reducción de la dimensión (a lo sumo *\# clases - 1*). La visión de Fisher del discriminante lineal contempla encontrar la mejor proyección de los datos (a una dimensión inferior) que permita separar bien las clases. Esto se logra persiguiendo la mayor dispersión posible en los datos. Una buena introducción a esta visión del LDA está disponible en las [lecciones de Prof. Olga Veksler](https://www.csd.uwo.ca/~olga/Courses/CS434a_541a/Lecture8.pdf). También se recomiendo el excelente [post de Matthias Döring](https://www.datascienceblog.net/post/machine-learning/linear-discriminant-analysis/).
+El LDA también puede ser visto como un método de reducción de la dimensión (a lo sumo *\# clases - 1*). La visión de Fisher del discriminante lineal contempla encontrar la mejor proyección de los datos (a una dimensión inferior) que permita separar bien las clases. Esto se logra persiguiendo la mayor dispersión posible en los datos. Una buena introducción a esta visión del LDA está disponible en las [lecciones de Prof. Olga Veksler](https://www.csd.uwo.ca/~olga/Courses/CS434a_541a/Lecture8.pdf). También recomiendo este [post de Matthias Döring](https://www.datascienceblog.net/post/machine-learning/linear-discriminant-analysis/).
 
-Retomando, veamos un ejemplo de los datos `iris`:
+Veamos un ejemplo con los datos `iris`:
 
 ```{r}
 library(MASS)
@@ -100,7 +100,10 @@ lda_iris
 
 El campo `Coefficients of linear discriminants` indica los coeficientes de cada discriminante. Por ejemplo, el primer discriminante lineal (LD1) es la combinación lineal:
 
-$$ (0.79*Sepal.Length) + (1.60*Sepal.Width) + (-2.14*Petal.Length) + (-2.90*Petal.Width) $$
+```{r, eval = FALSE}
+(0.79*Sepal.Length) + (1.60*Sepal.Width) + (-2.14*Petal.Length) + (-2.90*Petal.Width)
+```
+
 El campo `Proportions of trace` describe la proporción de varianza entre clases que es explicada por los discriminantes lineales sucesivos. En este caso, LD1 explica 99\% de la varianza, o sea, solo con la primera componente podríamos ser capaces de discriminar con buena precisión. Veamos la proyección en el espacio LD1 vs. LD2:
 
 ```{r, out.width='80%', fig.asp=.75, fig.align='center'}
