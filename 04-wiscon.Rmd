@@ -2,16 +2,16 @@
 
 Los datos de cáncer de mama Wisconsin están disponibles en diversas plataformas. Por ejemplo, en [Kaggle](https://www.kaggle.com/uciml/breast-cancer-wisconsin-data). Estos corresponden a mediciones obtenidas "*de una imagen digitalizada de un aspirado con aguja fina (FNA) de una masa mamaria*". La variables describen las características de los núcleos celulares presentes en la imagen. Este conjunto de datos es muy didáctico y permite estimar si los tumores son malignos o benignos, conociendo la media, desviación estándar y valor máximo de 10 mediciones de cada una de las 10 características:
 
-* radius (mean of distances from center to points on the perimeter)
-* texture (standard deviation of gray-scale values)
-* perimeter
-* area
-* smoothness (local variation in radius lengths)
-* compactness (perimeter^2 / area - 1.0)
-* concavity (severity of concave portions of the contour)
-* concave points (number of concave portions of the contour)
-* symmetry
-* fractal dimension ("coastline approximation" - 1)
+-   radius (mean of distances from center to points on the perimeter)
+-   texture (standard deviation of gray-scale values)
+-   perimeter
+-   area
+-   smoothness (local variation in radius lengths)
+-   compactness (perimeter\^2 / area - 1.0)
+-   concavity (severity of concave portions of the contour)
+-   concave points (number of concave portions of the contour)
+-   symmetry
+-   fractal dimension ("coastline approximation" - 1)
 
 El resultado es un problema de clasificación binario ($Y =$ `diagnosis`) con 30 variables predictoras. La muestra de 569 pacientes corresponde a 357 en la clase `B` y 212 en la clase `M`. Los datos están disponibles en este repositorio y también en Aula Global.
 
@@ -37,7 +37,7 @@ df <- as.data.frame(wiscon)
 str(df)
 ```
 
-Vamos a crear una partición independiente (con una semilla) de test y aplicar todo lo estudiado hasta ahora. 
+Vamos a crear una partición independiente (con una semilla) de test y aplicar todo lo estudiado hasta ahora.
 
 ```{r}
 set.seed(666)
@@ -47,10 +47,9 @@ train_df <- df[train.ID, ]
 test_df <- df[-train.ID, ]
 ```
 
-
 ¡A por ello!
 
-## Comentarios finales: reducción de la dimensión
+## Reducción de la dimensión
 
 Aunque queda fuera del *aprendizaje supervisado*, como posible solución a la alta dimensionalidad de los datos, en `caret` es posible aplicar técnicas *no supervisadas* que permiten *reducir la dimensión*. Una de ellas es el *Análisis de Componentes Principales* (*PCA*, por sus siglas en inglés). Veamos cómo hacer esto con la función `preProcess`:
 
@@ -81,7 +80,36 @@ test_df <- df.pca[-train.ID, ]
 
 entonces, podemos aplicar todos los modelos estudiados a un conjunto de datos de menor complejidad. Esto es una ganancia en tiempo de cómputo... ¿será también en términos predictivos? Intenta también **representar la frontera de decisión** correspondiente a cada método, usando como base la ya conocida `decision_bound`.
 
-Finalmente, comentar que el LDA también puede ser visto como un método de reducción de la dimensión. La visión de Fisher del discriminante lineal contempla encontrar la mejor proyección de los datos (a una dimensión inferior) que permita separar bien las clases. Esto se logra persiguiendo la mayor dispersión posible en los datos. 
+El LDA también puede ser visto como un método de reducción de la dimensión (a lo sumo *\# clases - 1*). La visión de Fisher del discriminante lineal contempla encontrar la mejor proyección de los datos (a una dimensión inferior) que permita separar bien las clases. Esto se logra persiguiendo la mayor dispersión posible en los datos. Una buena introducción a esta visión del LDA está disponible en las [lecciones de Prof. Olga Veksler](https://www.csd.uwo.ca/~olga/Courses/CS434a_541a/Lecture8.pdf). También se recomiendo el excelente [post de Matthias Döring](https://www.datascienceblog.net/post/machine-learning/linear-discriminant-analysis/).
 
-Más información sobre el PCA puede ser consultada en los libros que se citan al final del documento. Una buena introducción a esta visión del LDA está disponible en las [lecciones de Prof. Olga Veksler](https://www.csd.uwo.ca/~olga/Courses/CS434a_541a/Lecture8.pdf). También se recomiendo el excelente [post de Matthias Döring](https://www.datascienceblog.net/post/machine-learning/linear-discriminant-analysis/).
+Retomando, veamos un ejemplo de los datos `iris`:
+
+```{r}
+library(MASS)
+
+df <- iris
+set.seed(123)
+train.ID <- createDataPartition(df$Species, p = 0.8, list = FALSE)
+
+train_df <- df[train.ID, ]
+test_df <- df[-train.ID, ]
+
+lda_iris <- MASS::lda(Species ~ ., train_df)
+lda_iris
+```
+
+El campo `Coefficients of linear discriminants` indica los coeficientes de cada discriminante. Por ejemplo, el primer discriminante lineal (LD1) es la combinación lineal:
+
+$$ (0.79*Sepal.Length) + (1.60*Sepal.Width) + (-2.14*Petal.Length) + (-2.90*Petal.Width) $$
+El campo `Proportions of trace` describe la proporción de varianza entre clases que es explicada por los discriminantes lineales sucesivos. En este caso, LD1 explica 99\% de la varianza, o sea, solo con la primera componente podríamos ser capaces de discriminar con buena precisión. Veamos la proyección en el espacio LD1 vs. LD2:
+
+```{r, out.width='80%', fig.asp=.75, fig.align='center'}
+plot(lda_iris, col = as.integer(train_df$Species))
+```
+ 
+Vemos que LD1 permite separar bien ambas clases, aunque hay un poco de superposición entre `virginica` y `versicolor`. Finalmente, en una sola dimensión (la definida por LD1):
+
+```{r, out.width='80%', fig.asp=.75, fig.align='center'}
+plot(lda_iris, dimen = 1, type = "b")
+```
 

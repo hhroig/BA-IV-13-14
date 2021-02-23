@@ -5,20 +5,20 @@
   <meta charset="utf-8" />
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
   <title>5 Wisconsin Breast-Cancer Data | Introducción al Aprendizaje Supervisado</title>
-  <meta name="description" content="Sesiones 13-15 IV Edición del Big Analytics: de la información al conocimiento." />
-  <meta name="generator" content="bookdown 0.18 and GitBook 2.6.7" />
+  <meta name="description" content="Big Analytics V" />
+  <meta name="generator" content="bookdown 0.21 and GitBook 2.6.7" />
 
   <meta property="og:title" content="5 Wisconsin Breast-Cancer Data | Introducción al Aprendizaje Supervisado" />
   <meta property="og:type" content="book" />
   
   
-  <meta property="og:description" content="Sesiones 13-15 IV Edición del Big Analytics: de la información al conocimiento." />
+  <meta property="og:description" content="Big Analytics V" />
   
 
   <meta name="twitter:card" content="summary" />
   <meta name="twitter:title" content="5 Wisconsin Breast-Cancer Data | Introducción al Aprendizaje Supervisado" />
   
-  <meta name="twitter:description" content="Sesiones 13-15 IV Edición del Big Analytics: de la información al conocimiento." />
+  <meta name="twitter:description" content="Big Analytics V" />
   
 
 <meta name="author" content="Harold A. Hernández-Roig (hahernan@est-econ.uc3m.es)" />
@@ -32,6 +32,7 @@
   
 <link rel="prev" href="compara.html"/>
 <link rel="next" href="bibliografía.html"/>
+<script src="libs/header-attrs-2.6/header-attrs.js"></script>
 <script src="libs/jquery-2.2.3/jquery.min.js"></script>
 <link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
 <link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
@@ -52,25 +53,26 @@
 
 
 <style type="text/css">
-a.sourceLine { display: inline-block; line-height: 1.25; }
-a.sourceLine { pointer-events: none; color: inherit; text-decoration: inherit; }
-a.sourceLine:empty { height: 1.2em; }
-.sourceCode { overflow: visible; }
-code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
 pre.sourceCode { margin: 0; }
 @media screen {
 div.sourceCode { overflow: auto; }
 }
 @media print {
-code.sourceCode { white-space: pre-wrap; }
-a.sourceLine { text-indent: -1em; padding-left: 1em; }
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
 }
-pre.numberSource a.sourceLine
-  { position: relative; left: -4em; }
-pre.numberSource a.sourceLine::before
-  { content: attr(title);
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
     position: relative; left: -1em; text-align: right; vertical-align: baseline;
-    border: none; pointer-events: all; display: inline-block;
+    border: none; display: inline-block;
     -webkit-touch-callout: none; -webkit-user-select: none;
     -khtml-user-select: none; -moz-user-select: none;
     -ms-user-select: none; user-select: none;
@@ -79,9 +81,9 @@ pre.numberSource a.sourceLine::before
   }
 pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
 div.sourceCode
-  {  }
+  {   }
 @media screen {
-a.sourceLine::before { text-decoration: underline; }
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
 }
 code span.al { color: #ff0000; font-weight: bold; } /* Alert */
 code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
@@ -127,30 +129,40 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 
 <ul class="summary">
 <li class="chapter" data-level="1" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i><b>1</b> Introducción</a></li>
-<li class="chapter" data-level="2" data-path="k-vecinos-más-próximos.html"><a href="k-vecinos-más-próximos.html"><i class="fa fa-check"></i><b>2</b> K - Vecinos más Próximos</a><ul>
+<li class="chapter" data-level="2" data-path="k-vecinos-más-próximos.html"><a href="k-vecinos-más-próximos.html"><i class="fa fa-check"></i><b>2</b> K - Vecinos más Próximos</a>
+<ul>
 <li class="chapter" data-level="2.1" data-path="k-vecinos-más-próximos.html"><a href="k-vecinos-más-próximos.html#clasificación-con-el-paquete-class"><i class="fa fa-check"></i><b>2.1</b> Clasificación con el paquete <code>class</code></a></li>
-<li class="chapter" data-level="2.2" data-path="k-vecinos-más-próximos.html"><a href="k-vecinos-más-próximos.html#el-paquete-caret"><i class="fa fa-check"></i><b>2.2</b> El paquete <code>caret</code></a><ul>
+<li class="chapter" data-level="2.2" data-path="k-vecinos-más-próximos.html"><a href="k-vecinos-más-próximos.html#el-paquete-caret"><i class="fa fa-check"></i><b>2.2</b> El paquete <code>caret</code></a>
+<ul>
 <li class="chapter" data-level="2.2.1" data-path="k-vecinos-más-próximos.html"><a href="k-vecinos-más-próximos.html#visualización"><i class="fa fa-check"></i><b>2.2.1</b> Visualización</a></li>
 <li class="chapter" data-level="2.2.2" data-path="k-vecinos-más-próximos.html"><a href="k-vecinos-más-próximos.html#clasificación-con-knn"><i class="fa fa-check"></i><b>2.2.2</b> Clasificación con KNN</a></li>
 <li class="chapter" data-level="2.2.3" data-path="k-vecinos-más-próximos.html"><a href="k-vecinos-más-próximos.html#importancia-de-las-variables"><i class="fa fa-check"></i><b>2.2.3</b> Importancia de las variables</a></li>
 </ul></li>
 <li class="chapter" data-level="2.3" data-path="k-vecinos-más-próximos.html"><a href="k-vecinos-más-próximos.html#regresión"><i class="fa fa-check"></i><b>2.3</b> Regresión</a></li>
 <li class="chapter" data-level="2.4" data-path="k-vecinos-más-próximos.html"><a href="k-vecinos-más-próximos.html#weighted-knn"><i class="fa fa-check"></i><b>2.4</b> Weighted KNN</a></li>
+<li class="chapter" data-level="2.5" data-path="k-vecinos-más-próximos.html"><a href="k-vecinos-más-próximos.html#procesamiento-en-paralelo"><i class="fa fa-check"></i><b>2.5</b> Procesamiento en paralelo</a></li>
 </ul></li>
-<li class="chapter" data-level="3" data-path="DA.html"><a href="DA.html"><i class="fa fa-check"></i><b>3</b> Análisis Discriminante</a><ul>
-<li class="chapter" data-level="3.1" data-path="DA.html"><a href="DA.html#LDA"><i class="fa fa-check"></i><b>3.1</b> Análisis Discriminante Lineal</a></li>
+<li class="chapter" data-level="3" data-path="DA.html"><a href="DA.html"><i class="fa fa-check"></i><b>3</b> Análisis Discriminante</a>
+<ul>
+<li class="chapter" data-level="3.1" data-path="DA.html"><a href="DA.html#LDA"><i class="fa fa-check"></i><b>3.1</b> Análisis Discriminante Lineal</a>
+<ul>
+<li class="chapter" data-level="3.1.1" data-path="DA.html"><a href="DA.html#frontera-de-decisión-en-2d"><i class="fa fa-check"></i><b>3.1.1</b> Frontera de decisión en 2D</a></li>
+</ul></li>
 <li class="chapter" data-level="3.2" data-path="DA.html"><a href="DA.html#QDA"><i class="fa fa-check"></i><b>3.2</b> Análisis Discriminante Cuadrático</a></li>
 <li class="chapter" data-level="3.3" data-path="DA.html"><a href="DA.html#RDA"><i class="fa fa-check"></i><b>3.3</b> Análisis Discriminante Regularizado</a></li>
 </ul></li>
-<li class="chapter" data-level="4" data-path="compara.html"><a href="compara.html"><i class="fa fa-check"></i><b>4</b> Comparación entre Modelos</a><ul>
+<li class="chapter" data-level="4" data-path="compara.html"><a href="compara.html"><i class="fa fa-check"></i><b>4</b> Comparación entre Modelos</a>
+<ul>
 <li class="chapter" data-level="4.1" data-path="compara.html"><a href="compara.html#comparando-según-accuracy"><i class="fa fa-check"></i><b>4.1</b> Comparando según <code>Accuracy</code></a></li>
-<li class="chapter" data-level="4.2" data-path="compara.html"><a href="compara.html#curva-roc"><i class="fa fa-check"></i><b>4.2</b> Curva <em>ROC</em></a><ul>
+<li class="chapter" data-level="4.2" data-path="compara.html"><a href="compara.html#curva-roc"><i class="fa fa-check"></i><b>4.2</b> Curva <em>ROC</em></a>
+<ul>
 <li class="chapter" data-level="4.2.1" data-path="compara.html"><a href="compara.html#análisis-en-la-muestra-test"><i class="fa fa-check"></i><b>4.2.1</b> Análisis en la muestra test</a></li>
 <li class="chapter" data-level="4.2.2" data-path="compara.html"><a href="compara.html#análisis-en-la-muestra-de-entrenamiento"><i class="fa fa-check"></i><b>4.2.2</b> Análisis en la muestra de entrenamiento</a></li>
 </ul></li>
 </ul></li>
-<li class="chapter" data-level="5" data-path="wiscon.html"><a href="wiscon.html"><i class="fa fa-check"></i><b>5</b> Wisconsin Breast-Cancer Data</a><ul>
-<li class="chapter" data-level="5.1" data-path="wiscon.html"><a href="wiscon.html#comentarios-finales-reducción-de-la-dimensión"><i class="fa fa-check"></i><b>5.1</b> Comentarios finales: reducción de la dimensión</a></li>
+<li class="chapter" data-level="5" data-path="wiscon.html"><a href="wiscon.html"><i class="fa fa-check"></i><b>5</b> Wisconsin Breast-Cancer Data</a>
+<ul>
+<li class="chapter" data-level="5.1" data-path="wiscon.html"><a href="wiscon.html#reducción-de-la-dimensión"><i class="fa fa-check"></i><b>5.1</b> Reducción de la dimensión</a></li>
 </ul></li>
 <li class="chapter" data-level="" data-path="bibliografía.html"><a href="bibliografía.html"><i class="fa fa-check"></i>Bibliografía</a></li>
 </ul>
@@ -170,9 +182,9 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
           <div class="page-inner">
 
             <section class="normal" id="section-">
-<div id="wiscon" class="section level1">
+<div id="wiscon" class="section level1" number="5">
 <h1><span class="header-section-number">5</span> Wisconsin Breast-Cancer Data</h1>
-<p>Los datos de cáncer de mama Wisconsin están disponibles en diversas plataformas. Por ejemplo, en <a href="https://www.kaggle.com/uciml/breast-cancer-wisconsin-data">Kaggle</a>. Estos corresponden a mediciones obtenidas “<em>de una imagen digitalizada de un aspirado con aguja fina (FNA) de una masa mamaria</em>”. La variables describen las características de los núcleos celulares presentes en la imagen. Este conjunto de datos es muy didáctico y permite estimar si los tumores son malignos o benignos, conociendo la media, desviación estándar y valor máximo de 10 mediciones de cada una de las 10 características:</p>
+<p>Los datos de cáncer de mama Wisconsin están disponibles en diversas plataformas. Por ejemplo, en <a href="https://www.kaggle.com/uciml/breast-cancer-wisconsin-data">Kaggle</a>. Estos corresponden a mediciones obtenidas “<em>de una imagen digitalizada de un aspirado con aguja fina (FNA) de una masa mamaria</em>.” La variables describen las características de los núcleos celulares presentes en la imagen. Este conjunto de datos es muy didáctico y permite estimar si los tumores son malignos o benignos, conociendo la media, desviación estándar y valor máximo de 10 mediciones de cada una de las 10 características:</p>
 <ul>
 <li>radius (mean of distances from center to points on the perimeter)</li>
 <li>texture (standard deviation of gray-scale values)</li>
@@ -186,25 +198,25 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li>fractal dimension (“coastline approximation” - 1)</li>
 </ul>
 <p>El resultado es un problema de clasificación binario (<span class="math inline">\(Y =\)</span> <code>diagnosis</code>) con 30 variables predictoras. La muestra de 569 pacientes corresponde a 357 en la clase <code>B</code> y 212 en la clase <code>M</code>. Los datos están disponibles en este repositorio y también en Aula Global.</p>
-<div class="sourceCode" id="cb173"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb173-1" title="1"><span class="kw">library</span>(caret)</a>
-<a class="sourceLine" id="cb173-2" title="2"><span class="kw">library</span>(ggplot2)</a>
-<a class="sourceLine" id="cb173-3" title="3"><span class="kw">library</span>(readr)</a>
-<a class="sourceLine" id="cb173-4" title="4"><span class="kw">library</span>(dplyr)</a>
-<a class="sourceLine" id="cb173-5" title="5"><span class="kw">library</span>(gridExtra)</a>
-<a class="sourceLine" id="cb173-6" title="6"><span class="kw">library</span>(ROCR)</a>
-<a class="sourceLine" id="cb173-7" title="7"></a>
-<a class="sourceLine" id="cb173-8" title="8"><span class="co">## Cargar datos ----</span></a>
-<a class="sourceLine" id="cb173-9" title="9">wiscon &lt;-<span class="st"> </span><span class="kw">read_csv</span>(<span class="st">&quot;data_breast_cancer_wisconsin.csv&quot;</span>)</a>
-<a class="sourceLine" id="cb173-10" title="10"></a>
-<a class="sourceLine" id="cb173-11" title="11"><span class="co"># no nos interesan los ID, y la última columna no se ha cargado bien</span></a>
-<a class="sourceLine" id="cb173-12" title="12">wiscon &lt;-<span class="st"> </span>wiscon[, <span class="dv">2</span><span class="op">:</span><span class="dv">32</span>]</a>
-<a class="sourceLine" id="cb173-13" title="13"></a>
-<a class="sourceLine" id="cb173-14" title="14"><span class="co"># la respuesta es diagnosis: B = benign, M = malignant</span></a>
-<a class="sourceLine" id="cb173-15" title="15">wiscon<span class="op">$</span>diagnosis &lt;-<span class="st"> </span><span class="kw">as.factor</span>(wiscon<span class="op">$</span>diagnosis)</a>
-<a class="sourceLine" id="cb173-16" title="16"></a>
-<a class="sourceLine" id="cb173-17" title="17">df &lt;-<span class="st"> </span><span class="kw">as.data.frame</span>(wiscon)</a>
-<a class="sourceLine" id="cb173-18" title="18"></a>
-<a class="sourceLine" id="cb173-19" title="19"><span class="kw">str</span>(df)</a></code></pre></div>
+<div class="sourceCode" id="cb162"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb162-1"><a href="wiscon.html#cb162-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(caret)</span>
+<span id="cb162-2"><a href="wiscon.html#cb162-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(ggplot2)</span>
+<span id="cb162-3"><a href="wiscon.html#cb162-3" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(readr)</span>
+<span id="cb162-4"><a href="wiscon.html#cb162-4" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(dplyr)</span>
+<span id="cb162-5"><a href="wiscon.html#cb162-5" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(gridExtra)</span>
+<span id="cb162-6"><a href="wiscon.html#cb162-6" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(ROCR)</span>
+<span id="cb162-7"><a href="wiscon.html#cb162-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb162-8"><a href="wiscon.html#cb162-8" aria-hidden="true" tabindex="-1"></a><span class="do">## Cargar datos ----</span></span>
+<span id="cb162-9"><a href="wiscon.html#cb162-9" aria-hidden="true" tabindex="-1"></a>wiscon <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(<span class="st">&quot;data_breast_cancer_wisconsin.csv&quot;</span>)</span>
+<span id="cb162-10"><a href="wiscon.html#cb162-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb162-11"><a href="wiscon.html#cb162-11" aria-hidden="true" tabindex="-1"></a><span class="co"># no nos interesan los ID, y la última columna no se ha cargado bien</span></span>
+<span id="cb162-12"><a href="wiscon.html#cb162-12" aria-hidden="true" tabindex="-1"></a>wiscon <span class="ot">&lt;-</span> wiscon[, <span class="dv">2</span><span class="sc">:</span><span class="dv">32</span>]</span>
+<span id="cb162-13"><a href="wiscon.html#cb162-13" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb162-14"><a href="wiscon.html#cb162-14" aria-hidden="true" tabindex="-1"></a><span class="co"># la respuesta es diagnosis: B = benign, M = malignant</span></span>
+<span id="cb162-15"><a href="wiscon.html#cb162-15" aria-hidden="true" tabindex="-1"></a>wiscon<span class="sc">$</span>diagnosis <span class="ot">&lt;-</span> <span class="fu">as.factor</span>(wiscon<span class="sc">$</span>diagnosis)</span>
+<span id="cb162-16"><a href="wiscon.html#cb162-16" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb162-17"><a href="wiscon.html#cb162-17" aria-hidden="true" tabindex="-1"></a>df <span class="ot">&lt;-</span> <span class="fu">as.data.frame</span>(wiscon)</span>
+<span id="cb162-18"><a href="wiscon.html#cb162-18" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb162-19"><a href="wiscon.html#cb162-19" aria-hidden="true" tabindex="-1"></a><span class="fu">str</span>(df)</span></code></pre></div>
 <pre><code>## &#39;data.frame&#39;:    569 obs. of  31 variables:
 ##  $ diagnosis              : Factor w/ 2 levels &quot;B&quot;,&quot;M&quot;: 2 2 2 2 2 2 2 2 2 2 ...
 ##  $ radius_mean            : num  18 20.6 19.7 11.4 20.3 ...
@@ -237,28 +249,28 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 ##  $ concave points_worst   : num  0.265 0.186 0.243 0.258 0.163 ...
 ##  $ symmetry_worst         : num  0.46 0.275 0.361 0.664 0.236 ...
 ##  $ fractal_dimension_worst: num  0.1189 0.089 0.0876 0.173 0.0768 ...
-##  - attr(*, &quot;problems&quot;)=Classes &#39;tbl_df&#39;, &#39;tbl&#39; and &#39;data.frame&#39;: 569 obs. of  5 variables:
-##   ..$ row     : int  1 2 3 4 5 6 7 8 9 10 ...
-##   ..$ col     : chr  NA NA NA NA ...
-##   ..$ expected: chr  &quot;33 columns&quot; &quot;33 columns&quot; &quot;33 columns&quot; &quot;33 columns&quot; ...
-##   ..$ actual  : chr  &quot;32 columns&quot; &quot;32 columns&quot; &quot;32 columns&quot; &quot;32 columns&quot; ...
-##   ..$ file    : chr  &quot;&#39;data_breast_cancer_wisconsin.csv&#39;&quot; &quot;&#39;data_breast_cancer_wisconsin.csv&#39;&quot; &quot;&#39;data_breast_cancer_wisconsin.csv&#39;&quot; &quot;&#39;data_breast_cancer_wisconsin.csv&#39;&quot; ...</code></pre>
+##  - attr(*, &quot;problems&quot;)= tibble [569 x 5] (S3: tbl_df/tbl/data.frame)
+##   ..$ row     : int [1:569] 1 2 3 4 5 6 7 8 9 10 ...
+##   ..$ col     : chr [1:569] NA NA NA NA ...
+##   ..$ expected: chr [1:569] &quot;33 columns&quot; &quot;33 columns&quot; &quot;33 columns&quot; &quot;33 columns&quot; ...
+##   ..$ actual  : chr [1:569] &quot;32 columns&quot; &quot;32 columns&quot; &quot;32 columns&quot; &quot;32 columns&quot; ...
+##   ..$ file    : chr [1:569] &quot;&#39;data_breast_cancer_wisconsin.csv&#39;&quot; &quot;&#39;data_breast_cancer_wisconsin.csv&#39;&quot; &quot;&#39;data_breast_cancer_wisconsin.csv&#39;&quot; &quot;&#39;data_breast_cancer_wisconsin.csv&#39;&quot; ...</code></pre>
 <p>Vamos a crear una partición independiente (con una semilla) de test y aplicar todo lo estudiado hasta ahora.</p>
-<div class="sourceCode" id="cb175"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb175-1" title="1"><span class="kw">set.seed</span>(<span class="dv">666</span>)</a>
-<a class="sourceLine" id="cb175-2" title="2">train.ID &lt;-<span class="st"> </span><span class="kw">createDataPartition</span>(df<span class="op">$</span>diagnosis, <span class="dt">p =</span> <span class="fl">0.7</span>, <span class="dt">list =</span> <span class="ot">FALSE</span>)</a>
-<a class="sourceLine" id="cb175-3" title="3"></a>
-<a class="sourceLine" id="cb175-4" title="4">train_df &lt;-<span class="st"> </span>df[train.ID, ]</a>
-<a class="sourceLine" id="cb175-5" title="5">test_df &lt;-<span class="st"> </span>df[<span class="op">-</span>train.ID, ]</a></code></pre></div>
+<div class="sourceCode" id="cb164"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb164-1"><a href="wiscon.html#cb164-1" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">666</span>)</span>
+<span id="cb164-2"><a href="wiscon.html#cb164-2" aria-hidden="true" tabindex="-1"></a>train.ID <span class="ot">&lt;-</span> <span class="fu">createDataPartition</span>(df<span class="sc">$</span>diagnosis, <span class="at">p =</span> <span class="fl">0.7</span>, <span class="at">list =</span> <span class="cn">FALSE</span>)</span>
+<span id="cb164-3"><a href="wiscon.html#cb164-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb164-4"><a href="wiscon.html#cb164-4" aria-hidden="true" tabindex="-1"></a>train_df <span class="ot">&lt;-</span> df[train.ID, ]</span>
+<span id="cb164-5"><a href="wiscon.html#cb164-5" aria-hidden="true" tabindex="-1"></a>test_df <span class="ot">&lt;-</span> df[<span class="sc">-</span>train.ID, ]</span></code></pre></div>
 <p>¡A por ello!</p>
-<div id="comentarios-finales-reducción-de-la-dimensión" class="section level2">
-<h2><span class="header-section-number">5.1</span> Comentarios finales: reducción de la dimensión</h2>
+<div id="reducción-de-la-dimensión" class="section level2" number="5.1">
+<h2><span class="header-section-number">5.1</span> Reducción de la dimensión</h2>
 <p>Aunque queda fuera del <em>aprendizaje supervisado</em>, como posible solución a la alta dimensionalidad de los datos, en <code>caret</code> es posible aplicar técnicas <em>no supervisadas</em> que permiten <em>reducir la dimensión</em>. Una de ellas es el <em>Análisis de Componentes Principales</em> (<em>PCA</em>, por sus siglas en inglés). Veamos cómo hacer esto con la función <code>preProcess</code>:</p>
-<div class="sourceCode" id="cb176"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb176-1" title="1"><span class="co"># en este caso estamos reduciendo la cantidad de variables iniciales</span></a>
-<a class="sourceLine" id="cb176-2" title="2"><span class="co"># a solamente ¡2!</span></a>
-<a class="sourceLine" id="cb176-3" title="3">preProc.res &lt;-<span class="st"> </span><span class="kw">preProcess</span>(df, <span class="dt">method =</span> <span class="kw">c</span>(<span class="st">&#39;pca&#39;</span>), <span class="dt">pcaComp =</span> <span class="dv">2</span>)</a>
-<a class="sourceLine" id="cb176-4" title="4">df.pca &lt;-<span class="st"> </span><span class="kw">predict</span>(preProc.res, df)</a>
-<a class="sourceLine" id="cb176-5" title="5"></a>
-<a class="sourceLine" id="cb176-6" title="6"><span class="kw">head</span>(df.pca, <span class="dv">7</span>)</a></code></pre></div>
+<div class="sourceCode" id="cb165"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb165-1"><a href="wiscon.html#cb165-1" aria-hidden="true" tabindex="-1"></a><span class="co"># en este caso estamos reduciendo la cantidad de variables iniciales</span></span>
+<span id="cb165-2"><a href="wiscon.html#cb165-2" aria-hidden="true" tabindex="-1"></a><span class="co"># a solamente ¡2!</span></span>
+<span id="cb165-3"><a href="wiscon.html#cb165-3" aria-hidden="true" tabindex="-1"></a>preProc.res <span class="ot">&lt;-</span> <span class="fu">preProcess</span>(df, <span class="at">method =</span> <span class="fu">c</span>(<span class="st">&#39;pca&#39;</span>), <span class="at">pcaComp =</span> <span class="dv">2</span>)</span>
+<span id="cb165-4"><a href="wiscon.html#cb165-4" aria-hidden="true" tabindex="-1"></a>df.pca <span class="ot">&lt;-</span> <span class="fu">predict</span>(preProc.res, df)</span>
+<span id="cb165-5"><a href="wiscon.html#cb165-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb165-6"><a href="wiscon.html#cb165-6" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(df.pca, <span class="dv">7</span>)</span></code></pre></div>
 <pre><code>##   diagnosis       PC1        PC2
 ## 1         M -9.184755  -1.946870
 ## 2         M -2.385703   3.764859
@@ -268,17 +280,59 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 ## 6         M -2.378155  -3.946456
 ## 7         M -2.236915   2.687666</code></pre>
 <p>Veamos qué tan separadas quedan las clases ahora:</p>
-<div class="sourceCode" id="cb178"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb178-1" title="1"><span class="kw">ggplot</span>(df.pca,  <span class="kw">aes</span>(<span class="dt">x =</span> PC1, <span class="dt">y =</span> PC2, <span class="dt">group =</span> diagnosis)) <span class="op">+</span></a>
-<a class="sourceLine" id="cb178-2" title="2"><span class="st">  </span><span class="kw">geom_point</span>(<span class="kw">aes</span>(<span class="dt">color =</span> diagnosis ), <span class="dt">alpha =</span> <span class="fl">0.8</span>) <span class="op">+</span></a>
-<a class="sourceLine" id="cb178-3" title="3"><span class="st">  </span><span class="kw">theme_light</span>()</a></code></pre></div>
-<p><img src="_main_files/figure-html/unnamed-chunk-78-1.png" width="80%" style="display: block; margin: auto;" /></p>
+<div class="sourceCode" id="cb167"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb167-1"><a href="wiscon.html#cb167-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(df.pca,  <span class="fu">aes</span>(<span class="at">x =</span> PC1, <span class="at">y =</span> PC2, <span class="at">group =</span> diagnosis)) <span class="sc">+</span></span>
+<span id="cb167-2"><a href="wiscon.html#cb167-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="fu">aes</span>(<span class="at">color =</span> diagnosis ), <span class="at">alpha =</span> <span class="fl">0.8</span>) <span class="sc">+</span></span>
+<span id="cb167-3"><a href="wiscon.html#cb167-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_light</span>()</span></code></pre></div>
+<p><img src="_main_files/figure-html/unnamed-chunk-80-1.png" width="80%" style="display: block; margin: auto;" /></p>
 <p>Si volvemos a hacer la partición de los datos (mismos índices para el test);</p>
-<div class="sourceCode" id="cb179"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb179-1" title="1"><span class="co"># Ajustemos nuestros modelos con los datos transformados:</span></a>
-<a class="sourceLine" id="cb179-2" title="2">train_df &lt;-<span class="st"> </span>df.pca[train.ID, ]</a>
-<a class="sourceLine" id="cb179-3" title="3">test_df &lt;-<span class="st"> </span>df.pca[<span class="op">-</span>train.ID, ]</a></code></pre></div>
+<div class="sourceCode" id="cb168"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb168-1"><a href="wiscon.html#cb168-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Ajustemos nuestros modelos con los datos transformados:</span></span>
+<span id="cb168-2"><a href="wiscon.html#cb168-2" aria-hidden="true" tabindex="-1"></a>train_df <span class="ot">&lt;-</span> df.pca[train.ID, ]</span>
+<span id="cb168-3"><a href="wiscon.html#cb168-3" aria-hidden="true" tabindex="-1"></a>test_df <span class="ot">&lt;-</span> df.pca[<span class="sc">-</span>train.ID, ]</span></code></pre></div>
 <p>entonces, podemos aplicar todos los modelos estudiados a un conjunto de datos de menor complejidad. Esto es una ganancia en tiempo de cómputo… ¿será también en términos predictivos? Intenta también <strong>representar la frontera de decisión</strong> correspondiente a cada método, usando como base la ya conocida <code>decision_bound</code>.</p>
-<p>Finalmente, comentar que el LDA también puede ser visto como un método de reducción de la dimensión. La visión de Fisher del discriminante lineal contempla encontrar la mejor proyección de los datos (a una dimensión inferior) que permita separar bien las clases. Esto se logra persiguiendo la mayor dispersión posible en los datos.</p>
-<p>Más información sobre el PCA puede ser consultada en los libros que se citan al final del documento. Una buena introducción a esta visión del LDA está disponible en las <a href="https://www.csd.uwo.ca/~olga/Courses/CS434a_541a/Lecture8.pdf">lecciones de Prof. Olga Veksler</a>. También se recomiendo el excelente <a href="https://www.datascienceblog.net/post/machine-learning/linear-discriminant-analysis/">post de Matthias Döring</a>.</p>
+<p>El LDA también puede ser visto como un método de reducción de la dimensión (a lo sumo <em># clases - 1</em>). La visión de Fisher del discriminante lineal contempla encontrar la mejor proyección de los datos (a una dimensión inferior) que permita separar bien las clases. Esto se logra persiguiendo la mayor dispersión posible en los datos. Una buena introducción a esta visión del LDA está disponible en las <a href="https://www.csd.uwo.ca/~olga/Courses/CS434a_541a/Lecture8.pdf">lecciones de Prof. Olga Veksler</a>. También se recomiendo el excelente <a href="https://www.datascienceblog.net/post/machine-learning/linear-discriminant-analysis/">post de Matthias Döring</a>.</p>
+<p>Retomando, veamos un ejemplo de los datos <code>iris</code>:</p>
+<div class="sourceCode" id="cb169"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb169-1"><a href="wiscon.html#cb169-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(MASS)</span>
+<span id="cb169-2"><a href="wiscon.html#cb169-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb169-3"><a href="wiscon.html#cb169-3" aria-hidden="true" tabindex="-1"></a>df <span class="ot">&lt;-</span> iris</span>
+<span id="cb169-4"><a href="wiscon.html#cb169-4" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">123</span>)</span>
+<span id="cb169-5"><a href="wiscon.html#cb169-5" aria-hidden="true" tabindex="-1"></a>train.ID <span class="ot">&lt;-</span> <span class="fu">createDataPartition</span>(df<span class="sc">$</span>Species, <span class="at">p =</span> <span class="fl">0.8</span>, <span class="at">list =</span> <span class="cn">FALSE</span>)</span>
+<span id="cb169-6"><a href="wiscon.html#cb169-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb169-7"><a href="wiscon.html#cb169-7" aria-hidden="true" tabindex="-1"></a>train_df <span class="ot">&lt;-</span> df[train.ID, ]</span>
+<span id="cb169-8"><a href="wiscon.html#cb169-8" aria-hidden="true" tabindex="-1"></a>test_df <span class="ot">&lt;-</span> df[<span class="sc">-</span>train.ID, ]</span>
+<span id="cb169-9"><a href="wiscon.html#cb169-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb169-10"><a href="wiscon.html#cb169-10" aria-hidden="true" tabindex="-1"></a>lda_iris <span class="ot">&lt;-</span> MASS<span class="sc">::</span><span class="fu">lda</span>(Species <span class="sc">~</span> ., train_df)</span>
+<span id="cb169-11"><a href="wiscon.html#cb169-11" aria-hidden="true" tabindex="-1"></a>lda_iris</span></code></pre></div>
+<pre><code>## Call:
+## lda(Species ~ ., data = train_df)
+## 
+## Prior probabilities of groups:
+##     setosa versicolor  virginica 
+##  0.3333333  0.3333333  0.3333333 
+## 
+## Group means:
+##            Sepal.Length Sepal.Width Petal.Length Petal.Width
+## setosa           4.9800      3.3700       1.4650      0.2400
+## versicolor       5.9400      2.7700       4.2325      1.3275
+## virginica        6.6375      3.0125       5.6225      2.0700
+## 
+## Coefficients of linear discriminants:
+##                    LD1         LD2
+## Sepal.Length  0.787581  0.05173815
+## Sepal.Width   1.605418 -2.45346114
+## Petal.Length -2.144011  0.80572094
+## Petal.Width  -2.909670 -2.51645779
+## 
+## Proportion of trace:
+##    LD1    LD2 
+## 0.9902 0.0098</code></pre>
+<p>El campo <code>Coefficients of linear discriminants</code> indica los coeficientes de cada discriminante. Por ejemplo, el primer discriminante lineal (LD1) es la combinación lineal:</p>
+<p><span class="math display">\[ (0.79*Sepal.Length) + (1.60*Sepal.Width) + (-2.14*Petal.Length) + (-2.90*Petal.Width) \]</span>
+El campo <code>Proportions of trace</code> describe la proporción de varianza entre clases que es explicada por los discriminantes lineales sucesivos. En este caso, LD1 explica 99% de la varianza, o sea, solo con la primera componente podríamos ser capaces de discriminar con buena precisión. Veamos la proyección en el espacio LD1 vs. LD2:</p>
+<div class="sourceCode" id="cb171"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb171-1"><a href="wiscon.html#cb171-1" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(lda_iris, <span class="at">col =</span> <span class="fu">as.integer</span>(train_df<span class="sc">$</span>Species))</span></code></pre></div>
+<p><img src="_main_files/figure-html/unnamed-chunk-83-1.png" width="80%" style="display: block; margin: auto;" /></p>
+<p>Vemos que LD1 permite separar bien ambas clases, aunque hay un poco de superposición entre <code>virginica</code> y <code>versicolor</code>. Finalmente, en una sola dimensión (la definida por LD1):</p>
+<div class="sourceCode" id="cb172"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb172-1"><a href="wiscon.html#cb172-1" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(lda_iris, <span class="at">dimen =</span> <span class="dv">1</span>, <span class="at">type =</span> <span class="st">&quot;b&quot;</span>)</span></code></pre></div>
+<p><img src="_main_files/figure-html/unnamed-chunk-84-1.png" width="80%" style="display: block; margin: auto;" /></p>
 
 </div>
 </div>

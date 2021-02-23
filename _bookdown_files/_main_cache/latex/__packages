@@ -11,3 +11,9 @@ gplots
 ROCR
 dplyr
 readr
+tidyverse
+tibble
+tidyr
+purrr
+stringr
+forcats

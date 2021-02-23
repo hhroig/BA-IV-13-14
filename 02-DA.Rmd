@@ -12,7 +12,7 @@ head(Default, 10)
 str(Default)
 
 ```
-El objetivo es predecir si un sujeto de la muestre fallará en el pago de su tarjeta de crédito. Por tanto, la variable respuesta es `default`, categórica con solo los niveles `Yes` y `No`. Tenemos información sobre el balance mensual de crédito en `balance`, el salario anual en `income` y si es estudiante o no en `student`. Solo un $3\%$ de la muestra ($n = 10000$), así que es una muestra muy desbalanceada.
+El objetivo es predecir si un sujeto de la muestra fallará en el pago de su tarjeta de crédito. Por tanto, la variable respuesta es `default`, categórica con solo los niveles `Yes` y `No`. Tenemos información sobre el balance mensual de crédito en `balance`, el salario anual en `income` y si es estudiante o no en `student`. Solo un $3\%$ de la muestra es de la clase `Yes`, así que está bastante desbalanceada.
 
 ```{r}
 summary(Default)
@@ -107,6 +107,28 @@ names(tasa.error.lda) <- "Error LDA"
 tasa.error.lda
 ```
 
+Vemos que la especificidad es muy buena (casi no falla al clasificar los verdaderos "No"), pero la sensibilidad (capacidad para detectar los verdaderos "Yes") es muy mala. Vamos a cambiar el umbral de decisión (por defecto probabilidad $0.5$) para intentar mejorar el algoritmo para protegernos de los malos pagadores: 
+
+```{r}
+# predecimos las probabilidades:
+prediction_lda_prob <- predict(model_lda_def, 
+                              newdata = test_df, 
+                              type = "prob")
+
+prediction_lda_def <- as.factor(
+  ifelse(prediction_lda_prob$Yes > 0.2, "Yes", "No")
+)
+  
+
+confusionMatrix(prediction_lda_def, 
+                reference = test_df$default, 
+                positive = "Yes", 
+                mode = "everything")
+
+```
+
+### Frontera de decisión en 2D
+
 Como estamos en un problema de clasificación en dos dimensiones ($p = 2$), es posible representar la frontera de decisión del algoritmo, usando la función `decision_bound`. Debemos modificar los campos para que coincidan con las variables de `Default`:
 
 ```{r}
@@ -155,6 +177,7 @@ decision_bound = function(train_df_in, test_df_in, model_in){
 decision_bound(train_df, test_df, model_lda_def)
 ```
 
+
 ## Análisis Discriminante Cuadrático {#QDA}
 
 El ajuste para el modelo QDA lo hacemos con el mismo control y la misma partición de la muestra.
@@ -174,16 +197,13 @@ Los resultados al entrenar son similares al caso LDA. Veamos las predicciones pa
 ```{r}
 # hagamos las predicciones del conjunto de prueba
 prediction_qda_def <- predict(model_qda_def, newdata = test_df)
-confusionMatrix(prediction_qda_def, reference = test_df$default)
-
-# extraemos el Accuracy o Precisión
-confusionMatrix(prediction_qda_def, reference = test_df$default)$overall[1]
-# la tasa de error
-tasa.error.qda <- 1-confusionMatrix(prediction_qda_def, reference = test_df$default)$overall[1]
-names(tasa.error.qda) <- "Error QDA"
-tasa.error.qda
+confusionMatrix(prediction_qda_def, 
+                reference = test_df$default, 
+                positive = "Yes", 
+                mode = "everything")
 ```
-Tampoco se logran mejorar los resultados. Finalmente, representamos la frontera de decisión del algoritmo.
+
+Notamos un rendimiento similar, con cierta mejora de la precisión y la sensibilidad. Finalmente, representamos la frontera de decisión del algoritmo.
 
 ```{r , out.width='80%', fig.asp=.75, fig.align='center'}
 decision_bound(train_df, test_df, model_qda_def)
@@ -240,7 +260,10 @@ Los resultados indican que los hiperparámetros óptimos en este caso correspond
 ```{r}
 # hagamos las predicciones del conjunto de prueba
 prediction_rda_def <- predict(model_rda_def, newdata = test_df)
-confusionMatrix(prediction_rda_def, reference = test_df$default)
+confusionMatrix(prediction_rda_def, 
+                reference = test_df$default, 
+                positive = "Yes", 
+                mode = "everything")
 
 # extraemos el Accuracy o Precisión
 confusionMatrix(prediction_rda_def, reference = test_df$default)$overall[1]

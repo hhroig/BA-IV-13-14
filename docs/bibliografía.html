@@ -5,20 +5,20 @@
   <meta charset="utf-8" />
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
   <title>Bibliografía | Introducción al Aprendizaje Supervisado</title>
-  <meta name="description" content="Sesiones 13-15 IV Edición del Big Analytics: de la información al conocimiento." />
-  <meta name="generator" content="bookdown 0.18 and GitBook 2.6.7" />
+  <meta name="description" content="Big Analytics V" />
+  <meta name="generator" content="bookdown 0.21 and GitBook 2.6.7" />
 
   <meta property="og:title" content="Bibliografía | Introducción al Aprendizaje Supervisado" />
   <meta property="og:type" content="book" />
   
   
-  <meta property="og:description" content="Sesiones 13-15 IV Edición del Big Analytics: de la información al conocimiento." />
+  <meta property="og:description" content="Big Analytics V" />
   
 
   <meta name="twitter:card" content="summary" />
   <meta name="twitter:title" content="Bibliografía | Introducción al Aprendizaje Supervisado" />
   
-  <meta name="twitter:description" content="Sesiones 13-15 IV Edición del Big Analytics: de la información al conocimiento." />
+  <meta name="twitter:description" content="Big Analytics V" />
   
 
 <meta name="author" content="Harold A. Hernández-Roig (hahernan@est-econ.uc3m.es)" />
@@ -32,6 +32,7 @@
   
 <link rel="prev" href="wiscon.html"/>
 
+<script src="libs/header-attrs-2.6/header-attrs.js"></script>
 <script src="libs/jquery-2.2.3/jquery.min.js"></script>
 <link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
 <link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
@@ -52,25 +53,26 @@
 
 
 <style type="text/css">
-a.sourceLine { display: inline-block; line-height: 1.25; }
-a.sourceLine { pointer-events: none; color: inherit; text-decoration: inherit; }
-a.sourceLine:empty { height: 1.2em; }
-.sourceCode { overflow: visible; }
-code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
 pre.sourceCode { margin: 0; }
 @media screen {
 div.sourceCode { overflow: auto; }
 }
 @media print {
-code.sourceCode { white-space: pre-wrap; }
-a.sourceLine { text-indent: -1em; padding-left: 1em; }
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
 }
-pre.numberSource a.sourceLine
-  { position: relative; left: -4em; }
-pre.numberSource a.sourceLine::before
-  { content: attr(title);
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
     position: relative; left: -1em; text-align: right; vertical-align: baseline;
-    border: none; pointer-events: all; display: inline-block;
+    border: none; display: inline-block;
     -webkit-touch-callout: none; -webkit-user-select: none;
     -khtml-user-select: none; -moz-user-select: none;
     -ms-user-select: none; user-select: none;
@@ -79,9 +81,9 @@ pre.numberSource a.sourceLine::before
   }
 pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
 div.sourceCode
-  {  }
+  {   }
 @media screen {
-a.sourceLine::before { text-decoration: underline; }
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
 }
 code span.al { color: #ff0000; font-weight: bold; } /* Alert */
 code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
@@ -127,30 +129,40 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 
 <ul class="summary">
 <li class="chapter" data-level="1" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i><b>1</b> Introducción</a></li>
-<li class="chapter" data-level="2" data-path="k-vecinos-más-próximos.html"><a href="k-vecinos-más-próximos.html"><i class="fa fa-check"></i><b>2</b> K - Vecinos más Próximos</a><ul>
+<li class="chapter" data-level="2" data-path="k-vecinos-más-próximos.html"><a href="k-vecinos-más-próximos.html"><i class="fa fa-check"></i><b>2</b> K - Vecinos más Próximos</a>
+<ul>
 <li class="chapter" data-level="2.1" data-path="k-vecinos-más-próximos.html"><a href="k-vecinos-más-próximos.html#clasificación-con-el-paquete-class"><i class="fa fa-check"></i><b>2.1</b> Clasificación con el paquete <code>class</code></a></li>
-<li class="chapter" data-level="2.2" data-path="k-vecinos-más-próximos.html"><a href="k-vecinos-más-próximos.html#el-paquete-caret"><i class="fa fa-check"></i><b>2.2</b> El paquete <code>caret</code></a><ul>
+<li class="chapter" data-level="2.2" data-path="k-vecinos-más-próximos.html"><a href="k-vecinos-más-próximos.html#el-paquete-caret"><i class="fa fa-check"></i><b>2.2</b> El paquete <code>caret</code></a>
+<ul>
 <li class="chapter" data-level="2.2.1" data-path="k-vecinos-más-próximos.html"><a href="k-vecinos-más-próximos.html#visualización"><i class="fa fa-check"></i><b>2.2.1</b> Visualización</a></li>
 <li class="chapter" data-level="2.2.2" data-path="k-vecinos-más-próximos.html"><a href="k-vecinos-más-próximos.html#clasificación-con-knn"><i class="fa fa-check"></i><b>2.2.2</b> Clasificación con KNN</a></li>
 <li class="chapter" data-level="2.2.3" data-path="k-vecinos-más-próximos.html"><a href="k-vecinos-más-próximos.html#importancia-de-las-variables"><i class="fa fa-check"></i><b>2.2.3</b> Importancia de las variables</a></li>
 </ul></li>
 <li class="chapter" data-level="2.3" data-path="k-vecinos-más-próximos.html"><a href="k-vecinos-más-próximos.html#regresión"><i class="fa fa-check"></i><b>2.3</b> Regresión</a></li>
 <li class="chapter" data-level="2.4" data-path="k-vecinos-más-próximos.html"><a href="k-vecinos-más-próximos.html#weighted-knn"><i class="fa fa-check"></i><b>2.4</b> Weighted KNN</a></li>
+<li class="chapter" data-level="2.5" data-path="k-vecinos-más-próximos.html"><a href="k-vecinos-más-próximos.html#procesamiento-en-paralelo"><i class="fa fa-check"></i><b>2.5</b> Procesamiento en paralelo</a></li>
 </ul></li>
-<li class="chapter" data-level="3" data-path="DA.html"><a href="DA.html"><i class="fa fa-check"></i><b>3</b> Análisis Discriminante</a><ul>
-<li class="chapter" data-level="3.1" data-path="DA.html"><a href="DA.html#LDA"><i class="fa fa-check"></i><b>3.1</b> Análisis Discriminante Lineal</a></li>
+<li class="chapter" data-level="3" data-path="DA.html"><a href="DA.html"><i class="fa fa-check"></i><b>3</b> Análisis Discriminante</a>
+<ul>
+<li class="chapter" data-level="3.1" data-path="DA.html"><a href="DA.html#LDA"><i class="fa fa-check"></i><b>3.1</b> Análisis Discriminante Lineal</a>
+<ul>
+<li class="chapter" data-level="3.1.1" data-path="DA.html"><a href="DA.html#frontera-de-decisión-en-2d"><i class="fa fa-check"></i><b>3.1.1</b> Frontera de decisión en 2D</a></li>
+</ul></li>
 <li class="chapter" data-level="3.2" data-path="DA.html"><a href="DA.html#QDA"><i class="fa fa-check"></i><b>3.2</b> Análisis Discriminante Cuadrático</a></li>
 <li class="chapter" data-level="3.3" data-path="DA.html"><a href="DA.html#RDA"><i class="fa fa-check"></i><b>3.3</b> Análisis Discriminante Regularizado</a></li>
 </ul></li>
-<li class="chapter" data-level="4" data-path="compara.html"><a href="compara.html"><i class="fa fa-check"></i><b>4</b> Comparación entre Modelos</a><ul>
+<li class="chapter" data-level="4" data-path="compara.html"><a href="compara.html"><i class="fa fa-check"></i><b>4</b> Comparación entre Modelos</a>
+<ul>
 <li class="chapter" data-level="4.1" data-path="compara.html"><a href="compara.html#comparando-según-accuracy"><i class="fa fa-check"></i><b>4.1</b> Comparando según <code>Accuracy</code></a></li>
-<li class="chapter" data-level="4.2" data-path="compara.html"><a href="compara.html#curva-roc"><i class="fa fa-check"></i><b>4.2</b> Curva <em>ROC</em></a><ul>
+<li class="chapter" data-level="4.2" data-path="compara.html"><a href="compara.html#curva-roc"><i class="fa fa-check"></i><b>4.2</b> Curva <em>ROC</em></a>
+<ul>
 <li class="chapter" data-level="4.2.1" data-path="compara.html"><a href="compara.html#análisis-en-la-muestra-test"><i class="fa fa-check"></i><b>4.2.1</b> Análisis en la muestra test</a></li>
 <li class="chapter" data-level="4.2.2" data-path="compara.html"><a href="compara.html#análisis-en-la-muestra-de-entrenamiento"><i class="fa fa-check"></i><b>4.2.2</b> Análisis en la muestra de entrenamiento</a></li>
 </ul></li>
 </ul></li>
-<li class="chapter" data-level="5" data-path="wiscon.html"><a href="wiscon.html"><i class="fa fa-check"></i><b>5</b> Wisconsin Breast-Cancer Data</a><ul>
-<li class="chapter" data-level="5.1" data-path="wiscon.html"><a href="wiscon.html#comentarios-finales-reducción-de-la-dimensión"><i class="fa fa-check"></i><b>5.1</b> Comentarios finales: reducción de la dimensión</a></li>
+<li class="chapter" data-level="5" data-path="wiscon.html"><a href="wiscon.html"><i class="fa fa-check"></i><b>5</b> Wisconsin Breast-Cancer Data</a>
+<ul>
+<li class="chapter" data-level="5.1" data-path="wiscon.html"><a href="wiscon.html#reducción-de-la-dimensión"><i class="fa fa-check"></i><b>5.1</b> Reducción de la dimensión</a></li>
 </ul></li>
 <li class="chapter" data-level="" data-path="bibliografía.html"><a href="bibliografía.html"><i class="fa fa-check"></i>Bibliografía</a></li>
 </ul>
@@ -173,27 +185,27 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <div id="bibliografía" class="section level1 unnumbered">
 <h1>Bibliografía</h1>
 
-<div id="refs" class="references">
-<div>
-<p>Burger, Scott V. 2018. <em>Introduction to machine learning with R - Rigorous mathematical modeling</em>. Vol. 1. O’Reilly.</p>
+<div id="refs" class="references csl-bib-body hanging-indent">
+<div id="ref-Burger2018" class="csl-entry">
+Burger, Scott V. 2018. <em><span class="nocase">Introduction to machine learning with R - Rigorous mathematical modeling</span></em>. Vol. 1. O’Reilly.
 </div>
-<div>
-<p>James, Gareth, Daniela Witten, Trevor Hastie, and Rob Tibshirani. 2017. <em>ISLR: Data for an Introduction to Statistical Learning with Applications in R</em>. <a href="https://CRAN.R-project.org/package=ISLR">https://CRAN.R-project.org/package=ISLR</a>.</p>
+<div id="ref-R-ISLR" class="csl-entry">
+James, Gareth, Daniela Witten, Trevor Hastie, and Rob Tibshirani. 2017. <em>ISLR: Data for an Introduction to Statistical Learning with Applications in r</em>. <a href="http://www.StatLearning.com">http://www.StatLearning.com</a>.
 </div>
-<div>
-<p>James, Gareth, Daniela Witten, Trevor Hastie, and Robert Tibshirani. 2013. <em>An Introduction to Statistical Learning with Applications in R*</em>. Vol. 6. Springer.</p>
+<div id="ref-james2013introduction" class="csl-entry">
+James, Gareth, Daniela Witten, Trevor Hastie, and Robert Tibshirani. 2013. <em>An Introduction to Statistical Learning with Applications in r*</em>. Vol. 6. Springer.
 </div>
-<div>
-<p>Kuhn, Max. 2020. <em>Caret: Classification and Regression Training</em>. <a href="https://CRAN.R-project.org/package=caret">https://CRAN.R-project.org/package=caret</a>.</p>
+<div id="ref-R-caret" class="csl-entry">
+Kuhn, Max. 2020. <em>Caret: Classification and Regression Training</em>. <a href="https://github.com/topepo/caret/">https://github.com/topepo/caret/</a>.
 </div>
-<div>
-<p>Rebala, Gopinath, Ajay Ravi, and Sanjay Churiwala. 2019. <em>An Introduction to Machine Learning</em>. Cham: Springer International Publishing. <a href="https://doi.org/10.1007/978-3-030-15729-6">https://doi.org/10.1007/978-3-030-15729-6</a>.</p>
+<div id="ref-Rebala2019" class="csl-entry">
+Rebala, Gopinath, Ajay Ravi, and Sanjay Churiwala. 2019. <em><span class="nocase">An Introduction to Machine Learning</span></em>. Cham: Springer International Publishing. <a href="https://doi.org/10.1007/978-3-030-15729-6">https://doi.org/10.1007/978-3-030-15729-6</a>.
 </div>
-<div>
-<p>Ripley, Brian. 2019. <em>Class: Functions for Classification</em>. <a href="https://CRAN.R-project.org/package=class">https://CRAN.R-project.org/package=class</a>.</p>
+<div id="ref-R-class" class="csl-entry">
+Ripley, Brian. 2020. <em>Class: Functions for Classification</em>. <a href="http://www.stats.ox.ac.uk/pub/MASS4/">http://www.stats.ox.ac.uk/pub/MASS4/</a>.
 </div>
-<div>
-<p>Sing, Tobias, Oliver Sander, Niko Beerenwinkel, and Thomas Lengauer. 2015. <em>ROCR: Visualizing the Performance of Scoring Classifiers</em>. <a href="https://CRAN.R-project.org/package=ROCR">https://CRAN.R-project.org/package=ROCR</a>.</p>
+<div id="ref-R-ROCR" class="csl-entry">
+Sing, Tobias, Oliver Sander, Niko Beerenwinkel, and Thomas Lengauer. 2020. <em>ROCR: Visualizing the Performance of Scoring Classifiers</em>. <a href="http://ipa-tys.github.io/ROCR/">http://ipa-tys.github.io/ROCR/</a>.
 </div>
 </div>
 </div>

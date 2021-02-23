@@ -18,8 +18,11 @@ knitr::kable(
 Cargamos las librerías necesarias para llevar a cabo el estudio. Luego inspeccionamos los datos.
 
 ```{r, out.width='100%', fig.asp=.75, fig.align='center', message=FALSE}
+# ya conocemos esta:
+library(tidyverse)
+# para usar knn:
 library(class)
-library(ggplot2)
+# esta es nueva para nosotros:
 library(GGally)
 
 df <- data(iris) # cargar datos
@@ -29,9 +32,20 @@ summary(iris) # un breve descriptivo
 prop.table(table(iris$Species))
 
 # visualización
-ggpairs(iris, ggplot2::aes(colour = Species, alpha = 0.2), lower=list(combo=wrap("facethist",  
-bins=round(sqrt(50))))) + theme_light()
+p1 <- ggpairs(iris, 
+        aes(colour = Species, alpha = 0.2), 
+        columns = c("Sepal.Length",  "Sepal.Width", 
+                    "Petal.Length", "Petal.Width")) + 
+  theme_bw()
+p1
 
+p2 <- ggpairs(iris, 
+        aes(colour = Species, alpha = 0.2), 
+        lower=list(combo=wrap("facethist",
+                              bins=round(sqrt(50))))) +
+  theme_bw() + 
+  theme(axis.text.x = element_text(angle = 45, hjust = 1)) 
+p2
 ```
 
 De estos análisis observamos, por ejemplo, que 2 de las 4 variables---*Petal.Width* y *Petal.Length*---parecen separar bastante bien las 3 especies, y que la muestra está muy bien balanceada.
@@ -109,7 +123,7 @@ Se representa la tasa de error al aumentar el número de vecinos. Los *saltos* d
 
 ## El paquete `caret`
 
-El paquete `caret` (_**C**lassification **A**nd **RE**gression **T**raining_) es uno de los más populares para entrenar modelos de *machine learning*. Contiene una interface uniforme para la mayoría de los algoritmos que se tratan en este curso y, en particular, los 3 que veremos en estas sesiones. Las ventajas del paquete son que permite hacer:
+El paquete `caret` (_**C**lassification **A**nd **RE**gression **T**raining_) es uno de los más populares para entrenar modelos de *machine learning*. Contiene una interfaz uniforme para la mayoría de los algoritmos que se tratan en este curso y, en particular, los 3 que veremos en estas sesiones. Las ventajas del paquete son que permite hacer:
 
 * partición de los datos
 * pre-procesado de los datos
@@ -181,12 +195,13 @@ train_df <- df[train.ID, ]
 test_df <- df[-train.ID, ]
 ```
 
-Para ajustar el modelo usaremos la función `train`, que permite:
-* evaluar, usando remuestreo, el efecto de distintos parámetros en la precisión del modelo
-* escoger el modelo óptimo, de acuerdo a los parámetros probados
-* estimar la precisión del modelo, de acuerdo a diferentes medidas
+Para ajustar el modelo usaremos la función `train`, que permite: 
 
-Actualmente hay uno $\approx 238$ modelos disponibles. Nosotros empezaremos probando el `knn`, pero antes tenemos que especificar el método de remuestreo, usando la función `trainControl`. Con esta función, podemos fijar una validación cruzada *k-Fold* o *leave-one-out (LOOCV)*. También están disponibles las opciones *bootstrap* y *k-Fold repetitivo*. 
+* evaluar, usando remuestreo, el efecto de distintos parámetros en la precisión del modelo;
+* escoger el modelo óptimo, de acuerdo a los parámetros probados; 
+* estimar la precisión del modelo, de acuerdo a diferentes medidas.
+
+Actualmente hay unos $\approx 238$ modelos disponibles. Nosotros empezaremos probando el `knn`, pero antes tenemos que especificar el método de remuestreo, usando la función `trainControl`. Con esta función, podemos fijar una validación cruzada *k-Fold* o *leave-one-out (LOOCV)*. También están disponibles las opciones *bootstrap* y *k-Fold repetitivo*. 
 
 En este ejemplo, hemos fijado un *k-Fold* con 10 hojas. Además, hacemos el escalado de las variables dentro del propio algoritmo, usando la opción `preProcess`. Finalmente, le decimos al algoritmo que intente 10 valores diferentes para escoger el número de vecinos óptimo, usando la opción `tuneLength`
 
@@ -502,6 +517,7 @@ buscar_mejor <- expand.grid( kmax =  3:9,
                                         "triangular",
                                         "gaussian"))
 ```
+
 El modelo se ajusta igual a como ya hemos estudiado:
 ```{r}
 set.seed(321)
@@ -538,4 +554,51 @@ model.w.knn <- train(Species ~.,
 model.w.knn
 plot(model.w.knn)
 ```
+
+## Procesamiento en paralelo
+
+No cambia la estructura de entrenamiento, solo es necesario fijar el número de núcleos. En este caso tenemos un ejemplo donde comparamos una ejecución sin paralelizar y otra que emplea 8 núcleos en paralelo con el paquete `doParallel`. El número de hiperparámetros es 16.
+
+```{r, eval = FALSE}
+# random search WKNN
+fit_control <- trainControl(method='repeatedcv', number = 16, 
+                            repeats = 10,
+                            search = "random")
+## No-Parallel ----
+tic("wknn-train")
+
+set.seed(321)
+model.w.knn <- train(Species ~.,
+                     data = train_df,
+                     method = "kknn",
+                     trControl = fit_control,
+                     preProcess = c("center", "scale"),
+                     tuneLength = 16)
+time_wknn <- toc()
+
+## Parallel ----
+
+library(doParallel)
+
+# Número de núcleos:
+cl <- makePSOCKcluster(8)
+
+# Registrar:
+registerDoParallel(cl)
+
+# Misma estructura que hasta ahora:
+tic("wknn-train_para")
+set.seed(321)
+model.w.knn <- train(Species ~.,
+                     data = train_df,
+                     method = "kknn",
+                     trControl = fit_control,
+                     preProcess = c("center", "scale"),
+                     tuneLength = 16)
+time_wknn_para <- toc()
+
+
+stopImplicitCluster()
+```
+
 
