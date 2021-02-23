@@ -198,25 +198,25 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li>fractal dimension (“coastline approximation” - 1)</li>
 </ul>
 <p>El resultado es un problema de clasificación binario (<span class="math inline">\(Y =\)</span> <code>diagnosis</code>) con 30 variables predictoras. La muestra de 569 pacientes corresponde a 357 en la clase <code>B</code> y 212 en la clase <code>M</code>. Los datos están disponibles en este repositorio y también en Aula Global.</p>
-<div class="sourceCode" id="cb162"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb162-1"><a href="wiscon.html#cb162-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(caret)</span>
-<span id="cb162-2"><a href="wiscon.html#cb162-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(ggplot2)</span>
-<span id="cb162-3"><a href="wiscon.html#cb162-3" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(readr)</span>
-<span id="cb162-4"><a href="wiscon.html#cb162-4" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(dplyr)</span>
-<span id="cb162-5"><a href="wiscon.html#cb162-5" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(gridExtra)</span>
-<span id="cb162-6"><a href="wiscon.html#cb162-6" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(ROCR)</span>
-<span id="cb162-7"><a href="wiscon.html#cb162-7" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb162-8"><a href="wiscon.html#cb162-8" aria-hidden="true" tabindex="-1"></a><span class="do">## Cargar datos ----</span></span>
-<span id="cb162-9"><a href="wiscon.html#cb162-9" aria-hidden="true" tabindex="-1"></a>wiscon <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(<span class="st">&quot;data_breast_cancer_wisconsin.csv&quot;</span>)</span>
-<span id="cb162-10"><a href="wiscon.html#cb162-10" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb162-11"><a href="wiscon.html#cb162-11" aria-hidden="true" tabindex="-1"></a><span class="co"># no nos interesan los ID, y la última columna no se ha cargado bien</span></span>
-<span id="cb162-12"><a href="wiscon.html#cb162-12" aria-hidden="true" tabindex="-1"></a>wiscon <span class="ot">&lt;-</span> wiscon[, <span class="dv">2</span><span class="sc">:</span><span class="dv">32</span>]</span>
-<span id="cb162-13"><a href="wiscon.html#cb162-13" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb162-14"><a href="wiscon.html#cb162-14" aria-hidden="true" tabindex="-1"></a><span class="co"># la respuesta es diagnosis: B = benign, M = malignant</span></span>
-<span id="cb162-15"><a href="wiscon.html#cb162-15" aria-hidden="true" tabindex="-1"></a>wiscon<span class="sc">$</span>diagnosis <span class="ot">&lt;-</span> <span class="fu">as.factor</span>(wiscon<span class="sc">$</span>diagnosis)</span>
-<span id="cb162-16"><a href="wiscon.html#cb162-16" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb162-17"><a href="wiscon.html#cb162-17" aria-hidden="true" tabindex="-1"></a>df <span class="ot">&lt;-</span> <span class="fu">as.data.frame</span>(wiscon)</span>
-<span id="cb162-18"><a href="wiscon.html#cb162-18" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb162-19"><a href="wiscon.html#cb162-19" aria-hidden="true" tabindex="-1"></a><span class="fu">str</span>(df)</span></code></pre></div>
+<div class="sourceCode" id="cb168"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb168-1"><a href="wiscon.html#cb168-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(caret)</span>
+<span id="cb168-2"><a href="wiscon.html#cb168-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(ggplot2)</span>
+<span id="cb168-3"><a href="wiscon.html#cb168-3" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(readr)</span>
+<span id="cb168-4"><a href="wiscon.html#cb168-4" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(dplyr)</span>
+<span id="cb168-5"><a href="wiscon.html#cb168-5" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(gridExtra)</span>
+<span id="cb168-6"><a href="wiscon.html#cb168-6" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(ROCR)</span>
+<span id="cb168-7"><a href="wiscon.html#cb168-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb168-8"><a href="wiscon.html#cb168-8" aria-hidden="true" tabindex="-1"></a><span class="do">## Cargar datos ----</span></span>
+<span id="cb168-9"><a href="wiscon.html#cb168-9" aria-hidden="true" tabindex="-1"></a>wiscon <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(<span class="st">&quot;data_breast_cancer_wisconsin.csv&quot;</span>)</span>
+<span id="cb168-10"><a href="wiscon.html#cb168-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb168-11"><a href="wiscon.html#cb168-11" aria-hidden="true" tabindex="-1"></a><span class="co"># no nos interesan los ID, y la última columna no se ha cargado bien</span></span>
+<span id="cb168-12"><a href="wiscon.html#cb168-12" aria-hidden="true" tabindex="-1"></a>wiscon <span class="ot">&lt;-</span> wiscon[, <span class="dv">2</span><span class="sc">:</span><span class="dv">32</span>]</span>
+<span id="cb168-13"><a href="wiscon.html#cb168-13" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb168-14"><a href="wiscon.html#cb168-14" aria-hidden="true" tabindex="-1"></a><span class="co"># la respuesta es diagnosis: B = benign, M = malignant</span></span>
+<span id="cb168-15"><a href="wiscon.html#cb168-15" aria-hidden="true" tabindex="-1"></a>wiscon<span class="sc">$</span>diagnosis <span class="ot">&lt;-</span> <span class="fu">as.factor</span>(wiscon<span class="sc">$</span>diagnosis)</span>
+<span id="cb168-16"><a href="wiscon.html#cb168-16" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb168-17"><a href="wiscon.html#cb168-17" aria-hidden="true" tabindex="-1"></a>df <span class="ot">&lt;-</span> <span class="fu">as.data.frame</span>(wiscon)</span>
+<span id="cb168-18"><a href="wiscon.html#cb168-18" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb168-19"><a href="wiscon.html#cb168-19" aria-hidden="true" tabindex="-1"></a><span class="fu">str</span>(df)</span></code></pre></div>
 <pre><code>## &#39;data.frame&#39;:    569 obs. of  31 variables:
 ##  $ diagnosis              : Factor w/ 2 levels &quot;B&quot;,&quot;M&quot;: 2 2 2 2 2 2 2 2 2 2 ...
 ##  $ radius_mean            : num  18 20.6 19.7 11.4 20.3 ...
@@ -256,21 +256,21 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 ##   ..$ actual  : chr [1:569] &quot;32 columns&quot; &quot;32 columns&quot; &quot;32 columns&quot; &quot;32 columns&quot; ...
 ##   ..$ file    : chr [1:569] &quot;&#39;data_breast_cancer_wisconsin.csv&#39;&quot; &quot;&#39;data_breast_cancer_wisconsin.csv&#39;&quot; &quot;&#39;data_breast_cancer_wisconsin.csv&#39;&quot; &quot;&#39;data_breast_cancer_wisconsin.csv&#39;&quot; ...</code></pre>
 <p>Vamos a crear una partición independiente (con una semilla) de test y aplicar todo lo estudiado hasta ahora.</p>
-<div class="sourceCode" id="cb164"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb164-1"><a href="wiscon.html#cb164-1" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">666</span>)</span>
-<span id="cb164-2"><a href="wiscon.html#cb164-2" aria-hidden="true" tabindex="-1"></a>train.ID <span class="ot">&lt;-</span> <span class="fu">createDataPartition</span>(df<span class="sc">$</span>diagnosis, <span class="at">p =</span> <span class="fl">0.7</span>, <span class="at">list =</span> <span class="cn">FALSE</span>)</span>
-<span id="cb164-3"><a href="wiscon.html#cb164-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb164-4"><a href="wiscon.html#cb164-4" aria-hidden="true" tabindex="-1"></a>train_df <span class="ot">&lt;-</span> df[train.ID, ]</span>
-<span id="cb164-5"><a href="wiscon.html#cb164-5" aria-hidden="true" tabindex="-1"></a>test_df <span class="ot">&lt;-</span> df[<span class="sc">-</span>train.ID, ]</span></code></pre></div>
+<div class="sourceCode" id="cb170"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb170-1"><a href="wiscon.html#cb170-1" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">666</span>)</span>
+<span id="cb170-2"><a href="wiscon.html#cb170-2" aria-hidden="true" tabindex="-1"></a>train.ID <span class="ot">&lt;-</span> <span class="fu">createDataPartition</span>(df<span class="sc">$</span>diagnosis, <span class="at">p =</span> <span class="fl">0.7</span>, <span class="at">list =</span> <span class="cn">FALSE</span>)</span>
+<span id="cb170-3"><a href="wiscon.html#cb170-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb170-4"><a href="wiscon.html#cb170-4" aria-hidden="true" tabindex="-1"></a>train_df <span class="ot">&lt;-</span> df[train.ID, ]</span>
+<span id="cb170-5"><a href="wiscon.html#cb170-5" aria-hidden="true" tabindex="-1"></a>test_df <span class="ot">&lt;-</span> df[<span class="sc">-</span>train.ID, ]</span></code></pre></div>
 <p>¡A por ello!</p>
 <div id="reducción-de-la-dimensión" class="section level2" number="5.1">
 <h2><span class="header-section-number">5.1</span> Reducción de la dimensión</h2>
 <p>Aunque queda fuera del <em>aprendizaje supervisado</em>, como posible solución a la alta dimensionalidad de los datos, en <code>caret</code> es posible aplicar técnicas <em>no supervisadas</em> que permiten <em>reducir la dimensión</em>. Una de ellas es el <em>Análisis de Componentes Principales</em> (<em>PCA</em>, por sus siglas en inglés). Veamos cómo hacer esto con la función <code>preProcess</code>:</p>
-<div class="sourceCode" id="cb165"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb165-1"><a href="wiscon.html#cb165-1" aria-hidden="true" tabindex="-1"></a><span class="co"># en este caso estamos reduciendo la cantidad de variables iniciales</span></span>
-<span id="cb165-2"><a href="wiscon.html#cb165-2" aria-hidden="true" tabindex="-1"></a><span class="co"># a solamente ¡2!</span></span>
-<span id="cb165-3"><a href="wiscon.html#cb165-3" aria-hidden="true" tabindex="-1"></a>preProc.res <span class="ot">&lt;-</span> <span class="fu">preProcess</span>(df, <span class="at">method =</span> <span class="fu">c</span>(<span class="st">&#39;pca&#39;</span>), <span class="at">pcaComp =</span> <span class="dv">2</span>)</span>
-<span id="cb165-4"><a href="wiscon.html#cb165-4" aria-hidden="true" tabindex="-1"></a>df.pca <span class="ot">&lt;-</span> <span class="fu">predict</span>(preProc.res, df)</span>
-<span id="cb165-5"><a href="wiscon.html#cb165-5" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb165-6"><a href="wiscon.html#cb165-6" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(df.pca, <span class="dv">7</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb171"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb171-1"><a href="wiscon.html#cb171-1" aria-hidden="true" tabindex="-1"></a><span class="co"># en este caso estamos reduciendo la cantidad de variables iniciales</span></span>
+<span id="cb171-2"><a href="wiscon.html#cb171-2" aria-hidden="true" tabindex="-1"></a><span class="co"># a solamente ¡2!</span></span>
+<span id="cb171-3"><a href="wiscon.html#cb171-3" aria-hidden="true" tabindex="-1"></a>preProc.res <span class="ot">&lt;-</span> <span class="fu">preProcess</span>(df, <span class="at">method =</span> <span class="fu">c</span>(<span class="st">&#39;pca&#39;</span>), <span class="at">pcaComp =</span> <span class="dv">2</span>)</span>
+<span id="cb171-4"><a href="wiscon.html#cb171-4" aria-hidden="true" tabindex="-1"></a>df.pca <span class="ot">&lt;-</span> <span class="fu">predict</span>(preProc.res, df)</span>
+<span id="cb171-5"><a href="wiscon.html#cb171-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb171-6"><a href="wiscon.html#cb171-6" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(df.pca, <span class="dv">7</span>)</span></code></pre></div>
 <pre><code>##   diagnosis       PC1        PC2
 ## 1         M -9.184755  -1.946870
 ## 2         M -2.385703   3.764859
@@ -280,28 +280,28 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 ## 6         M -2.378155  -3.946456
 ## 7         M -2.236915   2.687666</code></pre>
 <p>Veamos qué tan separadas quedan las clases ahora:</p>
-<div class="sourceCode" id="cb167"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb167-1"><a href="wiscon.html#cb167-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(df.pca,  <span class="fu">aes</span>(<span class="at">x =</span> PC1, <span class="at">y =</span> PC2, <span class="at">group =</span> diagnosis)) <span class="sc">+</span></span>
-<span id="cb167-2"><a href="wiscon.html#cb167-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="fu">aes</span>(<span class="at">color =</span> diagnosis ), <span class="at">alpha =</span> <span class="fl">0.8</span>) <span class="sc">+</span></span>
-<span id="cb167-3"><a href="wiscon.html#cb167-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_light</span>()</span></code></pre></div>
+<div class="sourceCode" id="cb173"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb173-1"><a href="wiscon.html#cb173-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(df.pca,  <span class="fu">aes</span>(<span class="at">x =</span> PC1, <span class="at">y =</span> PC2, <span class="at">group =</span> diagnosis)) <span class="sc">+</span></span>
+<span id="cb173-2"><a href="wiscon.html#cb173-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="fu">aes</span>(<span class="at">color =</span> diagnosis ), <span class="at">alpha =</span> <span class="fl">0.8</span>) <span class="sc">+</span></span>
+<span id="cb173-3"><a href="wiscon.html#cb173-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_light</span>()</span></code></pre></div>
 <p><img src="_main_files/figure-html/unnamed-chunk-80-1.png" width="80%" style="display: block; margin: auto;" /></p>
 <p>Si volvemos a hacer la partición de los datos (mismos índices para el test);</p>
-<div class="sourceCode" id="cb168"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb168-1"><a href="wiscon.html#cb168-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Ajustemos nuestros modelos con los datos transformados:</span></span>
-<span id="cb168-2"><a href="wiscon.html#cb168-2" aria-hidden="true" tabindex="-1"></a>train_df <span class="ot">&lt;-</span> df.pca[train.ID, ]</span>
-<span id="cb168-3"><a href="wiscon.html#cb168-3" aria-hidden="true" tabindex="-1"></a>test_df <span class="ot">&lt;-</span> df.pca[<span class="sc">-</span>train.ID, ]</span></code></pre></div>
+<div class="sourceCode" id="cb174"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb174-1"><a href="wiscon.html#cb174-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Ajustemos nuestros modelos con los datos transformados:</span></span>
+<span id="cb174-2"><a href="wiscon.html#cb174-2" aria-hidden="true" tabindex="-1"></a>train_df <span class="ot">&lt;-</span> df.pca[train.ID, ]</span>
+<span id="cb174-3"><a href="wiscon.html#cb174-3" aria-hidden="true" tabindex="-1"></a>test_df <span class="ot">&lt;-</span> df.pca[<span class="sc">-</span>train.ID, ]</span></code></pre></div>
 <p>entonces, podemos aplicar todos los modelos estudiados a un conjunto de datos de menor complejidad. Esto es una ganancia en tiempo de cómputo… ¿será también en términos predictivos? Intenta también <strong>representar la frontera de decisión</strong> correspondiente a cada método, usando como base la ya conocida <code>decision_bound</code>.</p>
 <p>El LDA también puede ser visto como un método de reducción de la dimensión (a lo sumo <em># clases - 1</em>). La visión de Fisher del discriminante lineal contempla encontrar la mejor proyección de los datos (a una dimensión inferior) que permita separar bien las clases. Esto se logra persiguiendo la mayor dispersión posible en los datos. Una buena introducción a esta visión del LDA está disponible en las <a href="https://www.csd.uwo.ca/~olga/Courses/CS434a_541a/Lecture8.pdf">lecciones de Prof. Olga Veksler</a>. También recomiendo este <a href="https://www.datascienceblog.net/post/machine-learning/linear-discriminant-analysis/">post de Matthias Döring</a>.</p>
 <p>Veamos un ejemplo con los datos <code>iris</code>:</p>
-<div class="sourceCode" id="cb169"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb169-1"><a href="wiscon.html#cb169-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(MASS)</span>
-<span id="cb169-2"><a href="wiscon.html#cb169-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb169-3"><a href="wiscon.html#cb169-3" aria-hidden="true" tabindex="-1"></a>df <span class="ot">&lt;-</span> iris</span>
-<span id="cb169-4"><a href="wiscon.html#cb169-4" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">123</span>)</span>
-<span id="cb169-5"><a href="wiscon.html#cb169-5" aria-hidden="true" tabindex="-1"></a>train.ID <span class="ot">&lt;-</span> <span class="fu">createDataPartition</span>(df<span class="sc">$</span>Species, <span class="at">p =</span> <span class="fl">0.8</span>, <span class="at">list =</span> <span class="cn">FALSE</span>)</span>
-<span id="cb169-6"><a href="wiscon.html#cb169-6" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb169-7"><a href="wiscon.html#cb169-7" aria-hidden="true" tabindex="-1"></a>train_df <span class="ot">&lt;-</span> df[train.ID, ]</span>
-<span id="cb169-8"><a href="wiscon.html#cb169-8" aria-hidden="true" tabindex="-1"></a>test_df <span class="ot">&lt;-</span> df[<span class="sc">-</span>train.ID, ]</span>
-<span id="cb169-9"><a href="wiscon.html#cb169-9" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb169-10"><a href="wiscon.html#cb169-10" aria-hidden="true" tabindex="-1"></a>lda_iris <span class="ot">&lt;-</span> MASS<span class="sc">::</span><span class="fu">lda</span>(Species <span class="sc">~</span> ., train_df)</span>
-<span id="cb169-11"><a href="wiscon.html#cb169-11" aria-hidden="true" tabindex="-1"></a>lda_iris</span></code></pre></div>
+<div class="sourceCode" id="cb175"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb175-1"><a href="wiscon.html#cb175-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(MASS)</span>
+<span id="cb175-2"><a href="wiscon.html#cb175-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb175-3"><a href="wiscon.html#cb175-3" aria-hidden="true" tabindex="-1"></a>df <span class="ot">&lt;-</span> iris</span>
+<span id="cb175-4"><a href="wiscon.html#cb175-4" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">123</span>)</span>
+<span id="cb175-5"><a href="wiscon.html#cb175-5" aria-hidden="true" tabindex="-1"></a>train.ID <span class="ot">&lt;-</span> <span class="fu">createDataPartition</span>(df<span class="sc">$</span>Species, <span class="at">p =</span> <span class="fl">0.8</span>, <span class="at">list =</span> <span class="cn">FALSE</span>)</span>
+<span id="cb175-6"><a href="wiscon.html#cb175-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb175-7"><a href="wiscon.html#cb175-7" aria-hidden="true" tabindex="-1"></a>train_df <span class="ot">&lt;-</span> df[train.ID, ]</span>
+<span id="cb175-8"><a href="wiscon.html#cb175-8" aria-hidden="true" tabindex="-1"></a>test_df <span class="ot">&lt;-</span> df[<span class="sc">-</span>train.ID, ]</span>
+<span id="cb175-9"><a href="wiscon.html#cb175-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb175-10"><a href="wiscon.html#cb175-10" aria-hidden="true" tabindex="-1"></a>lda_iris <span class="ot">&lt;-</span> MASS<span class="sc">::</span><span class="fu">lda</span>(Species <span class="sc">~</span> ., train_df)</span>
+<span id="cb175-11"><a href="wiscon.html#cb175-11" aria-hidden="true" tabindex="-1"></a>lda_iris</span></code></pre></div>
 <pre><code>## Call:
 ## lda(Species ~ ., data = train_df)
 ## 
@@ -326,12 +326,12 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 ##    LD1    LD2 
 ## 0.9902 0.0098</code></pre>
 <p>El campo <code>Coefficients of linear discriminants</code> indica los coeficientes de cada discriminante. Por ejemplo, el primer discriminante lineal (LD1) es la combinación lineal:</p>
-<div class="sourceCode" id="cb171"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb171-1"><a href="wiscon.html#cb171-1" aria-hidden="true" tabindex="-1"></a>(<span class="fl">0.79</span><span class="sc">*</span>Sepal.Length) <span class="sc">+</span> (<span class="fl">1.60</span><span class="sc">*</span>Sepal.Width) <span class="sc">+</span> (<span class="sc">-</span><span class="fl">2.14</span><span class="sc">*</span>Petal.Length) <span class="sc">+</span> (<span class="sc">-</span><span class="fl">2.90</span><span class="sc">*</span>Petal.Width)</span></code></pre></div>
+<div class="sourceCode" id="cb177"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb177-1"><a href="wiscon.html#cb177-1" aria-hidden="true" tabindex="-1"></a>(<span class="fl">0.79</span><span class="sc">*</span>Sepal.Length) <span class="sc">+</span> (<span class="fl">1.60</span><span class="sc">*</span>Sepal.Width) <span class="sc">+</span> (<span class="sc">-</span><span class="fl">2.14</span><span class="sc">*</span>Petal.Length) <span class="sc">+</span> (<span class="sc">-</span><span class="fl">2.90</span><span class="sc">*</span>Petal.Width)</span></code></pre></div>
 <p>El campo <code>Proportions of trace</code> describe la proporción de varianza entre clases que es explicada por los discriminantes lineales sucesivos. En este caso, LD1 explica 99% de la varianza, o sea, solo con la primera componente podríamos ser capaces de discriminar con buena precisión. Veamos la proyección en el espacio LD1 vs. LD2:</p>
-<div class="sourceCode" id="cb172"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb172-1"><a href="wiscon.html#cb172-1" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(lda_iris, <span class="at">col =</span> <span class="fu">as.integer</span>(train_df<span class="sc">$</span>Species))</span></code></pre></div>
+<div class="sourceCode" id="cb178"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb178-1"><a href="wiscon.html#cb178-1" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(lda_iris, <span class="at">col =</span> <span class="fu">as.integer</span>(train_df<span class="sc">$</span>Species))</span></code></pre></div>
 <p><img src="_main_files/figure-html/unnamed-chunk-84-1.png" width="80%" style="display: block; margin: auto;" /></p>
 <p>Vemos que LD1 permite separar bien ambas clases, aunque hay un poco de superposición entre <code>virginica</code> y <code>versicolor</code>. Finalmente, en una sola dimensión (la definida por LD1):</p>
-<div class="sourceCode" id="cb173"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb173-1"><a href="wiscon.html#cb173-1" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(lda_iris, <span class="at">dimen =</span> <span class="dv">1</span>, <span class="at">type =</span> <span class="st">&quot;b&quot;</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb179"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb179-1"><a href="wiscon.html#cb179-1" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(lda_iris, <span class="at">dimen =</span> <span class="dv">1</span>, <span class="at">type =</span> <span class="st">&quot;b&quot;</span>)</span></code></pre></div>
 <p><img src="_main_files/figure-html/unnamed-chunk-85-1.png" width="80%" style="display: block; margin: auto;" /></p>
 
 </div>
