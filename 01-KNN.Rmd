@@ -275,7 +275,32 @@ Para KNN no tenemos un método que permita determinar la relevancia de cada pred
 varImp(model_knn_iris)
 ```
 
-Aunque esto no debe usarse como método de selección de variables, sí motiva el estudio del problema al disminuir la dimensión $p = 4$. Por ejemplo, veamos la precisión del modelo al dejar solo `Petal.Length` y `Petal.Width`.
+Otra opción es usar la **información mutua** o **transinformación** (MI, del inglés *mutual information*); una cantidad que mide la dependencia mutua entre dos variables aleatorias, es decir, mide la reducción de la incertidumbre (*entropía*) de una variable aleatoria, $X$, debido al conocimiento del valor de otra variable aleatoria $Y$.
+
+Veamos un ejemplo usando el paquete `infotheo` (a mayor MI, mayor relación entre variables):
+
+```{r}
+library(infotheo)
+
+# ?mutinformation
+
+dat_MI <- discretize(train_df)
+
+# MI matrix:
+MI <- mutinformation(dat_MI, method= "emp")
+MI
+
+MI %>% 
+  as_tibble() %>% 
+  mutate(Variable = colnames(MI), MI = Species) %>% 
+  dplyr::select(Variable, MI) %>% 
+  ggplot(aes(x = reorder(Variable, -MI), y = MI)) +
+  geom_col(alpha= 0.5) +
+  labs(title = "MI: todas vs. Species", x = "Variable") +
+  theme_bw()
+```
+
+Hay métodos específicos de selección de variables, los más usados dependiendo del modelo (*lasso*, *elastic-net*, *stepwise selction* en modelos generalizados, etc.). Aún así, los resultados obtenidos con el *MI*, *varImp* y el análisis descriptivo inicial motivan el estudio del problema al disminuir la dimensión $p = 4$ a $2$, dejando solo `Petal.Length` y `Petal.Width`.
 
 ```{r, out.width='80%', fig.asp=.75, fig.align='center'}
 # seleccionamos los predictores que queremos y la respuesta
