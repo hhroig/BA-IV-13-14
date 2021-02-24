@@ -267,7 +267,7 @@ prediction_knn_iris2 <- predict(model2_knn_iris, newdata = test_df)
 confusionMatrix(prediction_knn_iris2, reference = test_df$Species)
 ```
 
-### Importancia de las variables
+## Importancia de las variables
 
 Para KNN no tenemos un método que permita determinar la relevancia de cada predictor. Por ejemplo, en mínimos cuadrados, sí se puede conducir un test para determinar si cada coeficiente $\beta_i$ del modelo es significativamente distinto de cero. Aún así, `caret` incorpora la función `varImp` que da una medida de *importancia* de cada predictor del problema de clasificación o regresión.
 

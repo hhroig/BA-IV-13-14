@@ -136,11 +136,11 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <ul>
 <li class="chapter" data-level="2.2.1" data-path="k-vecinos-más-próximos.html"><a href="k-vecinos-más-próximos.html#visualización"><i class="fa fa-check"></i><b>2.2.1</b> Visualización</a></li>
 <li class="chapter" data-level="2.2.2" data-path="k-vecinos-más-próximos.html"><a href="k-vecinos-más-próximos.html#clasificación-con-knn"><i class="fa fa-check"></i><b>2.2.2</b> Clasificación con KNN</a></li>
-<li class="chapter" data-level="2.2.3" data-path="k-vecinos-más-próximos.html"><a href="k-vecinos-más-próximos.html#importancia-de-las-variables"><i class="fa fa-check"></i><b>2.2.3</b> Importancia de las variables</a></li>
 </ul></li>
-<li class="chapter" data-level="2.3" data-path="k-vecinos-más-próximos.html"><a href="k-vecinos-más-próximos.html#regresión"><i class="fa fa-check"></i><b>2.3</b> Regresión</a></li>
-<li class="chapter" data-level="2.4" data-path="k-vecinos-más-próximos.html"><a href="k-vecinos-más-próximos.html#weighted-knn"><i class="fa fa-check"></i><b>2.4</b> Weighted KNN</a></li>
-<li class="chapter" data-level="2.5" data-path="k-vecinos-más-próximos.html"><a href="k-vecinos-más-próximos.html#procesamiento-en-paralelo"><i class="fa fa-check"></i><b>2.5</b> Procesamiento en paralelo</a></li>
+<li class="chapter" data-level="2.3" data-path="k-vecinos-más-próximos.html"><a href="k-vecinos-más-próximos.html#importancia-de-las-variables"><i class="fa fa-check"></i><b>2.3</b> Importancia de las variables</a></li>
+<li class="chapter" data-level="2.4" data-path="k-vecinos-más-próximos.html"><a href="k-vecinos-más-próximos.html#regresión"><i class="fa fa-check"></i><b>2.4</b> Regresión</a></li>
+<li class="chapter" data-level="2.5" data-path="k-vecinos-más-próximos.html"><a href="k-vecinos-más-próximos.html#weighted-knn"><i class="fa fa-check"></i><b>2.5</b> Weighted KNN</a></li>
+<li class="chapter" data-level="2.6" data-path="k-vecinos-más-próximos.html"><a href="k-vecinos-más-próximos.html#procesamiento-en-paralelo"><i class="fa fa-check"></i><b>2.6</b> Procesamiento en paralelo</a></li>
 </ul></li>
 <li class="chapter" data-level="3" data-path="DA.html"><a href="DA.html"><i class="fa fa-check"></i><b>3</b> Análisis Discriminante</a>
 <ul>
@@ -635,8 +635,9 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 ## Detection Prevalence        0.3333            0.4000           0.2667
 ## Balanced Accuracy           1.0000            0.9500           0.9000</code></pre>
 </div>
-<div id="importancia-de-las-variables" class="section level3" number="2.2.3">
-<h3><span class="header-section-number">2.2.3</span> Importancia de las variables</h3>
+</div>
+<div id="importancia-de-las-variables" class="section level2" number="2.3">
+<h2><span class="header-section-number">2.3</span> Importancia de las variables</h2>
 <p>Para KNN no tenemos un método que permita determinar la relevancia de cada predictor. Por ejemplo, en mínimos cuadrados, sí se puede conducir un test para determinar si cada coeficiente <span class="math inline">\(\beta_i\)</span> del modelo es significativamente distinto de cero. Aún así, <code>caret</code> incorpora la función <code>varImp</code> que da una medida de <em>importancia</em> de cada predictor del problema de clasificación o regresión.</p>
 <div class="sourceCode" id="cb33"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb33-1"><a href="k-vecinos-más-próximos.html#cb33-1" aria-hidden="true" tabindex="-1"></a><span class="fu">varImp</span>(model_knn_iris)</span></code></pre></div>
 <pre><code>## ROC curve variable importance
@@ -816,9 +817,8 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 ##     combine</code></pre>
 <p><img src="_main_files/figure-html/unnamed-chunk-22-1.png" width="80%" style="display: block; margin: auto;" /></p>
 </div>
-</div>
-<div id="regresión" class="section level2" number="2.3">
-<h2><span class="header-section-number">2.3</span> Regresión</h2>
+<div id="regresión" class="section level2" number="2.4">
+<h2><span class="header-section-number">2.4</span> Regresión</h2>
 <p>Abordamos ahora el problema de regresión con KNN, o sea, la respuesta es cuantitativa-continua. Seguimos usando el paquete <code>caret</code> que tiene implementado el algoritmo y ofrece facilidades para el preprocesado de los datos y la validación del modelo.</p>
 <p>Particularmente, atacaremos el problema de predecir el precio medio de las viviendas (<code>medv</code>) en los suburbios de Boston, usando otras 13 variables predictoras.</p>
 <div class="sourceCode" id="cb51"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb51-1"><a href="k-vecinos-más-próximos.html#cb51-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(MASS)</span>
@@ -1009,8 +1009,8 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <span id="cb71-6"><a href="k-vecinos-más-próximos.html#cb71-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_light</span>()</span></code></pre></div>
 <p><img src="_main_files/figure-html/unnamed-chunk-30-1.png" width="80%" style="display: block; margin: auto;" /></p>
 </div>
-<div id="weighted-knn" class="section level2" number="2.4">
-<h2><span class="header-section-number">2.4</span> Weighted KNN</h2>
+<div id="weighted-knn" class="section level2" number="2.5">
+<h2><span class="header-section-number">2.5</span> Weighted KNN</h2>
 <p>El método de K-Vecinos Más Próximos Ponderados (WKNN: <em>Weighted K-Nearest Neighbors</em>) es una variante del KNN. El principio básico es el mismo: predecir una respuesta en función de los puntos más cercanos de la muestra. La diferencia es que WKNN da más importancia a los más próximos, dentro de los K prefijados. Esto se logra ponderando o dando pesos a los vecinos.</p>
 <p>En <code>caret</code> podemos fijar el método <code>kknn</code> que implementa WKNN, tanto para regresión como para clasificación. Ahora debemos optimizar 3 hiperparámetros:</p>
 <div class="sourceCode" id="cb72"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb72-1"><a href="k-vecinos-más-próximos.html#cb72-1" aria-hidden="true" tabindex="-1"></a><span class="fu">getModelInfo</span>(<span class="st">&quot;kknn&quot;</span>)<span class="sc">$</span>kknn<span class="sc">$</span>parameters</span></code></pre></div>
@@ -1158,8 +1158,8 @@ Observamos que el modelo final—el mejor de acuerdo al <code>Accuracy</code>—
 <div class="sourceCode" id="cb83"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb83-1"><a href="k-vecinos-más-próximos.html#cb83-1" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(model.w.knn)</span></code></pre></div>
 <p><img src="_main_files/figure-html/unnamed-chunk-36-1.png" width="80%" style="display: block; margin: auto;" /></p>
 </div>
-<div id="procesamiento-en-paralelo" class="section level2" number="2.5">
-<h2><span class="header-section-number">2.5</span> Procesamiento en paralelo</h2>
+<div id="procesamiento-en-paralelo" class="section level2" number="2.6">
+<h2><span class="header-section-number">2.6</span> Procesamiento en paralelo</h2>
 <p>No cambia la estructura de entrenamiento, solo es necesario fijar el número de núcleos. En este caso tenemos un ejemplo donde comparamos una ejecución sin paralelizar y otra que emplea 8 núcleos en paralelo con el paquete <code>doParallel</code>. El número de hiperparámetros es 16.</p>
 <div class="sourceCode" id="cb84"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb84-1"><a href="k-vecinos-más-próximos.html#cb84-1" aria-hidden="true" tabindex="-1"></a><span class="co"># random search WKNN</span></span>
 <span id="cb84-2"><a href="k-vecinos-más-próximos.html#cb84-2" aria-hidden="true" tabindex="-1"></a>fit_control <span class="ot">&lt;-</span> <span class="fu">trainControl</span>(<span class="at">method=</span><span class="st">&#39;repeatedcv&#39;</span>, <span class="at">number =</span> <span class="dv">16</span>, </span>
