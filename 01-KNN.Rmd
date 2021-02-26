@@ -607,8 +607,8 @@ No cambia la estructura de entrenamiento, solo es necesario fijar el número de 
 
 ```{r, eval = FALSE}
 # random search WKNN
-fit_control <- trainControl(method='repeatedcv', number = 16, 
-                            repeats = 10,
+fit_control <- trainControl(method='repeatedcv', number = 5, 
+                            repeats = 5,
                             search = "random")
 ## No-Parallel ----
 tic("wknn-train")
