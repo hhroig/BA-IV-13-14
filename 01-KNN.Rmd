@@ -330,6 +330,7 @@ confusionMatrix(prediction_knn_petal, reference = test_df_petal$Species)
 ```
 
 Pero, ¿cómo visualizar las fronteras de decisión del método? Ahora que $p = 2$, podemos representar esto en el plano usando la siguiente función:
+
 ```{r}
 decision_bound = function(train_df_in, test_df_in, model_in){
   # plot decision boundary  for iris[,c("Petal.Length", "Petal.Width", "Species")]
@@ -381,7 +382,27 @@ decision_bound(train_df_petal, test_df_petal, model_knn_petal)
 
 ```
 
+También es interesante observar cómo cambia la flexibilidad del modelo al variar el número de vecinos. En el caso de KNN, a menor número de vecinos, mayor flexibilidad (e.g. $X = 1$ vs. $K=20$):
 
+```{r, out.width='80%', fig.asp=.75, fig.align='center'}
+# Fijando K = 1 vecinos
+model_1_knn_petal <- train(Species ~.,
+                       data = train_df_petal,
+                       method = "knn",
+                       preProcess = c("center", "scale"), 
+                       tuneGrid = expand.grid(k = 1))
+
+# Fijando K = 20 vecinos
+model_20_knn_petal <- train(Species ~.,
+                       data = train_df_petal,
+                       method = "knn",
+                       preProcess = c("center", "scale"), 
+                       tuneGrid = expand.grid(k = 20))
+
+# fronteras de decisión, variando la flexibilidad
+decision_bound(train_df_petal, test_df_petal, model_1_knn_petal)
+decision_bound(train_df_petal, test_df_petal, model_20_knn_petal)
+```
 
 ## Regresión
 
