@@ -382,7 +382,7 @@ decision_bound(train_df_petal, test_df_petal, model_knn_petal)
 
 ```
 
-También es interesante observar cómo cambia la flexibilidad del modelo al variar el número de vecinos. En el caso de KNN, a menor número de vecinos, mayor flexibilidad (e.g. $X = 1$ vs. $K=20$):
+También es interesante observar cómo cambia la flexibilidad del modelo al variar el número de vecinos. En el caso de KNN, a menor número de vecinos, mayor flexibilidad (e.g. $K = 1$ vs. $K=20$):
 
 ```{r, out.width='80%', fig.asp=.75, fig.align='center'}
 # Fijando K = 1 vecinos

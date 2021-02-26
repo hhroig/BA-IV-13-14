@@ -185,11 +185,11 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <div id="DA" class="section level1" number="3">
 <h1><span class="header-section-number">3</span> Análisis Discriminante</h1>
 <p>En esta sección nos concentramos en el problema de clasificación. Particularmente, estudiaremos los métodos de <em>Análisis Discriminante Lineal (LDA)</em>, <em>Cuadrático (QDA)</em> y <em>Regularizado (RDA)</em>. Usaremos el conjunto de datos <code>Default</code> del paquete <code>ISLR</code>:</p>
-<div class="sourceCode" id="cb87"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb87-1"><a href="DA.html#cb87-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(caret)</span>
-<span id="cb87-2"><a href="DA.html#cb87-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(ISLR)</span>
-<span id="cb87-3"><a href="DA.html#cb87-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb87-4"><a href="DA.html#cb87-4" aria-hidden="true" tabindex="-1"></a><span class="fu">data</span>(<span class="st">&quot;Default&quot;</span>)</span>
-<span id="cb87-5"><a href="DA.html#cb87-5" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(Default, <span class="dv">10</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb79"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb79-1"><a href="DA.html#cb79-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(caret)</span>
+<span id="cb79-2"><a href="DA.html#cb79-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(ISLR)</span>
+<span id="cb79-3"><a href="DA.html#cb79-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb79-4"><a href="DA.html#cb79-4" aria-hidden="true" tabindex="-1"></a><span class="fu">data</span>(<span class="st">&quot;Default&quot;</span>)</span>
+<span id="cb79-5"><a href="DA.html#cb79-5" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(Default, <span class="dv">10</span>)</span></code></pre></div>
 <pre><code>##    default student   balance    income
 ## 1       No      No  729.5265 44361.625
 ## 2       No     Yes  817.1804 12106.135
@@ -201,14 +201,14 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 ## 8       No     Yes  808.6675 17600.451
 ## 9       No      No 1161.0579 37468.529
 ## 10      No      No    0.0000 29275.268</code></pre>
-<div class="sourceCode" id="cb89"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb89-1"><a href="DA.html#cb89-1" aria-hidden="true" tabindex="-1"></a><span class="fu">str</span>(Default)</span></code></pre></div>
+<div class="sourceCode" id="cb81"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb81-1"><a href="DA.html#cb81-1" aria-hidden="true" tabindex="-1"></a><span class="fu">str</span>(Default)</span></code></pre></div>
 <pre><code>## &#39;data.frame&#39;:    10000 obs. of  4 variables:
 ##  $ default: Factor w/ 2 levels &quot;No&quot;,&quot;Yes&quot;: 1 1 1 1 1 1 1 1 1 1 ...
 ##  $ student: Factor w/ 2 levels &quot;No&quot;,&quot;Yes&quot;: 1 2 1 1 1 2 1 2 1 1 ...
 ##  $ balance: num  730 817 1074 529 786 ...
 ##  $ income : num  44362 12106 31767 35704 38463 ...</code></pre>
 <p>El objetivo es predecir si un sujeto de la muestra fallará en el pago de su tarjeta de crédito. Por tanto, la variable respuesta es <code>default</code>, categórica con solo los niveles <code>Yes</code> y <code>No</code>. Tenemos información sobre el balance mensual de crédito en <code>balance</code>, el salario anual en <code>income</code> y si es estudiante o no en <code>student</code>. Solo un <span class="math inline">\(3\%\)</span> de la muestra es de la clase <code>Yes</code>, así que está bastante desbalanceada.</p>
-<div class="sourceCode" id="cb91"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb91-1"><a href="DA.html#cb91-1" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(Default)</span></code></pre></div>
+<div class="sourceCode" id="cb83"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb83-1"><a href="DA.html#cb83-1" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(Default)</span></code></pre></div>
 <pre><code>##  default    student       balance           income     
 ##  No :9667   No :7056   Min.   :   0.0   Min.   :  772  
 ##  Yes: 333   Yes:2944   1st Qu.: 481.7   1st Qu.:21340  
@@ -216,65 +216,65 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 ##                        Mean   : 835.4   Mean   :33517  
 ##                        3rd Qu.:1166.3   3rd Qu.:43808  
 ##                        Max.   :2654.3   Max.   :73554</code></pre>
-<div class="sourceCode" id="cb93"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb93-1"><a href="DA.html#cb93-1" aria-hidden="true" tabindex="-1"></a><span class="co"># ver el balance de la muestra</span></span>
-<span id="cb93-2"><a href="DA.html#cb93-2" aria-hidden="true" tabindex="-1"></a><span class="fu">prop.table</span>(<span class="fu">table</span>(Default<span class="sc">$</span>default))</span></code></pre></div>
+<div class="sourceCode" id="cb85"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb85-1"><a href="DA.html#cb85-1" aria-hidden="true" tabindex="-1"></a><span class="co"># ver el balance de la muestra</span></span>
+<span id="cb85-2"><a href="DA.html#cb85-2" aria-hidden="true" tabindex="-1"></a><span class="fu">prop.table</span>(<span class="fu">table</span>(Default<span class="sc">$</span>default))</span></code></pre></div>
 <pre><code>## 
 ##     No    Yes 
 ## 0.9667 0.0333</code></pre>
 <p>Nos concentramos en predecir <code>default</code> a partir de las variables predictoras <code>balance</code> e <code>income</code>. En el siguiente diagrama de dispersión se observa cierto solapamiento entre las clases a predecir, pero una clara diferenciación de acuerdo a la variable <code>balance</code>.</p>
-<div class="sourceCode" id="cb95"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb95-1"><a href="DA.html#cb95-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(ggplot2)</span>
-<span id="cb95-2"><a href="DA.html#cb95-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(gridExtra)</span>
-<span id="cb95-3"><a href="DA.html#cb95-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb95-4"><a href="DA.html#cb95-4" aria-hidden="true" tabindex="-1"></a><span class="do">## Scatter plot con densidades ----</span></span>
-<span id="cb95-5"><a href="DA.html#cb95-5" aria-hidden="true" tabindex="-1"></a>plot<span class="fl">.2</span>d <span class="ot">&lt;-</span> <span class="fu">ggplot</span>(Default, <span class="fu">aes</span>(<span class="at">x =</span> balance, <span class="at">y =</span> income, <span class="at">group =</span> default)) <span class="sc">+</span></span>
-<span id="cb95-6"><a href="DA.html#cb95-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="fu">aes</span>(<span class="at">shape =</span> default, <span class="at">color =</span> default), <span class="at">alpha =</span> <span class="fl">0.5</span>) <span class="sc">+</span></span>
-<span id="cb95-7"><a href="DA.html#cb95-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_light</span>()</span>
-<span id="cb95-8"><a href="DA.html#cb95-8" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb95-9"><a href="DA.html#cb95-9" aria-hidden="true" tabindex="-1"></a><span class="co"># Empty plot</span></span>
-<span id="cb95-10"><a href="DA.html#cb95-10" aria-hidden="true" tabindex="-1"></a>empty <span class="ot">&lt;-</span> <span class="fu">ggplot</span>()<span class="sc">+</span><span class="fu">geom_point</span>(<span class="fu">aes</span>(<span class="dv">1</span>,<span class="dv">1</span>), <span class="at">color=</span><span class="st">&quot;white&quot;</span>) <span class="sc">+</span></span>
-<span id="cb95-11"><a href="DA.html#cb95-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>(</span>
-<span id="cb95-12"><a href="DA.html#cb95-12" aria-hidden="true" tabindex="-1"></a>    <span class="at">plot.background =</span> <span class="fu">element_blank</span>(),</span>
-<span id="cb95-13"><a href="DA.html#cb95-13" aria-hidden="true" tabindex="-1"></a>    <span class="at">panel.grid.major =</span> <span class="fu">element_blank</span>(),</span>
-<span id="cb95-14"><a href="DA.html#cb95-14" aria-hidden="true" tabindex="-1"></a>    <span class="at">panel.grid.minor =</span> <span class="fu">element_blank</span>(),</span>
-<span id="cb95-15"><a href="DA.html#cb95-15" aria-hidden="true" tabindex="-1"></a>    <span class="at">panel.border =</span> <span class="fu">element_blank</span>(),</span>
-<span id="cb95-16"><a href="DA.html#cb95-16" aria-hidden="true" tabindex="-1"></a>    <span class="at">panel.background =</span> <span class="fu">element_blank</span>(),</span>
-<span id="cb95-17"><a href="DA.html#cb95-17" aria-hidden="true" tabindex="-1"></a>    <span class="at">axis.title.x =</span> <span class="fu">element_blank</span>(),</span>
-<span id="cb95-18"><a href="DA.html#cb95-18" aria-hidden="true" tabindex="-1"></a>    <span class="at">axis.title.y =</span> <span class="fu">element_blank</span>(),</span>
-<span id="cb95-19"><a href="DA.html#cb95-19" aria-hidden="true" tabindex="-1"></a>    <span class="at">axis.text.x =</span> <span class="fu">element_blank</span>(),</span>
-<span id="cb95-20"><a href="DA.html#cb95-20" aria-hidden="true" tabindex="-1"></a>    <span class="at">axis.text.y =</span> <span class="fu">element_blank</span>(),</span>
-<span id="cb95-21"><a href="DA.html#cb95-21" aria-hidden="true" tabindex="-1"></a>    <span class="at">axis.ticks =</span> <span class="fu">element_blank</span>()</span>
-<span id="cb95-22"><a href="DA.html#cb95-22" aria-hidden="true" tabindex="-1"></a>  )</span>
-<span id="cb95-23"><a href="DA.html#cb95-23" aria-hidden="true" tabindex="-1"></a><span class="co"># arriba</span></span>
-<span id="cb95-24"><a href="DA.html#cb95-24" aria-hidden="true" tabindex="-1"></a>dens.balance <span class="ot">&lt;-</span> <span class="fu">ggplot</span>(Default, <span class="fu">aes</span>(<span class="at">x =</span> balance, <span class="at">group =</span> default)) <span class="sc">+</span></span>
-<span id="cb95-25"><a href="DA.html#cb95-25" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_density</span>(<span class="fu">aes</span>(<span class="at">color =</span> default, <span class="at">fill =</span> default), <span class="at">alpha =</span> <span class="fl">0.2</span>) <span class="sc">+</span></span>
-<span id="cb95-26"><a href="DA.html#cb95-26" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_light</span>()<span class="sc">+</span></span>
-<span id="cb95-27"><a href="DA.html#cb95-27" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>(<span class="at">legend.position =</span> <span class="st">&quot;none&quot;</span>)</span>
-<span id="cb95-28"><a href="DA.html#cb95-28" aria-hidden="true" tabindex="-1"></a><span class="co"># derecha</span></span>
-<span id="cb95-29"><a href="DA.html#cb95-29" aria-hidden="true" tabindex="-1"></a>dens.income <span class="ot">&lt;-</span> <span class="fu">ggplot</span>(Default, <span class="fu">aes</span>(<span class="at">x =</span> income, <span class="at">group =</span> default)) <span class="sc">+</span></span>
-<span id="cb95-30"><a href="DA.html#cb95-30" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_density</span>(<span class="fu">aes</span>(<span class="at">color =</span> default, <span class="at">fill =</span> default), <span class="at">alpha =</span> <span class="fl">0.2</span>) <span class="sc">+</span></span>
-<span id="cb95-31"><a href="DA.html#cb95-31" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_light</span>() <span class="sc">+</span> <span class="fu">coord_flip</span>() <span class="sc">+</span></span>
-<span id="cb95-32"><a href="DA.html#cb95-32" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>(<span class="at">legend.position =</span> <span class="st">&quot;none&quot;</span>)</span>
-<span id="cb95-33"><a href="DA.html#cb95-33" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb95-34"><a href="DA.html#cb95-34" aria-hidden="true" tabindex="-1"></a><span class="fu">grid.arrange</span>(dens.balance, empty, plot<span class="fl">.2</span>d, dens.income, <span class="at">ncol=</span><span class="dv">2</span>, <span class="at">nrow=</span><span class="dv">2</span>, <span class="at">widths=</span><span class="fu">c</span>(<span class="dv">4</span>, <span class="dv">1</span>), <span class="at">heights=</span><span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">4</span>))</span></code></pre></div>
+<div class="sourceCode" id="cb87"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb87-1"><a href="DA.html#cb87-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(ggplot2)</span>
+<span id="cb87-2"><a href="DA.html#cb87-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(gridExtra)</span>
+<span id="cb87-3"><a href="DA.html#cb87-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb87-4"><a href="DA.html#cb87-4" aria-hidden="true" tabindex="-1"></a><span class="do">## Scatter plot con densidades ----</span></span>
+<span id="cb87-5"><a href="DA.html#cb87-5" aria-hidden="true" tabindex="-1"></a>plot<span class="fl">.2</span>d <span class="ot">&lt;-</span> <span class="fu">ggplot</span>(Default, <span class="fu">aes</span>(<span class="at">x =</span> balance, <span class="at">y =</span> income, <span class="at">group =</span> default)) <span class="sc">+</span></span>
+<span id="cb87-6"><a href="DA.html#cb87-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="fu">aes</span>(<span class="at">shape =</span> default, <span class="at">color =</span> default), <span class="at">alpha =</span> <span class="fl">0.5</span>) <span class="sc">+</span></span>
+<span id="cb87-7"><a href="DA.html#cb87-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_light</span>()</span>
+<span id="cb87-8"><a href="DA.html#cb87-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb87-9"><a href="DA.html#cb87-9" aria-hidden="true" tabindex="-1"></a><span class="co"># Empty plot</span></span>
+<span id="cb87-10"><a href="DA.html#cb87-10" aria-hidden="true" tabindex="-1"></a>empty <span class="ot">&lt;-</span> <span class="fu">ggplot</span>()<span class="sc">+</span><span class="fu">geom_point</span>(<span class="fu">aes</span>(<span class="dv">1</span>,<span class="dv">1</span>), <span class="at">color=</span><span class="st">&quot;white&quot;</span>) <span class="sc">+</span></span>
+<span id="cb87-11"><a href="DA.html#cb87-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>(</span>
+<span id="cb87-12"><a href="DA.html#cb87-12" aria-hidden="true" tabindex="-1"></a>    <span class="at">plot.background =</span> <span class="fu">element_blank</span>(),</span>
+<span id="cb87-13"><a href="DA.html#cb87-13" aria-hidden="true" tabindex="-1"></a>    <span class="at">panel.grid.major =</span> <span class="fu">element_blank</span>(),</span>
+<span id="cb87-14"><a href="DA.html#cb87-14" aria-hidden="true" tabindex="-1"></a>    <span class="at">panel.grid.minor =</span> <span class="fu">element_blank</span>(),</span>
+<span id="cb87-15"><a href="DA.html#cb87-15" aria-hidden="true" tabindex="-1"></a>    <span class="at">panel.border =</span> <span class="fu">element_blank</span>(),</span>
+<span id="cb87-16"><a href="DA.html#cb87-16" aria-hidden="true" tabindex="-1"></a>    <span class="at">panel.background =</span> <span class="fu">element_blank</span>(),</span>
+<span id="cb87-17"><a href="DA.html#cb87-17" aria-hidden="true" tabindex="-1"></a>    <span class="at">axis.title.x =</span> <span class="fu">element_blank</span>(),</span>
+<span id="cb87-18"><a href="DA.html#cb87-18" aria-hidden="true" tabindex="-1"></a>    <span class="at">axis.title.y =</span> <span class="fu">element_blank</span>(),</span>
+<span id="cb87-19"><a href="DA.html#cb87-19" aria-hidden="true" tabindex="-1"></a>    <span class="at">axis.text.x =</span> <span class="fu">element_blank</span>(),</span>
+<span id="cb87-20"><a href="DA.html#cb87-20" aria-hidden="true" tabindex="-1"></a>    <span class="at">axis.text.y =</span> <span class="fu">element_blank</span>(),</span>
+<span id="cb87-21"><a href="DA.html#cb87-21" aria-hidden="true" tabindex="-1"></a>    <span class="at">axis.ticks =</span> <span class="fu">element_blank</span>()</span>
+<span id="cb87-22"><a href="DA.html#cb87-22" aria-hidden="true" tabindex="-1"></a>  )</span>
+<span id="cb87-23"><a href="DA.html#cb87-23" aria-hidden="true" tabindex="-1"></a><span class="co"># arriba</span></span>
+<span id="cb87-24"><a href="DA.html#cb87-24" aria-hidden="true" tabindex="-1"></a>dens.balance <span class="ot">&lt;-</span> <span class="fu">ggplot</span>(Default, <span class="fu">aes</span>(<span class="at">x =</span> balance, <span class="at">group =</span> default)) <span class="sc">+</span></span>
+<span id="cb87-25"><a href="DA.html#cb87-25" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_density</span>(<span class="fu">aes</span>(<span class="at">color =</span> default, <span class="at">fill =</span> default), <span class="at">alpha =</span> <span class="fl">0.2</span>) <span class="sc">+</span></span>
+<span id="cb87-26"><a href="DA.html#cb87-26" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_light</span>()<span class="sc">+</span></span>
+<span id="cb87-27"><a href="DA.html#cb87-27" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>(<span class="at">legend.position =</span> <span class="st">&quot;none&quot;</span>)</span>
+<span id="cb87-28"><a href="DA.html#cb87-28" aria-hidden="true" tabindex="-1"></a><span class="co"># derecha</span></span>
+<span id="cb87-29"><a href="DA.html#cb87-29" aria-hidden="true" tabindex="-1"></a>dens.income <span class="ot">&lt;-</span> <span class="fu">ggplot</span>(Default, <span class="fu">aes</span>(<span class="at">x =</span> income, <span class="at">group =</span> default)) <span class="sc">+</span></span>
+<span id="cb87-30"><a href="DA.html#cb87-30" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_density</span>(<span class="fu">aes</span>(<span class="at">color =</span> default, <span class="at">fill =</span> default), <span class="at">alpha =</span> <span class="fl">0.2</span>) <span class="sc">+</span></span>
+<span id="cb87-31"><a href="DA.html#cb87-31" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_light</span>() <span class="sc">+</span> <span class="fu">coord_flip</span>() <span class="sc">+</span></span>
+<span id="cb87-32"><a href="DA.html#cb87-32" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>(<span class="at">legend.position =</span> <span class="st">&quot;none&quot;</span>)</span>
+<span id="cb87-33"><a href="DA.html#cb87-33" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb87-34"><a href="DA.html#cb87-34" aria-hidden="true" tabindex="-1"></a><span class="fu">grid.arrange</span>(dens.balance, empty, plot<span class="fl">.2</span>d, dens.income, <span class="at">ncol=</span><span class="dv">2</span>, <span class="at">nrow=</span><span class="dv">2</span>, <span class="at">widths=</span><span class="fu">c</span>(<span class="dv">4</span>, <span class="dv">1</span>), <span class="at">heights=</span><span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">4</span>))</span></code></pre></div>
 <p><img src="_main_files/figure-html/unnamed-chunk-41-1.png" width="80%" style="display: block; margin: auto;" /></p>
 <div id="LDA" class="section level2" number="3.1">
 <h2><span class="header-section-number">3.1</span> Análisis Discriminante Lineal</h2>
-<div class="sourceCode" id="cb96"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb96-1"><a href="DA.html#cb96-1" aria-hidden="true" tabindex="-1"></a>df <span class="ot">&lt;-</span> Default[, <span class="fu">c</span>(<span class="st">&quot;income&quot;</span>, <span class="st">&quot;balance&quot;</span>, <span class="st">&quot;default&quot;</span>)]</span>
-<span id="cb96-2"><a href="DA.html#cb96-2" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">123</span>)</span>
-<span id="cb96-3"><a href="DA.html#cb96-3" aria-hidden="true" tabindex="-1"></a>train.ID <span class="ot">&lt;-</span> <span class="fu">createDataPartition</span>(df<span class="sc">$</span>default, <span class="at">p =</span> <span class="fl">0.8</span>, <span class="at">list =</span> <span class="cn">FALSE</span>)</span>
-<span id="cb96-4"><a href="DA.html#cb96-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb96-5"><a href="DA.html#cb96-5" aria-hidden="true" tabindex="-1"></a>train_df <span class="ot">&lt;-</span> df[train.ID, ]</span>
-<span id="cb96-6"><a href="DA.html#cb96-6" aria-hidden="true" tabindex="-1"></a>test_df <span class="ot">&lt;-</span> df[<span class="sc">-</span>train.ID, ]</span>
-<span id="cb96-7"><a href="DA.html#cb96-7" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb96-8"><a href="DA.html#cb96-8" aria-hidden="true" tabindex="-1"></a><span class="co"># definimos como control una validación cruzada con 10 hojas, sin repeticiones</span></span>
-<span id="cb96-9"><a href="DA.html#cb96-9" aria-hidden="true" tabindex="-1"></a>fit_control <span class="ot">&lt;-</span> <span class="fu">trainControl</span>(<span class="at">method=</span><span class="st">&#39;cv&#39;</span>, <span class="at">number =</span> <span class="dv">10</span>)</span>
-<span id="cb96-10"><a href="DA.html#cb96-10" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb96-11"><a href="DA.html#cb96-11" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">123</span>)</span>
-<span id="cb96-12"><a href="DA.html#cb96-12" aria-hidden="true" tabindex="-1"></a>model_lda_def <span class="ot">&lt;-</span> <span class="fu">train</span>(default <span class="sc">~</span>.,</span>
-<span id="cb96-13"><a href="DA.html#cb96-13" aria-hidden="true" tabindex="-1"></a>                       <span class="at">data =</span> train_df,</span>
-<span id="cb96-14"><a href="DA.html#cb96-14" aria-hidden="true" tabindex="-1"></a>                       <span class="at">method =</span> <span class="st">&quot;lda&quot;</span>,</span>
-<span id="cb96-15"><a href="DA.html#cb96-15" aria-hidden="true" tabindex="-1"></a>                       <span class="at">trControl =</span> fit_control)</span>
-<span id="cb96-16"><a href="DA.html#cb96-16" aria-hidden="true" tabindex="-1"></a>model_lda_def</span></code></pre></div>
+<div class="sourceCode" id="cb88"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb88-1"><a href="DA.html#cb88-1" aria-hidden="true" tabindex="-1"></a>df <span class="ot">&lt;-</span> Default[, <span class="fu">c</span>(<span class="st">&quot;income&quot;</span>, <span class="st">&quot;balance&quot;</span>, <span class="st">&quot;default&quot;</span>)]</span>
+<span id="cb88-2"><a href="DA.html#cb88-2" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">123</span>)</span>
+<span id="cb88-3"><a href="DA.html#cb88-3" aria-hidden="true" tabindex="-1"></a>train.ID <span class="ot">&lt;-</span> <span class="fu">createDataPartition</span>(df<span class="sc">$</span>default, <span class="at">p =</span> <span class="fl">0.8</span>, <span class="at">list =</span> <span class="cn">FALSE</span>)</span>
+<span id="cb88-4"><a href="DA.html#cb88-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb88-5"><a href="DA.html#cb88-5" aria-hidden="true" tabindex="-1"></a>train_df <span class="ot">&lt;-</span> df[train.ID, ]</span>
+<span id="cb88-6"><a href="DA.html#cb88-6" aria-hidden="true" tabindex="-1"></a>test_df <span class="ot">&lt;-</span> df[<span class="sc">-</span>train.ID, ]</span>
+<span id="cb88-7"><a href="DA.html#cb88-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb88-8"><a href="DA.html#cb88-8" aria-hidden="true" tabindex="-1"></a><span class="co"># definimos como control una validación cruzada con 10 hojas, sin repeticiones</span></span>
+<span id="cb88-9"><a href="DA.html#cb88-9" aria-hidden="true" tabindex="-1"></a>fit_control <span class="ot">&lt;-</span> <span class="fu">trainControl</span>(<span class="at">method=</span><span class="st">&#39;cv&#39;</span>, <span class="at">number =</span> <span class="dv">10</span>)</span>
+<span id="cb88-10"><a href="DA.html#cb88-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb88-11"><a href="DA.html#cb88-11" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">123</span>)</span>
+<span id="cb88-12"><a href="DA.html#cb88-12" aria-hidden="true" tabindex="-1"></a>model_lda_def <span class="ot">&lt;-</span> <span class="fu">train</span>(default <span class="sc">~</span>.,</span>
+<span id="cb88-13"><a href="DA.html#cb88-13" aria-hidden="true" tabindex="-1"></a>                       <span class="at">data =</span> train_df,</span>
+<span id="cb88-14"><a href="DA.html#cb88-14" aria-hidden="true" tabindex="-1"></a>                       <span class="at">method =</span> <span class="st">&quot;lda&quot;</span>,</span>
+<span id="cb88-15"><a href="DA.html#cb88-15" aria-hidden="true" tabindex="-1"></a>                       <span class="at">trControl =</span> fit_control)</span>
+<span id="cb88-16"><a href="DA.html#cb88-16" aria-hidden="true" tabindex="-1"></a>model_lda_def</span></code></pre></div>
 <pre><code>## Linear Discriminant Analysis 
 ## 
 ## 8001 samples
@@ -288,7 +288,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 ## 
 ##   Accuracy  Kappa    
 ##   0.973379  0.3710518</code></pre>
-<div class="sourceCode" id="cb98"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb98-1"><a href="DA.html#cb98-1" aria-hidden="true" tabindex="-1"></a>model_lda_def<span class="sc">$</span>finalModel</span></code></pre></div>
+<div class="sourceCode" id="cb90"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb90-1"><a href="DA.html#cb90-1" aria-hidden="true" tabindex="-1"></a>model_lda_def<span class="sc">$</span>finalModel</span></code></pre></div>
 <pre><code>## Call:
 ## lda(x, grouping = y)
 ## 
@@ -308,16 +308,16 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <p>La precisión durante el entrenamiento es de un <span class="math inline">\(\approx 97\%\)</span>. También vemos que las probabilidades a priori <span class="math inline">\(\pi_i, i = 1,2\)</span> de pertenecer a cada clase son aproximadamente <span class="math inline">\(97\%\)</span> y <span class="math inline">\(3\%\)</span> respectivamente, lo cual corresponde a la razón de fallo que se comenta al inicio. El resultado <code>Coefficients of linear discriminants</code> indica las constantes que se multiplican a cada elemento de la muestra <span class="math inline">\((\text{income}_i, \text{balance}_i)\)</span>, <span class="math inline">\(i = 1, \ldots, n_{\text{train}}\)</span>, para obtener su correspondiente valor de la <em>función discriminante lineal</em>:
 <span class="math display">\[ \delta_k(x) = x^T \Sigma^{-1} \mu_k  - \dfrac{1}{2} \mu_k^T \Sigma^{-1} \mu_k+ log(\pi_k) \]</span>
 Todo indica que la variable <code>balance</code> tiene un mayor peso en la discriminación. Como alternativa, podemos comprobarlo usando <code>varImp</code>:</p>
-<div class="sourceCode" id="cb100"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb100-1"><a href="DA.html#cb100-1" aria-hidden="true" tabindex="-1"></a><span class="fu">varImp</span>(model_lda_def)</span></code></pre></div>
+<div class="sourceCode" id="cb92"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb92-1"><a href="DA.html#cb92-1" aria-hidden="true" tabindex="-1"></a><span class="fu">varImp</span>(model_lda_def)</span></code></pre></div>
 <pre><code>## ROC curve variable importance
 ## 
 ##         Importance
 ## balance        100
 ## income           0</code></pre>
 <p>Veamos ahora qué tal es el ajuste en los datos test.</p>
-<div class="sourceCode" id="cb102"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb102-1"><a href="DA.html#cb102-1" aria-hidden="true" tabindex="-1"></a><span class="co"># hagamos las predicciones del conjunto de prueba</span></span>
-<span id="cb102-2"><a href="DA.html#cb102-2" aria-hidden="true" tabindex="-1"></a>prediction_lda_def <span class="ot">&lt;-</span> <span class="fu">predict</span>(model_lda_def, <span class="at">newdata =</span> test_df)</span>
-<span id="cb102-3"><a href="DA.html#cb102-3" aria-hidden="true" tabindex="-1"></a><span class="fu">confusionMatrix</span>(prediction_lda_def, <span class="at">reference =</span> test_df<span class="sc">$</span>default)</span></code></pre></div>
+<div class="sourceCode" id="cb94"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb94-1"><a href="DA.html#cb94-1" aria-hidden="true" tabindex="-1"></a><span class="co"># hagamos las predicciones del conjunto de prueba</span></span>
+<span id="cb94-2"><a href="DA.html#cb94-2" aria-hidden="true" tabindex="-1"></a>prediction_lda_def <span class="ot">&lt;-</span> <span class="fu">predict</span>(model_lda_def, <span class="at">newdata =</span> test_df)</span>
+<span id="cb94-3"><a href="DA.html#cb94-3" aria-hidden="true" tabindex="-1"></a><span class="fu">confusionMatrix</span>(prediction_lda_def, <span class="at">reference =</span> test_df<span class="sc">$</span>default)</span></code></pre></div>
 <pre><code>## Confusion Matrix and Statistics
 ## 
 ##           Reference
@@ -345,31 +345,31 @@ Todo indica que la variable <code>balance</code> tiene un mayor peso en la discr
 ##                                          
 ##        &#39;Positive&#39; Class : No             
 ## </code></pre>
-<div class="sourceCode" id="cb104"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb104-1"><a href="DA.html#cb104-1" aria-hidden="true" tabindex="-1"></a><span class="co"># extraemos el Accuracy o Precisión</span></span>
-<span id="cb104-2"><a href="DA.html#cb104-2" aria-hidden="true" tabindex="-1"></a><span class="fu">confusionMatrix</span>(prediction_lda_def, <span class="at">reference =</span> test_df<span class="sc">$</span>default)<span class="sc">$</span>overall[<span class="dv">1</span>]</span></code></pre></div>
+<div class="sourceCode" id="cb96"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb96-1"><a href="DA.html#cb96-1" aria-hidden="true" tabindex="-1"></a><span class="co"># extraemos el Accuracy o Precisión</span></span>
+<span id="cb96-2"><a href="DA.html#cb96-2" aria-hidden="true" tabindex="-1"></a><span class="fu">confusionMatrix</span>(prediction_lda_def, <span class="at">reference =</span> test_df<span class="sc">$</span>default)<span class="sc">$</span>overall[<span class="dv">1</span>]</span></code></pre></div>
 <pre><code>## Accuracy 
 ## 0.969985</code></pre>
-<div class="sourceCode" id="cb106"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb106-1"><a href="DA.html#cb106-1" aria-hidden="true" tabindex="-1"></a><span class="co"># la tasa de error</span></span>
-<span id="cb106-2"><a href="DA.html#cb106-2" aria-hidden="true" tabindex="-1"></a>tasa.error.lda <span class="ot">&lt;-</span> <span class="dv">1</span><span class="sc">-</span><span class="fu">confusionMatrix</span>(prediction_lda_def, <span class="at">reference =</span> test_df<span class="sc">$</span>default)<span class="sc">$</span>overall[<span class="dv">1</span>]</span>
-<span id="cb106-3"><a href="DA.html#cb106-3" aria-hidden="true" tabindex="-1"></a><span class="fu">names</span>(tasa.error.lda) <span class="ot">&lt;-</span> <span class="st">&quot;Error LDA&quot;</span></span>
-<span id="cb106-4"><a href="DA.html#cb106-4" aria-hidden="true" tabindex="-1"></a>tasa.error.lda</span></code></pre></div>
+<div class="sourceCode" id="cb98"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb98-1"><a href="DA.html#cb98-1" aria-hidden="true" tabindex="-1"></a><span class="co"># la tasa de error</span></span>
+<span id="cb98-2"><a href="DA.html#cb98-2" aria-hidden="true" tabindex="-1"></a>tasa.error.lda <span class="ot">&lt;-</span> <span class="dv">1</span><span class="sc">-</span><span class="fu">confusionMatrix</span>(prediction_lda_def, <span class="at">reference =</span> test_df<span class="sc">$</span>default)<span class="sc">$</span>overall[<span class="dv">1</span>]</span>
+<span id="cb98-3"><a href="DA.html#cb98-3" aria-hidden="true" tabindex="-1"></a><span class="fu">names</span>(tasa.error.lda) <span class="ot">&lt;-</span> <span class="st">&quot;Error LDA&quot;</span></span>
+<span id="cb98-4"><a href="DA.html#cb98-4" aria-hidden="true" tabindex="-1"></a>tasa.error.lda</span></code></pre></div>
 <pre><code>##  Error LDA 
 ## 0.03001501</code></pre>
 <p>Vemos que la especificidad es muy buena (casi no falla al clasificar los verdaderos “No”), pero la sensibilidad (capacidad para detectar los verdaderos “Yes”) es muy mala. Vamos a cambiar el umbral de decisión (por defecto probabilidad <span class="math inline">\(0.5\)</span>) para intentar mejorar el algoritmo para protegernos de los malos pagadores:</p>
-<div class="sourceCode" id="cb108"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb108-1"><a href="DA.html#cb108-1" aria-hidden="true" tabindex="-1"></a><span class="co"># predecimos las probabilidades:</span></span>
-<span id="cb108-2"><a href="DA.html#cb108-2" aria-hidden="true" tabindex="-1"></a>prediction_lda_prob <span class="ot">&lt;-</span> <span class="fu">predict</span>(model_lda_def, </span>
-<span id="cb108-3"><a href="DA.html#cb108-3" aria-hidden="true" tabindex="-1"></a>                              <span class="at">newdata =</span> test_df, </span>
-<span id="cb108-4"><a href="DA.html#cb108-4" aria-hidden="true" tabindex="-1"></a>                              <span class="at">type =</span> <span class="st">&quot;prob&quot;</span>)</span>
-<span id="cb108-5"><a href="DA.html#cb108-5" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb108-6"><a href="DA.html#cb108-6" aria-hidden="true" tabindex="-1"></a>prediction_lda_def <span class="ot">&lt;-</span> <span class="fu">as.factor</span>(</span>
-<span id="cb108-7"><a href="DA.html#cb108-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ifelse</span>(prediction_lda_prob<span class="sc">$</span>Yes <span class="sc">&gt;</span> <span class="fl">0.2</span>, <span class="st">&quot;Yes&quot;</span>, <span class="st">&quot;No&quot;</span>)</span>
-<span id="cb108-8"><a href="DA.html#cb108-8" aria-hidden="true" tabindex="-1"></a>)</span>
-<span id="cb108-9"><a href="DA.html#cb108-9" aria-hidden="true" tabindex="-1"></a>  </span>
-<span id="cb108-10"><a href="DA.html#cb108-10" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb108-11"><a href="DA.html#cb108-11" aria-hidden="true" tabindex="-1"></a><span class="fu">confusionMatrix</span>(prediction_lda_def, </span>
-<span id="cb108-12"><a href="DA.html#cb108-12" aria-hidden="true" tabindex="-1"></a>                <span class="at">reference =</span> test_df<span class="sc">$</span>default, </span>
-<span id="cb108-13"><a href="DA.html#cb108-13" aria-hidden="true" tabindex="-1"></a>                <span class="at">positive =</span> <span class="st">&quot;Yes&quot;</span>, </span>
-<span id="cb108-14"><a href="DA.html#cb108-14" aria-hidden="true" tabindex="-1"></a>                <span class="at">mode =</span> <span class="st">&quot;everything&quot;</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb100"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb100-1"><a href="DA.html#cb100-1" aria-hidden="true" tabindex="-1"></a><span class="co"># predecimos las probabilidades:</span></span>
+<span id="cb100-2"><a href="DA.html#cb100-2" aria-hidden="true" tabindex="-1"></a>prediction_lda_prob <span class="ot">&lt;-</span> <span class="fu">predict</span>(model_lda_def, </span>
+<span id="cb100-3"><a href="DA.html#cb100-3" aria-hidden="true" tabindex="-1"></a>                              <span class="at">newdata =</span> test_df, </span>
+<span id="cb100-4"><a href="DA.html#cb100-4" aria-hidden="true" tabindex="-1"></a>                              <span class="at">type =</span> <span class="st">&quot;prob&quot;</span>)</span>
+<span id="cb100-5"><a href="DA.html#cb100-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb100-6"><a href="DA.html#cb100-6" aria-hidden="true" tabindex="-1"></a>prediction_lda_def <span class="ot">&lt;-</span> <span class="fu">as.factor</span>(</span>
+<span id="cb100-7"><a href="DA.html#cb100-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ifelse</span>(prediction_lda_prob<span class="sc">$</span>Yes <span class="sc">&gt;</span> <span class="fl">0.2</span>, <span class="st">&quot;Yes&quot;</span>, <span class="st">&quot;No&quot;</span>)</span>
+<span id="cb100-8"><a href="DA.html#cb100-8" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb100-9"><a href="DA.html#cb100-9" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb100-10"><a href="DA.html#cb100-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb100-11"><a href="DA.html#cb100-11" aria-hidden="true" tabindex="-1"></a><span class="fu">confusionMatrix</span>(prediction_lda_def, </span>
+<span id="cb100-12"><a href="DA.html#cb100-12" aria-hidden="true" tabindex="-1"></a>                <span class="at">reference =</span> test_df<span class="sc">$</span>default, </span>
+<span id="cb100-13"><a href="DA.html#cb100-13" aria-hidden="true" tabindex="-1"></a>                <span class="at">positive =</span> <span class="st">&quot;Yes&quot;</span>, </span>
+<span id="cb100-14"><a href="DA.html#cb100-14" aria-hidden="true" tabindex="-1"></a>                <span class="at">mode =</span> <span class="st">&quot;everything&quot;</span>)</span></code></pre></div>
 <pre><code>## Confusion Matrix and Statistics
 ## 
 ##           Reference
@@ -403,58 +403,58 @@ Todo indica que la variable <code>balance</code> tiene un mayor peso en la discr
 <div id="frontera-de-decisión-en-2d" class="section level3" number="3.1.1">
 <h3><span class="header-section-number">3.1.1</span> Frontera de decisión en 2D</h3>
 <p>Como estamos en un problema de clasificación en dos dimensiones (<span class="math inline">\(p = 2\)</span>), es posible representar la frontera de decisión del algoritmo, usando la función <code>decision_bound</code>. Debemos modificar los campos para que coincidan con las variables de <code>Default</code>:</p>
-<div class="sourceCode" id="cb110"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb110-1"><a href="DA.html#cb110-1" aria-hidden="true" tabindex="-1"></a>decision_bound <span class="ot">=</span> <span class="cf">function</span>(train_df_in, test_df_in, model_in){</span>
-<span id="cb110-2"><a href="DA.html#cb110-2" aria-hidden="true" tabindex="-1"></a>  <span class="co"># plot decision boundary  for df &lt;- Default[, c(&quot;income&quot;, &quot;balance&quot;, &quot;default&quot;)]</span></span>
-<span id="cb110-3"><a href="DA.html#cb110-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb110-4"><a href="DA.html#cb110-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">require</span>(MASS)</span>
-<span id="cb110-5"><a href="DA.html#cb110-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">require</span>(caret)</span>
-<span id="cb110-6"><a href="DA.html#cb110-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">require</span>(ggplot2)</span>
-<span id="cb110-7"><a href="DA.html#cb110-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">require</span>(gridExtra)</span>
-<span id="cb110-8"><a href="DA.html#cb110-8" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb110-9"><a href="DA.html#cb110-9" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Paso 1: crear un grid de valores desde min a max de ambos predictores</span></span>
-<span id="cb110-10"><a href="DA.html#cb110-10" aria-hidden="true" tabindex="-1"></a>  pl <span class="ot">=</span> <span class="fu">seq</span>(<span class="fu">min</span>(train_df_in<span class="sc">$</span>balance), <span class="fu">max</span>(train_df_in<span class="sc">$</span>balance), <span class="at">length.out =</span> <span class="dv">80</span>)</span>
-<span id="cb110-11"><a href="DA.html#cb110-11" aria-hidden="true" tabindex="-1"></a>  pw <span class="ot">=</span> <span class="fu">seq</span>(<span class="fu">min</span>(train_df_in<span class="sc">$</span>income), <span class="fu">max</span>(train_df_in<span class="sc">$</span>income), <span class="at">length.out =</span> <span class="dv">80</span>)</span>
-<span id="cb110-12"><a href="DA.html#cb110-12" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb110-13"><a href="DA.html#cb110-13" aria-hidden="true" tabindex="-1"></a>  lgrid <span class="ot">&lt;-</span> <span class="fu">expand.grid</span>(<span class="at">balance=</span>pl, <span class="at">income=</span>pw)</span>
-<span id="cb110-14"><a href="DA.html#cb110-14" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb110-15"><a href="DA.html#cb110-15" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Paso 2: obtener las predicciones tanto para el grid como para el test</span></span>
-<span id="cb110-16"><a href="DA.html#cb110-16" aria-hidden="true" tabindex="-1"></a>  modelPredGrid <span class="ot">&lt;-</span> <span class="fu">predict</span>(model_in, <span class="at">newdata=</span>lgrid)</span>
-<span id="cb110-17"><a href="DA.html#cb110-17" aria-hidden="true" tabindex="-1"></a>  train_df_in<span class="sc">$</span>Pred.Class <span class="ot">&lt;-</span> <span class="fu">predict</span>(model_in, <span class="at">newdata =</span> train_df_in)</span>
-<span id="cb110-18"><a href="DA.html#cb110-18" aria-hidden="true" tabindex="-1"></a>  test_df_in<span class="sc">$</span>Pred.Class <span class="ot">&lt;-</span> <span class="fu">predict</span>(model_in, <span class="at">newdata =</span> test_df_in)</span>
-<span id="cb110-19"><a href="DA.html#cb110-19" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb110-20"><a href="DA.html#cb110-20" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Paso 3: ggplot con la funcion contour</span></span>
-<span id="cb110-21"><a href="DA.html#cb110-21" aria-hidden="true" tabindex="-1"></a>  gg1 <span class="ot">&lt;-</span> <span class="fu">ggplot</span>(<span class="at">data=</span>lgrid) <span class="sc">+</span></span>
-<span id="cb110-22"><a href="DA.html#cb110-22" aria-hidden="true" tabindex="-1"></a>    <span class="fu">stat_contour</span>(<span class="fu">aes</span>(<span class="at">x=</span>balance, <span class="at">y=</span>income, <span class="at">z=</span><span class="fu">as.numeric</span>(modelPredGrid)), <span class="at">bins=</span><span class="dv">2</span>) <span class="sc">+</span></span>
-<span id="cb110-23"><a href="DA.html#cb110-23" aria-hidden="true" tabindex="-1"></a>    <span class="fu">geom_point</span>(<span class="fu">aes</span>(<span class="at">x=</span>balance, <span class="at">y=</span>income, <span class="at">colour=</span>modelPredGrid), <span class="at">alpha=</span><span class="fl">0.1</span>) <span class="sc">+</span></span>
-<span id="cb110-24"><a href="DA.html#cb110-24" aria-hidden="true" tabindex="-1"></a>    <span class="fu">labs</span>(<span class="at">colour =</span> <span class="st">&quot;Clases&quot;</span>) <span class="sc">+</span> <span class="fu">ggtitle</span>(<span class="st">&quot;Train&quot;</span>) <span class="sc">+</span></span>
-<span id="cb110-25"><a href="DA.html#cb110-25" aria-hidden="true" tabindex="-1"></a>    <span class="fu">geom_point</span>(<span class="at">data=</span>train_df_in,</span>
-<span id="cb110-26"><a href="DA.html#cb110-26" aria-hidden="true" tabindex="-1"></a>               <span class="fu">aes</span>(<span class="at">x=</span>balance, <span class="at">y=</span>income,</span>
-<span id="cb110-27"><a href="DA.html#cb110-27" aria-hidden="true" tabindex="-1"></a>                   <span class="at">colour=</span>default), <span class="at">size=</span><span class="dv">5</span>, <span class="at">shape=</span><span class="dv">1</span>) <span class="sc">+</span></span>
-<span id="cb110-28"><a href="DA.html#cb110-28" aria-hidden="true" tabindex="-1"></a>    <span class="fu">theme_light</span>()</span>
-<span id="cb110-29"><a href="DA.html#cb110-29" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb110-30"><a href="DA.html#cb110-30" aria-hidden="true" tabindex="-1"></a>  gg2 <span class="ot">&lt;-</span> <span class="fu">ggplot</span>(<span class="at">data=</span>lgrid) <span class="sc">+</span></span>
-<span id="cb110-31"><a href="DA.html#cb110-31" aria-hidden="true" tabindex="-1"></a>    <span class="fu">stat_contour</span>(<span class="fu">aes</span>(<span class="at">x=</span>balance, <span class="at">y=</span>income, <span class="at">z=</span><span class="fu">as.numeric</span>(modelPredGrid)), <span class="at">bins=</span><span class="dv">2</span>) <span class="sc">+</span></span>
-<span id="cb110-32"><a href="DA.html#cb110-32" aria-hidden="true" tabindex="-1"></a>    <span class="fu">geom_point</span>(<span class="fu">aes</span>(<span class="at">x=</span>balance, <span class="at">y=</span>income, <span class="at">colour=</span>modelPredGrid), <span class="at">alpha=</span><span class="fl">0.1</span>) <span class="sc">+</span></span>
-<span id="cb110-33"><a href="DA.html#cb110-33" aria-hidden="true" tabindex="-1"></a>    <span class="fu">labs</span>(<span class="at">colour =</span> <span class="st">&quot;Clases&quot;</span>) <span class="sc">+</span> <span class="fu">ggtitle</span>(<span class="st">&quot;Test&quot;</span>) <span class="sc">+</span></span>
-<span id="cb110-34"><a href="DA.html#cb110-34" aria-hidden="true" tabindex="-1"></a>    <span class="fu">geom_point</span>(<span class="at">data=</span>test_df_in,</span>
-<span id="cb110-35"><a href="DA.html#cb110-35" aria-hidden="true" tabindex="-1"></a>               <span class="fu">aes</span>(<span class="at">x=</span>balance, <span class="at">y=</span>income,</span>
-<span id="cb110-36"><a href="DA.html#cb110-36" aria-hidden="true" tabindex="-1"></a>                   <span class="at">colour=</span>default), <span class="at">size=</span><span class="dv">5</span>, <span class="at">shape=</span><span class="dv">1</span>) <span class="sc">+</span></span>
-<span id="cb110-37"><a href="DA.html#cb110-37" aria-hidden="true" tabindex="-1"></a>    <span class="fu">theme_light</span>()</span>
-<span id="cb110-38"><a href="DA.html#cb110-38" aria-hidden="true" tabindex="-1"></a>  <span class="fu">grid.arrange</span>(gg1, gg2, <span class="at">ncol=</span><span class="dv">1</span>, <span class="at">nrow=</span><span class="dv">2</span>)</span>
-<span id="cb110-39"><a href="DA.html#cb110-39" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div>
-<div class="sourceCode" id="cb111"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb111-1"><a href="DA.html#cb111-1" aria-hidden="true" tabindex="-1"></a><span class="fu">decision_bound</span>(train_df, test_df, model_lda_def)</span></code></pre></div>
+<div class="sourceCode" id="cb102"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb102-1"><a href="DA.html#cb102-1" aria-hidden="true" tabindex="-1"></a>decision_bound <span class="ot">=</span> <span class="cf">function</span>(train_df_in, test_df_in, model_in){</span>
+<span id="cb102-2"><a href="DA.html#cb102-2" aria-hidden="true" tabindex="-1"></a>  <span class="co"># plot decision boundary  for df &lt;- Default[, c(&quot;income&quot;, &quot;balance&quot;, &quot;default&quot;)]</span></span>
+<span id="cb102-3"><a href="DA.html#cb102-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb102-4"><a href="DA.html#cb102-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">require</span>(MASS)</span>
+<span id="cb102-5"><a href="DA.html#cb102-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">require</span>(caret)</span>
+<span id="cb102-6"><a href="DA.html#cb102-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">require</span>(ggplot2)</span>
+<span id="cb102-7"><a href="DA.html#cb102-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">require</span>(gridExtra)</span>
+<span id="cb102-8"><a href="DA.html#cb102-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb102-9"><a href="DA.html#cb102-9" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Paso 1: crear un grid de valores desde min a max de ambos predictores</span></span>
+<span id="cb102-10"><a href="DA.html#cb102-10" aria-hidden="true" tabindex="-1"></a>  pl <span class="ot">=</span> <span class="fu">seq</span>(<span class="fu">min</span>(train_df_in<span class="sc">$</span>balance), <span class="fu">max</span>(train_df_in<span class="sc">$</span>balance), <span class="at">length.out =</span> <span class="dv">80</span>)</span>
+<span id="cb102-11"><a href="DA.html#cb102-11" aria-hidden="true" tabindex="-1"></a>  pw <span class="ot">=</span> <span class="fu">seq</span>(<span class="fu">min</span>(train_df_in<span class="sc">$</span>income), <span class="fu">max</span>(train_df_in<span class="sc">$</span>income), <span class="at">length.out =</span> <span class="dv">80</span>)</span>
+<span id="cb102-12"><a href="DA.html#cb102-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb102-13"><a href="DA.html#cb102-13" aria-hidden="true" tabindex="-1"></a>  lgrid <span class="ot">&lt;-</span> <span class="fu">expand.grid</span>(<span class="at">balance=</span>pl, <span class="at">income=</span>pw)</span>
+<span id="cb102-14"><a href="DA.html#cb102-14" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb102-15"><a href="DA.html#cb102-15" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Paso 2: obtener las predicciones tanto para el grid como para el test</span></span>
+<span id="cb102-16"><a href="DA.html#cb102-16" aria-hidden="true" tabindex="-1"></a>  modelPredGrid <span class="ot">&lt;-</span> <span class="fu">predict</span>(model_in, <span class="at">newdata=</span>lgrid)</span>
+<span id="cb102-17"><a href="DA.html#cb102-17" aria-hidden="true" tabindex="-1"></a>  train_df_in<span class="sc">$</span>Pred.Class <span class="ot">&lt;-</span> <span class="fu">predict</span>(model_in, <span class="at">newdata =</span> train_df_in)</span>
+<span id="cb102-18"><a href="DA.html#cb102-18" aria-hidden="true" tabindex="-1"></a>  test_df_in<span class="sc">$</span>Pred.Class <span class="ot">&lt;-</span> <span class="fu">predict</span>(model_in, <span class="at">newdata =</span> test_df_in)</span>
+<span id="cb102-19"><a href="DA.html#cb102-19" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb102-20"><a href="DA.html#cb102-20" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Paso 3: ggplot con la funcion contour</span></span>
+<span id="cb102-21"><a href="DA.html#cb102-21" aria-hidden="true" tabindex="-1"></a>  gg1 <span class="ot">&lt;-</span> <span class="fu">ggplot</span>(<span class="at">data=</span>lgrid) <span class="sc">+</span></span>
+<span id="cb102-22"><a href="DA.html#cb102-22" aria-hidden="true" tabindex="-1"></a>    <span class="fu">stat_contour</span>(<span class="fu">aes</span>(<span class="at">x=</span>balance, <span class="at">y=</span>income, <span class="at">z=</span><span class="fu">as.numeric</span>(modelPredGrid)), <span class="at">bins=</span><span class="dv">2</span>) <span class="sc">+</span></span>
+<span id="cb102-23"><a href="DA.html#cb102-23" aria-hidden="true" tabindex="-1"></a>    <span class="fu">geom_point</span>(<span class="fu">aes</span>(<span class="at">x=</span>balance, <span class="at">y=</span>income, <span class="at">colour=</span>modelPredGrid), <span class="at">alpha=</span><span class="fl">0.1</span>) <span class="sc">+</span></span>
+<span id="cb102-24"><a href="DA.html#cb102-24" aria-hidden="true" tabindex="-1"></a>    <span class="fu">labs</span>(<span class="at">colour =</span> <span class="st">&quot;Clases&quot;</span>) <span class="sc">+</span> <span class="fu">ggtitle</span>(<span class="st">&quot;Train&quot;</span>) <span class="sc">+</span></span>
+<span id="cb102-25"><a href="DA.html#cb102-25" aria-hidden="true" tabindex="-1"></a>    <span class="fu">geom_point</span>(<span class="at">data=</span>train_df_in,</span>
+<span id="cb102-26"><a href="DA.html#cb102-26" aria-hidden="true" tabindex="-1"></a>               <span class="fu">aes</span>(<span class="at">x=</span>balance, <span class="at">y=</span>income,</span>
+<span id="cb102-27"><a href="DA.html#cb102-27" aria-hidden="true" tabindex="-1"></a>                   <span class="at">colour=</span>default), <span class="at">size=</span><span class="dv">5</span>, <span class="at">shape=</span><span class="dv">1</span>) <span class="sc">+</span></span>
+<span id="cb102-28"><a href="DA.html#cb102-28" aria-hidden="true" tabindex="-1"></a>    <span class="fu">theme_light</span>()</span>
+<span id="cb102-29"><a href="DA.html#cb102-29" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb102-30"><a href="DA.html#cb102-30" aria-hidden="true" tabindex="-1"></a>  gg2 <span class="ot">&lt;-</span> <span class="fu">ggplot</span>(<span class="at">data=</span>lgrid) <span class="sc">+</span></span>
+<span id="cb102-31"><a href="DA.html#cb102-31" aria-hidden="true" tabindex="-1"></a>    <span class="fu">stat_contour</span>(<span class="fu">aes</span>(<span class="at">x=</span>balance, <span class="at">y=</span>income, <span class="at">z=</span><span class="fu">as.numeric</span>(modelPredGrid)), <span class="at">bins=</span><span class="dv">2</span>) <span class="sc">+</span></span>
+<span id="cb102-32"><a href="DA.html#cb102-32" aria-hidden="true" tabindex="-1"></a>    <span class="fu">geom_point</span>(<span class="fu">aes</span>(<span class="at">x=</span>balance, <span class="at">y=</span>income, <span class="at">colour=</span>modelPredGrid), <span class="at">alpha=</span><span class="fl">0.1</span>) <span class="sc">+</span></span>
+<span id="cb102-33"><a href="DA.html#cb102-33" aria-hidden="true" tabindex="-1"></a>    <span class="fu">labs</span>(<span class="at">colour =</span> <span class="st">&quot;Clases&quot;</span>) <span class="sc">+</span> <span class="fu">ggtitle</span>(<span class="st">&quot;Test&quot;</span>) <span class="sc">+</span></span>
+<span id="cb102-34"><a href="DA.html#cb102-34" aria-hidden="true" tabindex="-1"></a>    <span class="fu">geom_point</span>(<span class="at">data=</span>test_df_in,</span>
+<span id="cb102-35"><a href="DA.html#cb102-35" aria-hidden="true" tabindex="-1"></a>               <span class="fu">aes</span>(<span class="at">x=</span>balance, <span class="at">y=</span>income,</span>
+<span id="cb102-36"><a href="DA.html#cb102-36" aria-hidden="true" tabindex="-1"></a>                   <span class="at">colour=</span>default), <span class="at">size=</span><span class="dv">5</span>, <span class="at">shape=</span><span class="dv">1</span>) <span class="sc">+</span></span>
+<span id="cb102-37"><a href="DA.html#cb102-37" aria-hidden="true" tabindex="-1"></a>    <span class="fu">theme_light</span>()</span>
+<span id="cb102-38"><a href="DA.html#cb102-38" aria-hidden="true" tabindex="-1"></a>  <span class="fu">grid.arrange</span>(gg1, gg2, <span class="at">ncol=</span><span class="dv">1</span>, <span class="at">nrow=</span><span class="dv">2</span>)</span>
+<span id="cb102-39"><a href="DA.html#cb102-39" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div>
+<div class="sourceCode" id="cb103"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb103-1"><a href="DA.html#cb103-1" aria-hidden="true" tabindex="-1"></a><span class="fu">decision_bound</span>(train_df, test_df, model_lda_def)</span></code></pre></div>
 <p><img src="_main_files/figure-html/unnamed-chunk-47-1.png" width="80%" style="display: block; margin: auto;" /></p>
 </div>
 </div>
 <div id="QDA" class="section level2" number="3.2">
 <h2><span class="header-section-number">3.2</span> Análisis Discriminante Cuadrático</h2>
 <p>El ajuste para el modelo QDA lo hacemos con el mismo control y la misma partición de la muestra.</p>
-<div class="sourceCode" id="cb112"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb112-1"><a href="DA.html#cb112-1" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">123</span>)</span>
-<span id="cb112-2"><a href="DA.html#cb112-2" aria-hidden="true" tabindex="-1"></a>model_qda_def <span class="ot">&lt;-</span> <span class="fu">train</span>(default <span class="sc">~</span>.,</span>
-<span id="cb112-3"><a href="DA.html#cb112-3" aria-hidden="true" tabindex="-1"></a>                       <span class="at">data =</span> train_df,</span>
-<span id="cb112-4"><a href="DA.html#cb112-4" aria-hidden="true" tabindex="-1"></a>                       <span class="at">method =</span> <span class="st">&quot;qda&quot;</span>,</span>
-<span id="cb112-5"><a href="DA.html#cb112-5" aria-hidden="true" tabindex="-1"></a>                       <span class="at">trControl =</span> fit_control)</span>
-<span id="cb112-6"><a href="DA.html#cb112-6" aria-hidden="true" tabindex="-1"></a>model_qda_def</span></code></pre></div>
+<div class="sourceCode" id="cb104"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb104-1"><a href="DA.html#cb104-1" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">123</span>)</span>
+<span id="cb104-2"><a href="DA.html#cb104-2" aria-hidden="true" tabindex="-1"></a>model_qda_def <span class="ot">&lt;-</span> <span class="fu">train</span>(default <span class="sc">~</span>.,</span>
+<span id="cb104-3"><a href="DA.html#cb104-3" aria-hidden="true" tabindex="-1"></a>                       <span class="at">data =</span> train_df,</span>
+<span id="cb104-4"><a href="DA.html#cb104-4" aria-hidden="true" tabindex="-1"></a>                       <span class="at">method =</span> <span class="st">&quot;qda&quot;</span>,</span>
+<span id="cb104-5"><a href="DA.html#cb104-5" aria-hidden="true" tabindex="-1"></a>                       <span class="at">trControl =</span> fit_control)</span>
+<span id="cb104-6"><a href="DA.html#cb104-6" aria-hidden="true" tabindex="-1"></a>model_qda_def</span></code></pre></div>
 <pre><code>## Quadratic Discriminant Analysis 
 ## 
 ## 8001 samples
@@ -468,7 +468,7 @@ Todo indica que la variable <code>balance</code> tiene un mayor peso en la discr
 ## 
 ##   Accuracy   Kappa    
 ##   0.9730043  0.3787741</code></pre>
-<div class="sourceCode" id="cb114"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb114-1"><a href="DA.html#cb114-1" aria-hidden="true" tabindex="-1"></a>model_qda_def<span class="sc">$</span>finalModel</span></code></pre></div>
+<div class="sourceCode" id="cb106"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb106-1"><a href="DA.html#cb106-1" aria-hidden="true" tabindex="-1"></a>model_qda_def<span class="sc">$</span>finalModel</span></code></pre></div>
 <pre><code>## Call:
 ## qda(x, grouping = y)
 ## 
@@ -481,12 +481,12 @@ Todo indica que la variable <code>balance</code> tiene un mayor peso en la discr
 ## No  33513.73  805.9109
 ## Yes 32450.16 1753.3628</code></pre>
 <p>Los resultados al entrenar son similares al caso LDA. Veamos las predicciones para la muestra test.</p>
-<div class="sourceCode" id="cb116"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb116-1"><a href="DA.html#cb116-1" aria-hidden="true" tabindex="-1"></a><span class="co"># hagamos las predicciones del conjunto de prueba</span></span>
-<span id="cb116-2"><a href="DA.html#cb116-2" aria-hidden="true" tabindex="-1"></a>prediction_qda_def <span class="ot">&lt;-</span> <span class="fu">predict</span>(model_qda_def, <span class="at">newdata =</span> test_df)</span>
-<span id="cb116-3"><a href="DA.html#cb116-3" aria-hidden="true" tabindex="-1"></a><span class="fu">confusionMatrix</span>(prediction_qda_def, </span>
-<span id="cb116-4"><a href="DA.html#cb116-4" aria-hidden="true" tabindex="-1"></a>                <span class="at">reference =</span> test_df<span class="sc">$</span>default, </span>
-<span id="cb116-5"><a href="DA.html#cb116-5" aria-hidden="true" tabindex="-1"></a>                <span class="at">positive =</span> <span class="st">&quot;Yes&quot;</span>, </span>
-<span id="cb116-6"><a href="DA.html#cb116-6" aria-hidden="true" tabindex="-1"></a>                <span class="at">mode =</span> <span class="st">&quot;everything&quot;</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb108"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb108-1"><a href="DA.html#cb108-1" aria-hidden="true" tabindex="-1"></a><span class="co"># hagamos las predicciones del conjunto de prueba</span></span>
+<span id="cb108-2"><a href="DA.html#cb108-2" aria-hidden="true" tabindex="-1"></a>prediction_qda_def <span class="ot">&lt;-</span> <span class="fu">predict</span>(model_qda_def, <span class="at">newdata =</span> test_df)</span>
+<span id="cb108-3"><a href="DA.html#cb108-3" aria-hidden="true" tabindex="-1"></a><span class="fu">confusionMatrix</span>(prediction_qda_def, </span>
+<span id="cb108-4"><a href="DA.html#cb108-4" aria-hidden="true" tabindex="-1"></a>                <span class="at">reference =</span> test_df<span class="sc">$</span>default, </span>
+<span id="cb108-5"><a href="DA.html#cb108-5" aria-hidden="true" tabindex="-1"></a>                <span class="at">positive =</span> <span class="st">&quot;Yes&quot;</span>, </span>
+<span id="cb108-6"><a href="DA.html#cb108-6" aria-hidden="true" tabindex="-1"></a>                <span class="at">mode =</span> <span class="st">&quot;everything&quot;</span>)</span></code></pre></div>
 <pre><code>## Confusion Matrix and Statistics
 ## 
 ##           Reference
@@ -518,21 +518,21 @@ Todo indica que la variable <code>balance</code> tiene un mayor peso en la discr
 ##        &#39;Positive&#39; Class : Yes            
 ## </code></pre>
 <p>Notamos un rendimiento similar, con cierta mejora de la precisión y la sensibilidad. Finalmente, representamos la frontera de decisión del algoritmo.</p>
-<div class="sourceCode" id="cb118"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb118-1"><a href="DA.html#cb118-1" aria-hidden="true" tabindex="-1"></a><span class="fu">decision_bound</span>(train_df, test_df, model_qda_def)</span></code></pre></div>
+<div class="sourceCode" id="cb110"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb110-1"><a href="DA.html#cb110-1" aria-hidden="true" tabindex="-1"></a><span class="fu">decision_bound</span>(train_df, test_df, model_qda_def)</span></code></pre></div>
 <p><img src="_main_files/figure-html/unnamed-chunk-50-1.png" width="80%" style="display: block; margin: auto;" /></p>
 <p>¡Ahora observamos que las regiones están separadas por curvas, en lugar de la recta del LDA!</p>
 </div>
 <div id="RDA" class="section level2" number="3.3">
 <h2><span class="header-section-number">3.3</span> Análisis Discriminante Regularizado</h2>
 <p><strong>Opción 1</strong>: el paquete <code>caret</code> crea el grid para <span class="math inline">\((\lambda, \gamma)\)</span>:</p>
-<div class="sourceCode" id="cb119"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb119-1"><a href="DA.html#cb119-1" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">123</span>)</span>
-<span id="cb119-2"><a href="DA.html#cb119-2" aria-hidden="true" tabindex="-1"></a>model_rda_def <span class="ot">&lt;-</span> <span class="fu">train</span>(default <span class="sc">~</span>.,</span>
-<span id="cb119-3"><a href="DA.html#cb119-3" aria-hidden="true" tabindex="-1"></a>                       <span class="at">data =</span> train_df,</span>
-<span id="cb119-4"><a href="DA.html#cb119-4" aria-hidden="true" tabindex="-1"></a>                       <span class="at">method =</span> <span class="st">&quot;rda&quot;</span>,</span>
-<span id="cb119-5"><a href="DA.html#cb119-5" aria-hidden="true" tabindex="-1"></a>                       <span class="at">tuneLength =</span> <span class="dv">2</span>,</span>
-<span id="cb119-6"><a href="DA.html#cb119-6" aria-hidden="true" tabindex="-1"></a>                       <span class="at">trControl =</span> fit_control)</span>
-<span id="cb119-7"><a href="DA.html#cb119-7" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb119-8"><a href="DA.html#cb119-8" aria-hidden="true" tabindex="-1"></a>model_rda_def</span></code></pre></div>
+<div class="sourceCode" id="cb111"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb111-1"><a href="DA.html#cb111-1" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">123</span>)</span>
+<span id="cb111-2"><a href="DA.html#cb111-2" aria-hidden="true" tabindex="-1"></a>model_rda_def <span class="ot">&lt;-</span> <span class="fu">train</span>(default <span class="sc">~</span>.,</span>
+<span id="cb111-3"><a href="DA.html#cb111-3" aria-hidden="true" tabindex="-1"></a>                       <span class="at">data =</span> train_df,</span>
+<span id="cb111-4"><a href="DA.html#cb111-4" aria-hidden="true" tabindex="-1"></a>                       <span class="at">method =</span> <span class="st">&quot;rda&quot;</span>,</span>
+<span id="cb111-5"><a href="DA.html#cb111-5" aria-hidden="true" tabindex="-1"></a>                       <span class="at">tuneLength =</span> <span class="dv">2</span>,</span>
+<span id="cb111-6"><a href="DA.html#cb111-6" aria-hidden="true" tabindex="-1"></a>                       <span class="at">trControl =</span> fit_control)</span>
+<span id="cb111-7"><a href="DA.html#cb111-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb111-8"><a href="DA.html#cb111-8" aria-hidden="true" tabindex="-1"></a>model_rda_def</span></code></pre></div>
 <pre><code>## Regularized Discriminant Analysis 
 ## 
 ## 8001 samples
@@ -552,7 +552,7 @@ Todo indica que la variable <code>balance</code> tiene un mayor peso en la discr
 ## 
 ## Accuracy was used to select the optimal model using the largest value.
 ## The final values used for the model were gamma = 0 and lambda = 1.</code></pre>
-<div class="sourceCode" id="cb121"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb121-1"><a href="DA.html#cb121-1" aria-hidden="true" tabindex="-1"></a>model_rda_def<span class="sc">$</span>finalModel</span></code></pre></div>
+<div class="sourceCode" id="cb113"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb113-1"><a href="DA.html#cb113-1" aria-hidden="true" tabindex="-1"></a>model_rda_def<span class="sc">$</span>finalModel</span></code></pre></div>
 <pre><code>## Call: 
 ## rda.default(x = x, grouping = y, gamma = param$gamma, lambda = param$lambda)
 ## 
@@ -566,21 +566,21 @@ Todo indica que la variable <code>balance</code> tiene un mayor peso en la discr
 ## 
 ## Misclassification rate: 
 ##        apparent: 2.662 %</code></pre>
-<div class="sourceCode" id="cb123"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb123-1"><a href="DA.html#cb123-1" aria-hidden="true" tabindex="-1"></a><span class="co"># en este caso el ggplot nos da información sobre los </span></span>
-<span id="cb123-2"><a href="DA.html#cb123-2" aria-hidden="true" tabindex="-1"></a><span class="co"># hiperparametros y su correspondiente Accuracy</span></span>
-<span id="cb123-3"><a href="DA.html#cb123-3" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(model_rda_def) <span class="sc">+</span> <span class="fu">theme_light</span>()</span></code></pre></div>
+<div class="sourceCode" id="cb115"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb115-1"><a href="DA.html#cb115-1" aria-hidden="true" tabindex="-1"></a><span class="co"># en este caso el ggplot nos da información sobre los </span></span>
+<span id="cb115-2"><a href="DA.html#cb115-2" aria-hidden="true" tabindex="-1"></a><span class="co"># hiperparametros y su correspondiente Accuracy</span></span>
+<span id="cb115-3"><a href="DA.html#cb115-3" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(model_rda_def) <span class="sc">+</span> <span class="fu">theme_light</span>()</span></code></pre></div>
 <p><img src="_main_files/figure-html/unnamed-chunk-52-1.png" width="80%" style="display: block; margin: auto;" /></p>
 <p><strong>Opción 2</strong>: podemos proporcionar un grid predefinido de valores <span class="math inline">\((\lambda, \gamma)\)</span> en un <code>data.frame</code> que le pasamos a <code>tuneGrid</code>:</p>
-<div class="sourceCode" id="cb124"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb124-1"><a href="DA.html#cb124-1" aria-hidden="true" tabindex="-1"></a><span class="co"># el grid se puede definir tambien &quot;a mano&quot;</span></span>
-<span id="cb124-2"><a href="DA.html#cb124-2" aria-hidden="true" tabindex="-1"></a>mi.grid <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(<span class="at">lambda =</span> <span class="fu">c</span>(<span class="dv">0</span>, <span class="fl">0.3</span>, <span class="fl">0.6</span>, <span class="dv">1</span>) , </span>
-<span id="cb124-3"><a href="DA.html#cb124-3" aria-hidden="true" tabindex="-1"></a>                       <span class="at">gamma =</span> <span class="fu">c</span>(<span class="dv">0</span>, <span class="dv">0</span>, <span class="dv">0</span>, <span class="dv">0</span>))</span>
-<span id="cb124-4"><a href="DA.html#cb124-4" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">123</span>)</span>
-<span id="cb124-5"><a href="DA.html#cb124-5" aria-hidden="true" tabindex="-1"></a>model_rda_def <span class="ot">&lt;-</span> <span class="fu">train</span>(default <span class="sc">~</span>.,</span>
-<span id="cb124-6"><a href="DA.html#cb124-6" aria-hidden="true" tabindex="-1"></a>                       <span class="at">data =</span> train_df,</span>
-<span id="cb124-7"><a href="DA.html#cb124-7" aria-hidden="true" tabindex="-1"></a>                       <span class="at">method =</span> <span class="st">&quot;rda&quot;</span>,</span>
-<span id="cb124-8"><a href="DA.html#cb124-8" aria-hidden="true" tabindex="-1"></a>                       <span class="at">tuneGrid =</span> mi.grid,</span>
-<span id="cb124-9"><a href="DA.html#cb124-9" aria-hidden="true" tabindex="-1"></a>                       <span class="at">trControl =</span> fit_control)</span>
-<span id="cb124-10"><a href="DA.html#cb124-10" aria-hidden="true" tabindex="-1"></a>model_rda_def</span></code></pre></div>
+<div class="sourceCode" id="cb116"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb116-1"><a href="DA.html#cb116-1" aria-hidden="true" tabindex="-1"></a><span class="co"># el grid se puede definir tambien &quot;a mano&quot;</span></span>
+<span id="cb116-2"><a href="DA.html#cb116-2" aria-hidden="true" tabindex="-1"></a>mi.grid <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(<span class="at">lambda =</span> <span class="fu">c</span>(<span class="dv">0</span>, <span class="fl">0.3</span>, <span class="fl">0.6</span>, <span class="dv">1</span>) , </span>
+<span id="cb116-3"><a href="DA.html#cb116-3" aria-hidden="true" tabindex="-1"></a>                       <span class="at">gamma =</span> <span class="fu">c</span>(<span class="dv">0</span>, <span class="dv">0</span>, <span class="dv">0</span>, <span class="dv">0</span>))</span>
+<span id="cb116-4"><a href="DA.html#cb116-4" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">123</span>)</span>
+<span id="cb116-5"><a href="DA.html#cb116-5" aria-hidden="true" tabindex="-1"></a>model_rda_def <span class="ot">&lt;-</span> <span class="fu">train</span>(default <span class="sc">~</span>.,</span>
+<span id="cb116-6"><a href="DA.html#cb116-6" aria-hidden="true" tabindex="-1"></a>                       <span class="at">data =</span> train_df,</span>
+<span id="cb116-7"><a href="DA.html#cb116-7" aria-hidden="true" tabindex="-1"></a>                       <span class="at">method =</span> <span class="st">&quot;rda&quot;</span>,</span>
+<span id="cb116-8"><a href="DA.html#cb116-8" aria-hidden="true" tabindex="-1"></a>                       <span class="at">tuneGrid =</span> mi.grid,</span>
+<span id="cb116-9"><a href="DA.html#cb116-9" aria-hidden="true" tabindex="-1"></a>                       <span class="at">trControl =</span> fit_control)</span>
+<span id="cb116-10"><a href="DA.html#cb116-10" aria-hidden="true" tabindex="-1"></a>model_rda_def</span></code></pre></div>
 <pre><code>## Regularized Discriminant Analysis 
 ## 
 ## 8001 samples
@@ -601,7 +601,7 @@ Todo indica que la variable <code>balance</code> tiene un mayor peso en la discr
 ## Tuning parameter &#39;gamma&#39; was held constant at a value of 0
 ## Accuracy was used to select the optimal model using the largest value.
 ## The final values used for the model were gamma = 0 and lambda = 0.6.</code></pre>
-<div class="sourceCode" id="cb126"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb126-1"><a href="DA.html#cb126-1" aria-hidden="true" tabindex="-1"></a>model_rda_def<span class="sc">$</span>finalModel</span></code></pre></div>
+<div class="sourceCode" id="cb118"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb118-1"><a href="DA.html#cb118-1" aria-hidden="true" tabindex="-1"></a>model_rda_def<span class="sc">$</span>finalModel</span></code></pre></div>
 <pre><code>## Call: 
 ## rda.default(x = x, grouping = y, gamma = param$gamma, lambda = param$lambda)
 ## 
@@ -615,17 +615,17 @@ Todo indica que la variable <code>balance</code> tiene un mayor peso en la discr
 ## 
 ## Misclassification rate: 
 ##        apparent: 2.675 %</code></pre>
-<div class="sourceCode" id="cb128"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb128-1"><a href="DA.html#cb128-1" aria-hidden="true" tabindex="-1"></a><span class="co"># en este caso el ggplot nos da información sobre los </span></span>
-<span id="cb128-2"><a href="DA.html#cb128-2" aria-hidden="true" tabindex="-1"></a><span class="co"># hiperparametros y su correspondiente Accuracy</span></span>
-<span id="cb128-3"><a href="DA.html#cb128-3" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(model_rda_def) <span class="sc">+</span> <span class="fu">theme_light</span>()</span></code></pre></div>
+<div class="sourceCode" id="cb120"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb120-1"><a href="DA.html#cb120-1" aria-hidden="true" tabindex="-1"></a><span class="co"># en este caso el ggplot nos da información sobre los </span></span>
+<span id="cb120-2"><a href="DA.html#cb120-2" aria-hidden="true" tabindex="-1"></a><span class="co"># hiperparametros y su correspondiente Accuracy</span></span>
+<span id="cb120-3"><a href="DA.html#cb120-3" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(model_rda_def) <span class="sc">+</span> <span class="fu">theme_light</span>()</span></code></pre></div>
 <p><img src="_main_files/figure-html/unnamed-chunk-54-1.png" width="80%" style="display: block; margin: auto;" /></p>
 <p>Los resultados indican que los hiperparámetros óptimos en este caso corresponden a <span class="math inline">\((\lambda, \gamma) = (0.6, 0)\)</span>. Esto que hemos hecho es comparar diferentes modelos (porque han sido ajustados con diferentes hiperparámetros) resultantes del mismo algoritmo. Veamos las predicciones para la muestra test, la tasa de error correspondiente y la frontera de decisión.</p>
-<div class="sourceCode" id="cb129"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb129-1"><a href="DA.html#cb129-1" aria-hidden="true" tabindex="-1"></a><span class="co"># hagamos las predicciones del conjunto de prueba</span></span>
-<span id="cb129-2"><a href="DA.html#cb129-2" aria-hidden="true" tabindex="-1"></a>prediction_rda_def <span class="ot">&lt;-</span> <span class="fu">predict</span>(model_rda_def, <span class="at">newdata =</span> test_df)</span>
-<span id="cb129-3"><a href="DA.html#cb129-3" aria-hidden="true" tabindex="-1"></a><span class="fu">confusionMatrix</span>(prediction_rda_def, </span>
-<span id="cb129-4"><a href="DA.html#cb129-4" aria-hidden="true" tabindex="-1"></a>                <span class="at">reference =</span> test_df<span class="sc">$</span>default, </span>
-<span id="cb129-5"><a href="DA.html#cb129-5" aria-hidden="true" tabindex="-1"></a>                <span class="at">positive =</span> <span class="st">&quot;Yes&quot;</span>, </span>
-<span id="cb129-6"><a href="DA.html#cb129-6" aria-hidden="true" tabindex="-1"></a>                <span class="at">mode =</span> <span class="st">&quot;everything&quot;</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb121"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb121-1"><a href="DA.html#cb121-1" aria-hidden="true" tabindex="-1"></a><span class="co"># hagamos las predicciones del conjunto de prueba</span></span>
+<span id="cb121-2"><a href="DA.html#cb121-2" aria-hidden="true" tabindex="-1"></a>prediction_rda_def <span class="ot">&lt;-</span> <span class="fu">predict</span>(model_rda_def, <span class="at">newdata =</span> test_df)</span>
+<span id="cb121-3"><a href="DA.html#cb121-3" aria-hidden="true" tabindex="-1"></a><span class="fu">confusionMatrix</span>(prediction_rda_def, </span>
+<span id="cb121-4"><a href="DA.html#cb121-4" aria-hidden="true" tabindex="-1"></a>                <span class="at">reference =</span> test_df<span class="sc">$</span>default, </span>
+<span id="cb121-5"><a href="DA.html#cb121-5" aria-hidden="true" tabindex="-1"></a>                <span class="at">positive =</span> <span class="st">&quot;Yes&quot;</span>, </span>
+<span id="cb121-6"><a href="DA.html#cb121-6" aria-hidden="true" tabindex="-1"></a>                <span class="at">mode =</span> <span class="st">&quot;everything&quot;</span>)</span></code></pre></div>
 <pre><code>## Confusion Matrix and Statistics
 ## 
 ##           Reference
@@ -656,17 +656,17 @@ Todo indica que la variable <code>balance</code> tiene un mayor peso en la discr
 ##                                           
 ##        &#39;Positive&#39; Class : Yes             
 ## </code></pre>
-<div class="sourceCode" id="cb131"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb131-1"><a href="DA.html#cb131-1" aria-hidden="true" tabindex="-1"></a><span class="co"># extraemos el Accuracy o Precisión</span></span>
-<span id="cb131-2"><a href="DA.html#cb131-2" aria-hidden="true" tabindex="-1"></a><span class="fu">confusionMatrix</span>(prediction_rda_def, <span class="at">reference =</span> test_df<span class="sc">$</span>default)<span class="sc">$</span>overall[<span class="dv">1</span>]</span></code></pre></div>
+<div class="sourceCode" id="cb123"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb123-1"><a href="DA.html#cb123-1" aria-hidden="true" tabindex="-1"></a><span class="co"># extraemos el Accuracy o Precisión</span></span>
+<span id="cb123-2"><a href="DA.html#cb123-2" aria-hidden="true" tabindex="-1"></a><span class="fu">confusionMatrix</span>(prediction_rda_def, <span class="at">reference =</span> test_df<span class="sc">$</span>default)<span class="sc">$</span>overall[<span class="dv">1</span>]</span></code></pre></div>
 <pre><code>##  Accuracy 
 ## 0.9704852</code></pre>
-<div class="sourceCode" id="cb133"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb133-1"><a href="DA.html#cb133-1" aria-hidden="true" tabindex="-1"></a><span class="co"># la tasa de error</span></span>
-<span id="cb133-2"><a href="DA.html#cb133-2" aria-hidden="true" tabindex="-1"></a>tasa.error.rda <span class="ot">&lt;-</span> <span class="dv">1</span><span class="sc">-</span><span class="fu">confusionMatrix</span>(prediction_rda_def, <span class="at">reference =</span> test_df<span class="sc">$</span>default)<span class="sc">$</span>overall[<span class="dv">1</span>]</span>
-<span id="cb133-3"><a href="DA.html#cb133-3" aria-hidden="true" tabindex="-1"></a><span class="fu">names</span>(tasa.error.rda) <span class="ot">&lt;-</span> <span class="st">&quot;Error RDA&quot;</span></span>
-<span id="cb133-4"><a href="DA.html#cb133-4" aria-hidden="true" tabindex="-1"></a>tasa.error.rda</span></code></pre></div>
+<div class="sourceCode" id="cb125"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb125-1"><a href="DA.html#cb125-1" aria-hidden="true" tabindex="-1"></a><span class="co"># la tasa de error</span></span>
+<span id="cb125-2"><a href="DA.html#cb125-2" aria-hidden="true" tabindex="-1"></a>tasa.error.rda <span class="ot">&lt;-</span> <span class="dv">1</span><span class="sc">-</span><span class="fu">confusionMatrix</span>(prediction_rda_def, <span class="at">reference =</span> test_df<span class="sc">$</span>default)<span class="sc">$</span>overall[<span class="dv">1</span>]</span>
+<span id="cb125-3"><a href="DA.html#cb125-3" aria-hidden="true" tabindex="-1"></a><span class="fu">names</span>(tasa.error.rda) <span class="ot">&lt;-</span> <span class="st">&quot;Error RDA&quot;</span></span>
+<span id="cb125-4"><a href="DA.html#cb125-4" aria-hidden="true" tabindex="-1"></a>tasa.error.rda</span></code></pre></div>
 <pre><code>##  Error RDA 
 ## 0.02951476</code></pre>
-<div class="sourceCode" id="cb135"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb135-1"><a href="DA.html#cb135-1" aria-hidden="true" tabindex="-1"></a><span class="fu">decision_bound</span>(train_df, test_df, model_rda_def)</span></code></pre></div>
+<div class="sourceCode" id="cb127"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb127-1"><a href="DA.html#cb127-1" aria-hidden="true" tabindex="-1"></a><span class="fu">decision_bound</span>(train_df, test_df, model_rda_def)</span></code></pre></div>
 <p><img src="_main_files/figure-html/unnamed-chunk-56-1.png" width="80%" style="display: block; margin: auto;" /></p>
 
 </div>
