@@ -13,7 +13,7 @@ Los datos de cáncer de mama Wisconsin están disponibles en diversas plataforma
 -   symmetry
 -   fractal dimension ("coastline approximation" - 1)
 
-El resultado es un problema de clasificación binario ($Y =$ `diagnosis`) con 30 variables predictoras. La muestra de 569 pacientes corresponde a 357 en la clase `B` y 212 en la clase `M`. Los datos están disponibles en este [repositorio]("https://raw.githubusercontent.com/hhroig/BAV-supervised/master/data_breast_cancer_wisconsin.csv").
+El resultado es un problema de clasificación binario ($Y =$ `diagnosis`) con 30 variables predictoras. La muestra de 569 pacientes corresponde a 357 en la clase `B` y 212 en la clase `M`. Los datos están disponibles en este [repositorio](data_breast_cancer_wisconsin.csv).
 
 ```{r, warning=FALSE, message=FALSE}
 library(caret)
